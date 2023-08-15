@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="system_cat_form_view" model="ir.ui.view">
+        <field name="name">system.category.form.view</field>
+        <field name="model">system.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            
+                        </group>
+                    </group>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="system_cat_tree_view" model="ir.ui.view">
+        <field name="name">system.category.view.tree</field>
+        <field name="model">system.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="system_cat_action" model="ir.actions.act_window">
+        <field name="name">System Category</field>
+        <field name="res_model">system.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_system_cat"
+            name="System Categories"
+            parent="maintenance.menu_maintenance_configuration"
+            action="system_cat_action"
+            sequence="5"/>
+
+    <record id="sub_system_form" model="ir.ui.view">
+        <field name="name">Sub System Form</field>
+        <field name="model">sub.system</field>
+        <field name="arch" type="xml">
+            <form string="Sub System" delete="false">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="system_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sub_system_tree" model="ir.ui.view">
+        <field name="name">Sub System Tree</field>
+        <field name="model">sub.system</field>
+        <field name="arch" type="xml">
+            <tree string="Sub system" delete="false">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="system_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_sub_system" model="ir.actions.act_window">
+        <field name="name">Sub System</field>
+        <field name="res_model">sub.system</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_sub_system"
+            name="Sub System"
+            action="action_sub_system"
+            parent="maintenance.menu_maintenance_configuration"
+    />
+
+    <record id="view_equipment_system_form" model="ir.ui.view">
+        <field name="name">view.equipment.system.form</field>
+        <field name="model">equipment.system</field>
+        <field name="arch" type="xml">
+            <form string="System" delete="false">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="system_cat_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_equipment_system_tree" model="ir.ui.view">
+        <field name="name">view.equipment.system.tree</field>
+        <field name="model">equipment.system</field>
+        <field name="arch" type="xml">
+            <tree string="system" delete="false">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="system_cat_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_equipment_system" model="ir.actions.act_window">
+        <field name="name">System</field>
+        <field name="res_model">equipment.system</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_equipment_system"
+            name="System"
+            action="action_equipment_system"
+            parent="maintenance.menu_maintenance_configuration"
+            sequence="9"/>
+
+</odoo>

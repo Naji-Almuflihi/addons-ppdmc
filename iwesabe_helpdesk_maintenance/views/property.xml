@@ -1,0 +1,21 @@
+<odoo>
+
+    <data>
+
+
+        <record id="form_view_property_property_inherit" model="ir.ui.view">
+            <field name="name">name.property.property.inherit.form</field>
+            <field name="model">property.property</field>
+            <field name="inherit_id" ref="iwesabe_ppmdc_airport_management.view_property_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='room_id']" position="after">
+                    <field name="main_zone_location_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

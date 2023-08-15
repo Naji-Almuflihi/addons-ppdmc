@@ -1,0 +1,30 @@
+<odoo>
+    <record id="wizard_invoice_credite_form_view" model="ir.ui.view">
+        <field name="name">invoice.credit.note.form</field>
+        <field name="model">invoice.credit.note</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="appendix_id" readonly="1"/>
+                    <group>
+                        <field name="old_invoice_id" readonly="1" />
+                        <field name="new_invoice_id" readonly="1"/>
+                        <field name="diff_amount" readonly="1"/>
+                        <field name="account_id" required="1" domain="[('deprecated', '=', False), ('user_type_id.type', 'not in', ('receivable', 'payable')), ('is_off_balance', '=', False)]"/>
+                    </group>
+                    <group>
+                        <field name="old_invoice_amount"/>
+                        <field name="new_invoice_amount"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="create_credit_note" string="Create Credit Note" type="object" attrs="{'invisible': [('diff_amount', '&lt;', 0.0)]}"/>
+                    <button class="oe_highlight" name="create_invoice" string="Create Invoice" type="object" attrs="{'invisible': [('diff_amount', '>', 0.0)]}"/>or
+                    
+                    <button class="oe_link" special="cancel" string="Cancel"/></footer>
+            </form>
+        </field>
+    </record>
+    
+</odoo>

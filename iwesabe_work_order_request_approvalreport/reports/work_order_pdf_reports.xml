@@ -1,0 +1,425 @@
+<odoo>
+    <data>
+        <record id="appendix_invoice_reports_pdf" model="ir.actions.report">
+            <field name="name">Work Order Request</field>
+            <field name="model">work.order.request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">iwesabe_work_order_request_approvalreport.report_work_order_request</field>
+            <field name="report_file">iwesabe_work_order_request_approvalreport.report_work_order_request</field>
+            <field name="print_report_name">'WorkOrderRequest - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="iwesabe_work_order_request.model_work_order_request"/>
+         </record>
+
+        <template id="report_work_order_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="iwesabe_work_order_request_approvalreport.external_custom_workorder_layout">
+                        <div class="page">
+                            <h1>Work Order Request Pdf report</h1>
+                            <table class="table table-sm o_main_table"
+                               style="border-left: 1px solid black; border-right: 1px solid black;"
+                               name="work_order_table">
+                               <tr style="border: 1px solid black; background:#f2f0f0;">
+                                <td width="23%" style="border: 1px solid black; text-align: left;">Date:</td>
+                                <td width="15%" style="border: 1px solid black; text-align: left;">Work Order NO.</td>
+                                <td width="15%" style="border: 1px solid black; text-align: left;">
+                                    <span t-field="o.din"/>
+                                </td>
+                                <td width="24%" style="border: 1px solid black; text-align: left;">
+                                    <t t-if="o.mode == 'new'">
+                                        <input type="checkbox" checked="1"/>New
+                                        <![CDATA[&emsp;]]><input type="checkbox"/>Renewal
+                                    </t>
+                                    <t t-if="o.mode == 'renewal'">
+                                        <input type="checkbox"/>New
+                                        <![CDATA[&emsp;]]><input type="checkbox" checked="1"/>Renewal
+                                    </t>
+                                </td>
+                                <td width="23%" style="border: 1px solid black; text-align: left;">التاريخ /  /  144 هـ
+                                    <span t-field="o.request_date_hijri"/>
+                                </td>
+                                </tr>
+                                
+                                
+                                <tr style="border: 1px solid black; background:#f2f0f0;">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center;">نوع العمل Work Type</td>
+                                </tr>
+                                
+                                <tr style="border: 1px solid black;" height="50px">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center; font-size:13px">
+                                      <!-- <span t-esc="o.print_sel()" />
+                                      <t t-set="values" t-value="o.get_work_type()"/>
+                                            <t t-foreach="values" t-as="value"></t> -->
+                                            <t t-if="o.work_type == 'new'">
+                                                (New Installations/Projects)تركيبات ومشاريع <input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(Emergency) صيانة طارئة <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(CM)صيانة تصحيحية <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(PM)صيانة وقائية <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.work_type == 'emergency'">
+                                                (New Installations/Projects)تركيبات ومشاريع <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(Emergency) صيانة طارئة <input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(CM)صيانة تصحيحية <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(PM)صيانة وقائية <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.work_type == 'cm'">
+                                                (New Installations/Projects)تركيبات ومشاريع <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(Emergency) صيانة طارئة <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(CM)صيانة تصحيحية <input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(PM)صيانة وقائية <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.work_type == 'pm'">
+                                                (New Installations/Projects)تركيبات ومشاريع <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(Emergency) صيانة طارئة <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(CM)صيانة تصحيحية <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(PM)صيانة وقائية <input type="checkbox" checked="1"/>
+                                            </t>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black; background:#f2f0f0;">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center;">Contractor مقاول التنفيذ </td>
+                                </tr>
+                                <tr style="border: 1px solid black;" height="50px">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center; font-size:17px">
+                                      <!-- <span t-esc="o.print_sel()" />
+                                      <t t-set="values" t-value="o.get_work_type()"/>
+                                            <t t-foreach="values" t-as="value"></t> -->
+                                            
+                                            <t t-if="o.contactor_id.name == 'KONE'">
+                                                (KONE) كوني<input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'IBLIC / VL'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"  checked="1"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'BT Advanced Operations &amp; Maintenance BTAM'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'Other'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'SSCL'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'TILAD'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'ABTSS'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox" checked="1"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.contactor_id.name == 'SATCO'">
+                                                (KONE) كوني<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(VLI/IBLIC) فاندرلاند/ إيبلك <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(BTAM) بيتام<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SSCL) السعودية للخدمات المحدودة<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]><![CDATA[&emsp;]]>(Other) أخرى<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(ALTILAD) التلاد <input type="checkbox"/>
+                                                <![CDATA[&emsp;]]> (ABTSS) المعمرون العرب<input type="checkbox"/>
+                                                <![CDATA[&emsp;]]>(SATCO) ساتكو <input type="checkbox" checked="1"/>
+                                            </t>                                            
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center; padding:0;">
+                                        <table style="margin:0; width: 100%;">
+                                            <td style="width:90% border-right: 1px solid black;">
+                                                <t t-if="o.category == 'other'">
+                                                    (OTHER)أخرى <input type="checkbox" checked="1"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]><p><b>Other Categories:</b><span t-field="o.other_category"/></p>
+                                                </t>
+                                                <t t-if="o.category == 'ulv'">
+                                                    (OTHER)أخرى <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox" checked="1"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"/>
+                                                </t>
+                                                <t t-if="o.category == 'civil'">
+                                                    (OTHER)أخرى <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox" checked="1"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"/>
+                                                </t>
+                                                <t t-if="o.category == 'elect'">
+                                                    (OTHER)أخرى <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"  checked="1"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"/>
+                                                </t>
+                                                <t t-if="o.category == 'mech'">
+                                                    (OTHER)أخرى <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"  checked="1"/>
+                                                </t>
+                                                <t t-if="o.category == 'mech'">
+                                                    (OTHER)أخرى <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"  checked="1"/>
+                                                </t>
+                                                <t t-if="o.category == 'mech'">
+                                                    (OTHER)أخرى <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ULV)  ألكتروني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(CIVIL)مدني<input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(ELECT) كهرباء <input type="checkbox"/>
+                                                    <![CDATA[&emsp;]]>(MECH)ميكانيكا<input type="checkbox"  checked="1"/>
+                                                </t>    
+                                            </td>
+                                            <td style="width:10%">
+                                                تصنيف العمل Category
+                                            </td>
+                                        </table>
+                                    </td>    
+                                </tr>
+
+                                <tr style="border: 1px solid black;">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center; padding:0;">
+                                        <table style="margin:0; width: 100%;" height="80 px">
+                                            <td width="17%" style="border-right: 1px solid black;"/>
+                                            <td width="10%" style="border-right: 1px solid black;">
+                                                التوقيع Signature
+                                            </td>
+                                            <td width="23%" style="border-right: 1px solid black;"/>
+                                            
+                                            <td width="17%" style="border-right: 1px solid black;">
+                                                رقم التواصل Contact No.
+                                            </td>
+                                            <td width="25%" style="border-right: 1px solid black;">
+                                                <span t-field="o.employee_id.name"/>
+                                            </td>
+                                            <td width="10%" style="border-right: 1px solid black;">
+                                                الاسم Name
+                                            </td>
+                                        </table>
+                                    </td>    
+                                </tr>
+                                <tr style="border: 1px solid black; background:#f2f0f0;">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center;">منطقة العمل Work Area</td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center;">
+                                        <t t-if="o.work_type != 'REOMTE.AREA' and o.work_type != 'ROOF TOP' and o.work_type != 'APRON'and o.work_type != 'PLAZA'and o.work_type != 'TERMINAL'">
+                                            <span t-field="o.zone_location_id.name"/> <input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>(RA)منطقة الموازيين <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Roof Top) سطح <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Apron) ساحة <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Plaza)بلازا<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Terminal)صالات <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.work_type == 'REOMTE.AREA'">
+                                            ............(Other) أخرى <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(RA)منطقة الموازيين <input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>(Roof Top) سطح <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Apron) ساحة <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Plaza)بلازا<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Terminal)صالات <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.work_type == 'ROOF TOP'">
+                                            ............(Other) أخرى <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(RA)منطقة الموازيين <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Roof Top) سطح <input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>(Apron) ساحة <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Plaza)بلازا<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Terminal)صالات <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.work_type == 'APRON'">
+                                            ............(Other) أخرى <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(RA)منطقة الموازيين <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Roof Top) سطح <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Apron) ساحة <input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>(Plaza)بلازا<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Terminal)صالات <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.work_type == 'PLAZA'">
+                                            ............(Other) أخرى <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(RA)منطقة الموازيين <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Roof Top) سطح <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Apron) ساحة <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Plaza)بلازا<input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>(Terminal)صالات <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.work_type == 'TERMINAL'">
+                                            ............(Other) أخرى <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(RA)منطقة الموازيين <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Roof Top) سطح <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Apron) ساحة <input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Plaza)بلازا<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>(Terminal)صالات <input type="checkbox" checked="1"/>
+                                        </t>
+                                    </td>
+                                    <tr style="border: 1px solid black;">
+                                        <td colspan="5" style="border: 1px solid black; text-align: left; text-align: center; padding:0;">
+                                            <table style="margin:0; width: 100%;" height="40 px">
+                                                <td width="10%" style="border-right: 1px solid black;">
+                                                    <t t-if="o.period == 'hour'">
+                                                        <span t-field="o.period_hour"/><![CDATA[&emsp;]]>(Hour) ساعة<input type="checkbox" checked="1"/>
+                                                        <![CDATA[&emsp;]]>(Day) يوم<input type="checkbox"/>
+                                                    </t>
+                                                    <t t-if="o.period == 'hour'">
+                                                        <span t-field="o.period_day"/><![CDATA[&emsp;]]> (Hour) ساعة<input type="checkbox"/>
+                                                        <![CDATA[&emsp;]]>(Day) يوم<input type="checkbox" checked="1"/>
+                                                    </t>
+                                                    <![CDATA[&emsp;]]>:(Period) مدة تنفيذ العمل 
+                                                </td>
+                                                <td width="17%" style="border-right: 1px solid black;">
+                                                    <span t-field="o.man_power"/>:(Manpower) عدد العمال
+                                                </td>
+
+                                            </table>
+                                        </td>    
+                                    </tr>
+                                </tr>
+                            </table>
+
+                            
+                            <table class="table table-sm o_main_table"
+                            style="border-left: 1px solid black; border-right: 1px solid black;"
+                            name="work_ordertime">
+                                <tr style="border: 1px solid black;">
+                                    <td width="50%" style="border: 1px solid black; text-align: left;">
+                                        Starting Date:<span t-field="o.start_date"/><br></br>
+                                        Time:<span t-field="o.start_time"/>
+                                        <t t-if="o.start_am_pm == 'am'">
+                                            <![CDATA[&emsp;]]>AM:<input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>PM<input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.start_am_pm == 'pm'">
+                                            <![CDATA[&emsp;]]>AM:<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>PM<input type="checkbox" checked="1"/>
+                                        </t>
+                                    </td>
+                                    <td width="50%" style="border: 1px solid black; text-align: right;">
+                                        <span t-field="o.start_date"/> :بدء العمل
+                                        <span t-field="o.start_date"/> :الساعة:
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td width="50%" style="border: 1px solid black; text-align: left;">
+                                        End Date:<span t-field="o.end_date"/><br></br>
+                                        Time:<span t-field="o.end_time"/>
+                                        <t t-if="o.end_am_pm == 'am'">
+                                            <![CDATA[&emsp;]]>AM:<input type="checkbox" checked="1"/>
+                                            <![CDATA[&emsp;]]>PM<input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.end_am_pm == 'pm'">
+                                            <![CDATA[&emsp;]]>AM:<input type="checkbox"/>
+                                            <![CDATA[&emsp;]]>PM<input type="checkbox" checked="1"/>
+                                        </t>
+                                    </td>
+                                    <td width="50%" style="border: 1px solid black; text-align: right;">
+                                        <span t-field="o.start_date"/> :إنتهاء العمل
+                                        <br></br><span t-field="o.start_date"/> :الساعة
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td colspan="2" width="100%" style="border: 1px solid black; text-align: left;">
+                                        <span t-field="o.work_description"/> 
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td width="50%" style="border: 1px solid black; text-align: left;">
+                                        Used Equipment / Tools :
+                                        <t t-set="e_count" t-value="1"/>
+                                        <t t-foreach="o.equipment_ids" t-as="eqp">
+                                            <t t-esc="e_count"/>-
+                                            <t t-esc="eqp.equipment_id.name"/> 
+                                            <t t-set="e_count" t-value="e_count+1"/>
+                                        </t>
+                                    </td>
+                                    <td width="50%" style="border: 1px solid black; text-align: right;">
+                                        :المعدات / الأدوات المستخدمة
+                                        <t t-set="e_count" t-value="1"/>
+                                        <t t-foreach="o.equipment_ids" t-as="eqp">
+                                            <t t-esc="e_count"/>-
+                                            <t t-esc="eqp.equipment_id.name"/> 
+                                            <t t-set="e_count" t-value="e_count+1"/>
+                                        </t>
+                                    </td>
+                                </tr>  
+                                <tr style="border: 1px solid black;">
+                                    <td width="50%" style="border: 1px solid black; text-align: left;">
+                                        Spare Part :
+                                        <t t-set="e_count" t-value="1"/>
+                                        <t t-foreach="o.equipment_ids" t-as="eqp">
+                                            <t t-esc="e_count"/>-
+                                            <t t-esc="eqp.equipment_id.name"/> 
+                                            <t t-set="e_count" t-value="e_count+1"/>
+                                        </t>
+                                    </td>
+                                    <td width="50%" style="border: 1px solid black; text-align: right;">
+                                        استخدام قطع الغيار:
+                                        <t t-set="e_count" t-value="1"/>
+                                        <t t-foreach="o.equipment_ids" t-as="eqp">
+                                            <t t-esc="e_count"/>-
+                                            <t t-esc="eqp.equipment_id.name"/> 
+                                            <t t-set="e_count" t-value="e_count+1"/>
+                                        </t>
+                                    </td>
+                                </tr>  
+                            </table> 
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

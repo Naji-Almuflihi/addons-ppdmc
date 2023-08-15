@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seq_bank_guarantee_name" model="ir.sequence">
+            <field name="name">Bank Guarantee</field>
+            <field name="code">bank.guarantee.seq</field>
+            <field name="prefix">G</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

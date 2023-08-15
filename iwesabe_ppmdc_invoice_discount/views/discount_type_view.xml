@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="tree_discount_type_view" model="ir.ui.view">
+            <field name="name">discount.type.tree</field>
+            <field name="model">discount.type</field>
+            <field name="type">tree</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Discount Type">
+                    <field name="name"/>
+                    <field name="discount_value"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_discount_type_view" model="ir.ui.view">
+            <field name="name">discount.type.form</field>
+            <field name="model">discount.type</field>
+            <field name="type">form</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Discount Type">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="discount_value"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_discount_type_search" model="ir.ui.view">
+            <field name="name">discount.type.search</field>
+            <field name="model">discount.type</field>
+            <field name="type">search</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Discount Type">
+                    <field name="name"/>
+                    <field name="discount_value"/>
+                </search>
+            </field>
+        </record>
+        <record id="act_open_discount_type_view" model="ir.actions.act_window">
+            <field name="name">Discount Types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">discount.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_discount_type_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <menuitem id="menu_discount_type_parent" name="Discount" parent="account.menu_finance_configuration" sequence="40"/>
+        <menuitem action="act_open_discount_type_view" id="menu_discount_type" name="Discount Type" parent="menu_discount_type_parent" sequence="1"/>
+    </data>
+    <data noupdate="1">
+        <record id="discount_type_percent_id" model="discount.type">
+            <field name="name">Percent</field>
+        </record>
+        <record id="discount_type_fixed_id" model="discount.type">
+            <field name="name">Fixed</field>
+        </record>
+    </data>
+</odoo>

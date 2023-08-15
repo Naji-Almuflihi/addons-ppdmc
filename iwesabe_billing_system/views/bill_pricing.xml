@@ -1,0 +1,154 @@
+<odoo>
+    <data>
+        <record id="view_bill_pricing_form1" model="ir.ui.view">
+            <field name="name">view_bill_pricing_form1</field>
+            <field name="model">billing.pricing</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="action_create_dynamic_field" string="Create Dynamic Field" class="oe_highlight"
+                                type="object"
+                                attrs="{'invisible': [('appendix_line_value_field', '!=', False), ('appendix_total_field', '!=', False), ('appendix_compute_field', '!=', False), ('appendix_line_view_field', '!=', False)]}"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                                <field name="active" invisible="1"/>
+                                <button type="object" class="oe_stat_button" icon="fa-archive" name="toggle_active" string="Archive" attrs="{'invisible': [('active', '=', False)]}"/>
+                                <button type="object" class="oe_stat_button" icon="fa-archive" name="toggle_active" string="Restore" attrs="{'invisible': [('active', '=', True)]}"/>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <widget name="web_ribbon" title="Dynamic Field Missing"
+                                bg_color="bg-danger"
+                                attrs="{'invisible': [('appendix_line_value_field', '!=', False), ('appendix_total_field', '!=', False), ('appendix_compute_field', '!=', False), ('appendix_line_view_field', '!=', False)]}"/>
+                        <!-- Invisible fields -->
+                        <field name="appendix_line_value_field" invisible="1"/>
+                        <field name="appendix_compute_field" invisible="1"/>
+                        <field name="appendix_total_field" invisible="1"/>
+                        <field name="appendix_line_view_field" invisible="1"/>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="airline_partner_ids" widget="many2many_tags" attrs="{'invisible': [('allow_other_customer', '=', True)]}" domain="[('is_airline', '=', True)]"/>
+                                <field name="non_airline_partner_ids" widget="many2many_tags" attrs="{'invisible': [('allow_other_customer', '=', False)]}" domain="[('is_non_airline', '=', True)]"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="product_id" domain="[('is_ams', '=', True)]"/>
+                                <field name="allow_other_customer"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Pricing"> 
+                             <div>
+                                 <field name="term_facilities_ids" attrs="{'invisible':[('type','!=','term_facilities_utilization')]}">
+                                     <tree editable="bottom">
+                                         <field name="arrival_passenger_number"/>
+                                         <field name="departure_passenger_number"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="system_ids" attrs="{'invisible':[('type','!=','systems')]}">
+                                     <tree editable="bottom">
+                                         <field name="arrival_passenger_number"/>
+                                         <field name="departure_passenger_number"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="hz_ids" attrs="{'invisible':[('type','!=','400hz')]}">
+                                     <tree editable="bottom">
+                                         <field name="aircraft_category_id"/>
+                                         <field name="amount"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="ground_handling_ids" attrs="{'invisible':[('type','!=','ground_handling')]}">
+                                     <tree editable="bottom">
+                                         <field name="aircraft_category_id"/>
+                                         <field name="amount"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="aircraft_not_registered_ids" attrs="{'invisible':[('type','!=','aircraft_parking_not_registered')]}">
+                                     <tree editable="bottom">
+                                         <field name="from_time" widget="float_time"/>
+                                         <field name="to_time" widget="float_time" attrs="{'invisible':[('is_above','=',True)]}"/>
+                                         <field name="price"/>
+
+                                         <field name="is_above"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="aircraft_registered_ids" attrs="{'invisible':[('type','!=','aircraft_registered')]}">
+                                     <tree editable="bottom">
+                                         <field name="from_time" widget="float_time"/>
+                                         <field name="to_time" widget="float_time" attrs="{'invisible':[('is_above','=',True)]}"/>
+                                         <field name="price"/>
+                                         <field name="is_above"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="blp_buses_ids" attrs="{'invisible':[('type','!=','PLBs_busses')]}">
+                                     <tree editable="bottom">
+                                         <field name="from_ton"/>
+                                         <field name="to_ton" attrs="{'invisible':[('is_above','=',True)]}"/>
+                                         <field name="price"/>
+                                         <field name="is_above"/>
+                                     </tree>
+                                 </field>
+                                 
+                                 <field name="security_services_ids" attrs="{'invisible':[('type','!=','security_services')]}">
+                                     <tree editable="bottom">
+                                         <field name="from_ton"/>
+                                         <field name="to_ton" attrs="{'invisible':[('is_above','=',True)]}"/>
+                                         <field name="price"/>
+                                         <field name="is_above"/>
+                                     </tree>
+                                 </field>
+                                 <field name="buss_transportation_ids" attrs="{'invisible':[('type','!=','bus_transportation')]}">
+                                    <tree editable="bottom">
+                                        <field name="no_of_flight"/>
+                                        <field name="price_per_flight"/>
+                                        <field name="subtotal" total="sum"/>
+                                    </tree>
+                                 </field>
+                             </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_billing_pricing_tree1" model="ir.ui.view">
+            <field name="name">view_billing_pricing_tree1</field>
+            <field name="model">billing.pricing</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="product_id"/>
+                    <field name="allow_other_customer"/>
+                    <field name="airline_partner_ids" widget="many2many_tags"/>
+                    <field name="non_airline_partner_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_billing_pricing_action" model="ir.actions.act_window">
+            <field name="name">Billing Pricing </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">billing.pricing</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+        
+        <menuitem id="menu_traifs_docute_view" name="Billing Pricing" parent="iwesabe_billing_system.menu_billing_configuration" action="action_billing_pricing_action" sequence="20"/>
+    </data>
+</odoo>

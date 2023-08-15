@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+        <record id="view_agent_grantee_form" model="ir.ui.view">
+            <field name="name">view_agent_grantee_form</field>
+            <field name="model">agent.grantee</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="confirm_button" type="object" class="btn-primary" string="Confirm" states="draft"/>
+                        <button name="renew_button" type="object" class="btn-primary" string="Renew" states="confirmed"/>
+                        <button name="cancel_button" type="object" class="btn-primary" string="cancel" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,under_renew,canceled"/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state','in',['confirmed','canceled'])]}"/>
+                                <field name="partner_id" attrs="{'readonly':[('state','in',['confirmed','canceled'])]}"/>
+                                <field name="agent_grantee_id" attrs="{'readonly':[('state','in',['confirmed','canceled'])]}"/>
+                                <field name="amount" attrs="{'readonly':[('state','in',['confirmed','canceled'])]}"/>
+                            </group>
+                            <group>
+                                <field name="start_date" attrs="{'readonly':[('state','in',['confirmed','canceled'])]}"/>
+                                <field name="end_date" attrs="{'readonly':[('state','in',['confirmed','canceled'])]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_agent_grantee_tree" model="ir.ui.view">
+            <field name="name">view_agent_grantee_tree</field>
+            <field name="model">agent.grantee</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="agent_grantee_id"/>
+                    <field name="amount"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_agent_grantee_view" model="ir.actions.act_window">
+            <field name="name">Agent Grantee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">agent.grantee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_agent_grantee_view" name="Agent Grantee" parent="iwesabe_billing_system.menu_airline_services_contract_categ" action="action_agent_grantee_view" sequence="3"/>
+    </data>
+</odoo>

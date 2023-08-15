@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <report
+            id="invoice_appendix_report_xlsx"
+            model="invoice.appendix"
+            string="Appendix Excel"
+            report_type="xlsx"
+            name="iwesabe_billing_system.invoice_appendix_report_xlsx"
+            file="iwesabe_billing_system.invoice_appendix_report_xlsx"
+            attachment_use="True"
+            menu = "True"
+            print_report_name="'AirLine - %s' % (object.name or 'Revenue').replace('/','')"
+
+        />
+
+    </data>
+</odoo>

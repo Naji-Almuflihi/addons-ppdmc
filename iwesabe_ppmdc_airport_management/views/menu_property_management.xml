@@ -1,0 +1,201 @@
+<odoo>
+    <!--Property Main Menu -->
+    <menuitem 
+        id="menu_property_root" 
+        name="Property Management"
+        web_icon="iwesabe_ppmdc_airport_management,static/description/icon.png"/>
+
+    <!--Property Menu -->
+    <menuitem 
+        id="menu_property_details" 
+        name="Property Details" 
+        parent="menu_property_root" 
+        sequence="1"/>
+
+    <!--Properties -->
+    <menuitem 
+        id="menu_property" 
+        name="Properties" 
+        parent="menu_property_details" 
+        action="action_property_view" 
+        sequence="1"/>
+
+    <menuitem 
+        id="menu_create_h_property2" 
+        name="Property Hierarchy" 
+        action="action_create_hierarchy_property_id" 
+        parent="menu_property_details" 
+        sequence="2"/>
+
+
+    <!--Tenant Details -->
+    <menuitem
+        id="menu_tenant_details_sub" 
+        name="Tenant Details" 
+        parent="menu_property_root" 
+        sequence="2"/>
+
+   
+    <!-- Quotation -->
+
+<!--    <menuitem-->
+<!--        id="menu_quotation"-->
+<!--        name="Quotation"-->
+<!--        parent="menu_tenant_details_sub"-->
+<!--        action="action_quotation"-->
+<!--        sequence="1"/>-->
+
+
+    <!--Tenancy -->
+    <menuitem 
+        id="menu_tenancy" 
+        name="Tenant Tenancy" 
+        parent="menu_tenant_details_sub" 
+        action="action_tenancy_tenant_view" 
+        sequence="2"/>
+
+    <!--Tenancy Service Contract -->
+    <menuitem 
+        id="menu_tenancy_service_contract" 
+        name="Tenant Service Quotation"
+        parent="menu_tenant_details_sub" 
+        action="actio_tenancy_service_contract" 
+        sequence="3"/>
+    <!-- Tenancy Service Application -->
+    <!-- <menuitem
+        id="menu_ten_service_application"
+        name="Service Applocation"
+        parent="menu_tenant_details_sub"
+        action="action_service_application" 
+        sequence="4"/> -->
+    <!--  Tenants-->
+    <menuitem 
+        id="menu_tenant_detail" 
+        name="Tenants" 
+        parent="menu_tenant_details_sub" 
+        action="action_tenant_view" 
+        sequence="5"/>
+
+    <!-- Phone Extention invocie -->
+  <!--   <menuitem
+        id="menu_phone_extention_invoice"
+        name="Phone Extention Invoice"
+        action="action_phone_extention_invoice"
+        parent="menu_tenant_details_sub" 
+        sequence="10"/> -->
+
+    <!--Hierarchy -->
+    <!-- <menuitem 
+        id="menu_account_asset_asset_hierarch_action" 
+        parent="menu_property_sub" 
+        action="action_account_asset_asset_hierarch" 
+        groups='base.group_erp_manager,property_management.group_property_manager'/> -->
+
+    <!--Rent Schedule menu-->
+    <menuitem 
+        id="menu_tenancy_rent" 
+        name="Tenancy Rent Schedule" 
+        parent="menu_tenant_details_sub" 
+        action="action_tenancy_rent" 
+        sequence="50"/>
+
+    <menuitem 
+        id="menu_report_sub" 
+        name="Reporting" 
+        parent="menu_property_root" 
+        sequence="6"/>
+
+
+
+    <menuitem 
+        id="menu_configuration_main" 
+        name="Configuration" 
+        parent="menu_property_root" 
+        sequence="7"/>
+
+    <!--Types-->
+    <menuitem 
+        id="menu_types_main" 
+        name="Types" 
+        parent="menu_configuration_main"/>
+
+    <!--Property Types-->
+    <menuitem 
+        id="menu_property_type" 
+        name="Property Type" 
+        parent="menu_types_main" 
+        action="action_property_type_view"/>
+
+    <!--Rent-->
+    <menuitem 
+        id="menu_rent_type" 
+        name="Season Rent" 
+        parent="menu_types_main" 
+        action="action_rent_type_view"/>
+
+  
+    <!--Utility Types-->
+    <menuitem 
+        id="menu_utility" 
+        name="Utility Type" 
+        parent="menu_types_main" 
+        action="action_utility_view"/>
+
+    <!--Place Types-->
+    <menuitem 
+        id="menu_place_type" 
+        name="Place Type" 
+        parent="menu_types_main" 
+        action="action_place_type_view"/>
+    
+    <!-- Setting -->
+    <menuitem
+        id="menu_setting"
+        name="Settings"
+        parent="menu_configuration_main"
+        action="action_setting_airport"
+        sequence="1"/>
+    <!-- Property Location -->
+     
+    <!-- Live -->
+    <menuitem 
+        id="menu_live" 
+        name="Level Number" 
+        action="action_property_live" 
+        parent="menu_configuration_main" 
+        sequence="2"/>
+ 
+     <!-- Zone -->
+    <menuitem 
+        id="menu_zone" 
+        name="Zone Module" 
+        parent="menu_configuration_main" 
+        action="action_property_zone"
+        sequence="3"/>
+
+    <!--Room-->
+    <menuitem 
+        id="menu_room" 
+        name="Room" 
+        parent="menu_configuration_main" 
+        action="action_property_room"
+        sequence="5"/>
+
+
+    <!-- Phone Extention -->
+    <menuitem
+        id="menu_phone_extention"
+        name="Phone Extention"
+        action="action_phone_extention"
+        parent="menu_configuration_main"
+        />
+
+    <!-- Service Application -->
+    <menuitem
+        id="menu_service_application"
+        name="Service Application"
+        parent="menu_configuration_main"
+        sequence="7"
+    />
+    
+</odoo>

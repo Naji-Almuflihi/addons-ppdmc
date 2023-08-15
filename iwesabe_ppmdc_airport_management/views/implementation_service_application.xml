@@ -1,0 +1,145 @@
+<odoo>
+    <data>
+        <record id="tree_view_implementation_service_application" model="ir.ui.view">
+            <field name="name">name.implementation.service.application.tree</field>
+            <field name="model">implementation.service.application</field>
+            <field name="arch" type="xml">
+                <tree string="Implementation Service Application">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="tenancy_id"/>
+                    <field name="date"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_view_implementation_service_application" model="ir.ui.view">
+            <field name="name">name.implementation.service.application.form</field>
+            <field name="model">implementation.service.application</field>
+            <field name="arch" type="xml">
+                <form string="Implementation Service Application">
+                    <header>
+                        <button class="oe_highlight" name="button_set_to_draft" states="cancelled,implemented,confirmed" string="Set to Draft" type="object" groups="iwesabe_ppmdc_airport_management.group_property_it"/>
+                        <button class="oe_highlight" name="button_set_to_confirmed" states="draft" string="Confirm" type="object" groups="iwesabe_ppmdc_airport_management.group_property_it" />
+                        <button class="oe_highlight" name="button_set_to_implemented" states="confirmed" string="Implementated" type="object" groups="iwesabe_ppmdc_airport_management.group_property_it"/>
+                        <button class="oe_highlight" name="button_set_to_cancelled" states="confirmed" string="Cancel" type="object" groups="iwesabe_ppmdc_airport_management.group_property_it"/>
+                        <button class="oe_highlight" icon="fa-envelope" name="button_send_mail" string="send by mail" type="object"/>
+                        <!-- <button name="create_phone_extention_invoice" string="Create Phone Extention Invoice" type="object"/> -->
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field attrs="{'readonly': [('is_service_quotation' ,'=',True )]}" name="partner_id" domain="[('parent_id', '=', False)]"/>
+                                <field attrs="{'readonly': [('is_service_quotation' ,'=',True )]}" name="tenancy_id"/>
+                                <field invisible="True" name="is_service_quotation"/>
+                                <field name="tenancy_contract_id" domain="[('tenancy_id', '=', tenancy_id)]" options="{'no_create':True, 'no_edit': True}" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="property_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="product_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="model_ids" widget="many2many_tags" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="date" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="date_start" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="date_end" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="type_of_request" widget="radio" options="{'horizontal': true}" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="related_service_application_id" attrs="{'readonly': [('state' ,'!=', 'draft')], 'invisible': [('type_of_request', 'not in', ['replacment', 'cancellation'])]}" domain="[('tenancy_id', '=', tenancy_id), ('partner_id', '=', partner_id)]"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Services" >
+                                <field name="service_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id" domain="[('id', 'in', parent.product_ids)]"/>
+                                        <field force_save="True" name="points"/>
+                                        <field force_save="True" name="points_ref" readonly="1"/>
+                                        <field name="location_id"/>
+                                        <field force_save="True" invisible="1" name="quantity" readonly="1"/>
+                                        <field force_save="True" invisible="1" name="rent" readonly="1"/>
+                                        <field force_save="True" invisible="1" name="total" readonly="1" sum="total"/>
+                                        <field name="authority" invisible="1"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Telephone Services" >
+                                <field name="telephone_service_ids" attrs="{'readonly': [('state' ,'!=', 'draft')]}">
+                                    <!-- <tree editable="bottom">
+                                        <field domain="[('id','in',parent.equipment_ids)]" name="equipment_id"/>
+                                        <field domain="[('id','in',parent.phone_extentions_ids)]" name="phone_extention_id"/>
+                                        <field domain="[('id','in',parent.phone_extentions_number_ids)]" name="extention_number_id"/>
+                                        <field domain="[('id','in',parent.locations_ids)]" name="location_id"/>
+                                        <field name="authority" invisible="1"/>
+                                        <field name="note"/>
+                                    </tree> -->
+                                    <tree editable="bottom">
+                                        <field name="equipment_id" domain="['|', ('is_equipment', '=', True), ('model', 'in', parent.model_ids)]"/>
+                                        <field name="phone_extention_id"/>
+                                        <field name="replacement_equipnment_id" attrs="{'column_invisible': [('parent.type_of_request', 'not in', ['replacment'])]}"/>
+                                        <field name="type_of_replacement" attrs="{'column_invisible': [('parent.type_of_request', 'not in', ['replacment'])]}"/>
+                                        
+                                        <field name="extention_number_id" domain="[('phone_extention_id', '=', phone_extention_id)]" context="{'type_of_request': type_of_request}"/>
+                                        <field name="location_id" domain="[('id', 'in', parent.property_ids)]"/>
+                                        <field name="authority" invisible="1"/>
+                                        <field name="note"/>
+                                        <field name="type_of_request" invisible="1"/>
+                                        <button name="maintenance_request" type="object" string="Maintenance Request" class="btn-primary" attrs="{'invisible': [('type_of_replacement', '!=', 'damaged')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook attrs="{'invisible': [('type_of_request', 'not in', ['replacment', 'cancellation'])]}">
+                            <page string="Related Services" >
+                                <field name="related_service_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field force_save="True" name="points"/>
+                                        <field force_save="True" name="points_ref" readonly="1"/>
+                                        <field name="location_id"/>
+                                        <field name="product_vlan_id"/>
+                                        <field force_save="True" invisible="1" name="quantity" readonly="1"/>
+                                        <field force_save="True" invisible="1" name="rent" readonly="1"/>
+                                        <field force_save="True" invisible="1" name="total" readonly="1" sum="total"/>
+                                        <field name="authority" invisible="1"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Related Telephone Services" >
+                                <field name="related_telephone_service_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="phone_extention_id"/>
+                                        <field name="replacement_equipnment_id" attrs="{'column_invisible': [('parent.type_of_request', 'not in', ['replacment'])]}"/>
+                                        <field name="type_of_replacement" attrs="{'column_invisible': [('parent.type_of_request', 'not in', ['replacment'])]}"/>
+                                        
+                                        <field name="extention_number_id" domain="[('phone_extention_id', '=', phone_extention_id)]"/>
+                                        <field name="location_id"/>
+                                        <field name="authority" invisible="1"/>
+                                        <field name="note"/>
+                                        <button name="maintenance_request" type="object" string="Maintenance Request" class="btn-primary" attrs="{'invisible': [('type_of_replacement', '!=', 'damaged')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_view_implementation_service_application" model="ir.actions.act_window">
+            <field name="name">Implementation Service Application</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">implementation.service.application</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_view_implementation_service_application" id="menu_implementation_service_application" name="Implementation Service Application" parent="menu_tenant_details_sub"/>
+    </data>
+</odoo>

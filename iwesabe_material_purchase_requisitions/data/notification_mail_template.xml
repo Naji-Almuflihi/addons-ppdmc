@@ -1,0 +1,33 @@
+<odoo>
+    <record id="email_purchase_aggrement_state_notification" model="mail.template">
+        <field name="name">Purchase Request state change - Send by Email</field>
+        <field name="email_from">${(object.company_id.email_formatted or user.email_formatted) | safe}</field>
+        <field name="subject">Purchase Request State Change - ${object.name}</field>
+        <field name="email_to">${object.employee_id.work_email}</field>
+        <field name="model_id" ref="purchase_requisition.model_purchase_requisition"/>
+        <field eval="True" name="auto_delete"/>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear,
+            <br/>
+            Your Purchase Request - ${object.name} State Changed</p><p>Thank You,</p>
+            <br/>]]>
+        </field>
+    </record>
+
+    <record id="email_stock_picking_state_notification" model="mail.template">
+        <field name="name">Stock Transfer state change - Send by Email</field>
+        <field name="email_from">${(object.company_id.email_formatted or user.email_formatted) | safe}</field>
+        <field name="subject">Stock Transfer State Change - ${object.name}</field>
+        <field name="email_to">${object.employee_id.work_email}</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field eval="True" name="auto_delete"/>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear,
+            <br/>
+            Your Stock Transfer - ${object.name} State Changed</p><p>Thank You,</p>
+            <br/>]]>
+        </field>
+    </record>
+</odoo>

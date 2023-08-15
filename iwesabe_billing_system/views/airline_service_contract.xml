@@ -1,0 +1,149 @@
+<odoo>
+    <data>
+        <record id="view_airline_services_form" model="ir.ui.view">
+            <field name="name">view_airline_services_form</field>
+            <field name="model">airline.service.contract</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <field name="bank_grantee_count" invisible="1"/>
+                        <field name="agent_grantee_count" invisible="1"/>
+                        <field name="payment_count" invisible="1"/>
+                        <button name="button_set_to_draft" string="Set to Draft" type="object" states='cancelled' class="btn-primary"/>
+                        <button name="button_confirm" string="Confirm" type="object" states='draft' class="btn-primary"/>
+                        <button name="button_cancel" string="Cancell" type="object" states='confirm,draft' class="btn-primary"/>
+
+                        <button name="bank_grantee_button" type="object" class="btn-primary" string="Create Bank Grantee" attrs="{'invisible':['|',('bank_grantee_count','!=',0),('contract_type','!=','bank_grantee')]}"/>
+                        <button name="agent_grantee_button" type="object" class="btn-primary" string="Create Agent Grantee" attrs="{'invisible':['|',('agent_grantee_count','!=',0),('contract_type','!=','agent_grantee')]}"/>
+                        <button name="account_move_button" type="object" class="btn-primary" string="Create Invoice'" attrs="{'invisible':['|',('payment_count','!=',0),('contract_type','!=','advance_payments')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="open_bank_grantee" icon="fa-arrow-circle-right" attrs="{'invisible':[('bank_grantee_count','=',0)]}">
+                                <field string="BNK Grantee" name="bank_grantee_count" widget="statinfo"
+                            />
+                            </button>
+                            <button class="oe_stat_button" type="object" icon="fa-arrow-circle-right" name="open_agent_grantee" attrs="{'invisible':[('agent_grantee_count','=',0)]}">
+                                <field string="Agent Grantee" name="agent_grantee_count" widget="statinfo"
+                            />
+                            </button>
+                            <button class="oe_stat_button" type="object" icon="fa-arrow-circle-right" name="open_payment" attrs="{'invisible':[('payment_count','=',0)]}">
+                                <field string="Advance Payments" name="payment_count" widget="statinfo"
+                            />
+                            </button>
+
+                        </div>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+
+                                <field name="date" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <div class="o_td_label">
+                                    <label for="partner_id" string="Customer" style="font-weight:bold;" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                </div>
+                                <field name="partner_id" widget="res_partner_many2one" nolabel="1" required="1" context="{                                             'res_partner_search_mode': (context.get('default_move_type', 'entry') in ('out_invoice', 'out_refund', 'out_receipt') and 'customer') or (context.get('default_move_type', 'entry') in ('in_invoice', 'in_refund', 'in_receipt') and 'supplier') or False,                                             'show_address': 1, 'default_is_company': True, 'show_vat': True}" options="{&quot;always_reload&quot;: True, &quot;no_quick_create&quot;: True}" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="contact_id" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="flight_type" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="amount" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="expected_flight_from" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="start_date" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="end_date" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="contract_type" required="1" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="gsa_text" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="expected_flight_To" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                                <field name="auto_renewal" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+<!--                                <field name="services_ids" widget="many2many_tags" required="1"/>-->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Summary">
+                                <field name="summary" attrs="{'readonly': [('state' ,'!=', 'draft')]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_airline_service_contract_tree" model="ir.ui.view">
+            <field name="name">view_airline_service_contract_tree</field>
+            <field name="model">airline.service.contract</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="contact_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="contract_type"/>
+                    <field name="services_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_airline_services_contract_view" model="ir.actions.act_window">
+            <field name="name">Airline Services Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">airline.service.contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+        <menuitem id="menu_airline_services_contract_categ" name="Airline Services Contract" parent="iwesabe_ppmdc_airport_management.menu_property_root" sequence="10"/>
+        <menuitem id="menu_airline_services_contract_view" name="Airline Services Contract" parent="menu_airline_services_contract_categ" action="action_airline_services_contract_view" sequence="1"/>
+
+
+        <record model='ir.ui.view' id='view_asc_document_tree'>
+            <field name="name">contract.type.document.tree</field>
+            <field name="model">contract.type.document</field>
+            <field name="arch" type="xml">
+                <tree string='description'>
+                    <field name='name'/>
+                    <field name="contract_type"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_asc_document_form">
+            <field name="name">contract.type.document.form</field>
+            <field name="model">contract.type.document</field>
+            <field name="arch" type="xml">
+                <form string="description">
+                    <sheet>
+                        <group>
+                            <field name="contract_type" required="1"/>
+                            <field name="description"/>
+                        </group>                       
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_airline_services_contract_document" model="ir.actions.act_window">
+            <field name="name">Airline Services Contract Document</field>
+            <field name="res_model">contract.type.document</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_airline_services_contract_description" name="Contract Document" parent="menu_airline_services_contract_categ" action="action_airline_services_contract_document" sequence="10"/>
+
+    </data>
+</odoo>

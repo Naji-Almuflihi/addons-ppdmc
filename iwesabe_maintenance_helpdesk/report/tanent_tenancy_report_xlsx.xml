@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <report
+            id="tanent_tenancy_report_xlsx"
+            model="wizard.tanent_tenancy_report"
+            string="Tenant Tenancy Annual Increase Report"
+            report_type="xlsx"
+            name="iwesabe_maintenance_helpdesk.tanent_tenancy_report_xlsx"
+            file="iwesabe_maintenance_helpdesk.tanent_tenancy_report_xlsx"
+            attachment_use="True"
+            menu = "False"
+        />
+
+         <record id="tanent_tenancy_report_xlsx_view_form" model="ir.ui.view">
+            <field name="name">tanent_tenancy_report_xlsx_view_form.form</field>
+            <field name="model">wizard.tanent_tenancy_report</field>
+            <field name="arch" type="xml">
+                <form>
+
+                        <group string="Generate Tenant Tenancy Annual Increase Excel Report">
+                        </group>
+
+                    <footer>
+                        <button name="print_tanent_tenancy_report_xls" type="object" string="Export Excel" class="oe_highlight"/> OR
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!--TODO the most powerfull window action-->
+        <record id="tanent_tenancy_report_wizard_action" model="ir.actions.act_window">
+            <field name="name">Tenant Tenancy Annual Increase Report</field>
+            <field name="res_model">wizard.tanent_tenancy_report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="tanent_tenancy_report_wizard_rep_xls" name="Tenant Tenancy Annual Increase Report" parent="iwesabe_ppmdc_airport_management.menu_report_sub" action="tanent_tenancy_report_wizard_action" sequence="20"/>
+
+
+
+    </data>
+</odoo>

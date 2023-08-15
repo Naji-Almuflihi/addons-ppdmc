@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <report
+            id="flight_movement_report_xlsx"
+            model="wizard.flight_movement_report"
+            string="flight_movement Report"
+            report_type="xlsx"
+            name="iwesabe_billing_system.flight_movement_report_xlsx"
+            file="iwesabe_billing_system.flight_movement_report_xlsx"
+            attachment_use="True"
+            menu = "False"
+        />
+
+         <record id="flight_movement_report_xlsx_view_form" model="ir.ui.view">
+            <field name="name">flight_movement_report_xlsx_view_form.form</field>
+            <field name="model">wizard.flight_movement_report</field>
+            <field name="arch" type="xml">
+                <form>
+
+                        <group string="Generate flight_movement Excel Report">
+                            <group>
+                                <field name="from_date"/>
+                            </group>
+                            <group>
+                                <field name="to_date"/>
+                            </group>
+                        </group>
+
+                    <footer>
+                        <button name="print_flight_movement_report_xls" type="object" string="Export Excel" class="oe_highlight"/> OR
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!--TODO the most powerfull window action-->
+        <record id="flight_movement_report_wizard_action" model="ir.actions.act_window">
+            <field name="name">Flight Movement Report</field>
+            <field name="res_model">wizard.flight_movement_report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="flight_movement_report_wizard_rep_xls" name="Flight Movement Report" parent="iwesabe_billing_system.billing_system_report" action="flight_movement_report_wizard_action" sequence="21"/>
+
+
+
+    </data>
+</odoo>

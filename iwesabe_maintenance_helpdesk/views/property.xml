@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_inherit_view_property_form" model="ir.ui.view">
+            <field name="name">view_inherit_view_property_form</field>
+            <field name="model">property.property</field>
+            <field name="inherit_id" ref="iwesabe_ppmdc_airport_management.view_property_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                     <button class="oe_stat_button" type="object" icon="fa-truck" name="action_open_related_maintenance" attrs="{'invisible':[('maintenance_count','=',0)]}">
+                        <field string="Maintenance" name="maintenance_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//field[@name='room_id']" position="after">
+                     <field name="under_maintain" readonly="1" force_save="1"/>
+                     <field name="maintenance_id" readonly="1" force_save="1"/>
+                </xpath>
+
+                 <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//div[@name='button_box']" position="after">
+                     <widget name="web_ribbon" title="Under Maintain" attrs="{'invisible': [('under_maintain', '!=', True)]}"/>
+
+                </xpath>
+
+
+
+
+                
+            </field>
+        </record>
+    </data>
+</odoo>

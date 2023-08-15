@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.rule" id="material_purchase_requisition_comp_rule">
+            <field name="name">Material Purchase Requisition multi-company</field>
+            <field name="model_id" ref="model_material_purchase_requisition"/>
+            <field name="global" eval="True"/>
+            <!--<field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>-->
+            <field name="domain_force">['|',('company_id','=',False),('company_id','in', company_ids)]</field>
+        </record>
+
+        <record model="ir.rule" id="material_purchase_requisition_line_comp_rule">
+            <field name="name">Material Purchase Requisition Line multi-company</field>
+            <field name="model_id" ref="model_material_purchase_requisition_line"/>
+            <field name="global" eval="True"/>
+            <!--<field name="domain_force">['|',('requisition_id.company_id','=',False),('requisition_id.company_id','child_of',[user.company_id.id])]</field>-->
+            <field name="domain_force">
+                ['|',('requisition_id.company_id','=',False),('requisition_id.company_id','in',company_ids)]
+            </field>
+        </record>
+
+
+        <record model="ir.rule" id="warehouse_user_own_rule1">
+            <field name="name">Warehouse user owen as default warehouse</field>
+            <field name="model_id" ref="stock.model_stock_warehouse"/>
+            <field name="global" eval="True"/>
+            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <!--<field name="domain_force">['|',('requisition_id.company_id','=',False),('requisition_id.company_id','child_of',[user.company_id.id])]</field>-->
+            <field name="domain_force">[('id','in',user.allowed_warehouses_ids.ids)]</field>
+        </record>
+
+        <record model="ir.rule" id="stock_picking_typ_warehouse_user_own_rule1">
+            <field name="name">Stock Overview Warehouse user owen as default warehouse</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="global" eval="True"/>
+            <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <!--<field name="domain_force">['|',('requisition_id.company_id','=',False),('requisition_id.company_id','child_of',[user.company_id.id])]</field>-->
+            <field name="domain_force">[('warehouse_id.id','in',user.allowed_warehouses_ids.ids)]</field>
+        </record>
+
+        <record model="ir.rule" id="material_purchase_requisition_warehouse_user_own_rule1">
+            <field name="name">Material Purchase Requisition user owen as Allowed warehouse</field>
+            <field name="model_id" ref="model_material_purchase_requisition"/>
+            <field name="groups" eval="[(4, ref('iwesabe_material_purchase_requisitions.group_purchase_requisition_inventory_manager'))]"/>
+            <!--<field name="domain_force">['|',('requisition_id.company_id','=',False),('requisition_id.company_id','child_of',[user.company_id.id])]</field>-->
+            <field name="domain_force">[('warehouse_id.id','in',user.allowed_warehouses_ids.ids)]</field>
+        </record>
+
+
+
+    </data>
+</odoo>

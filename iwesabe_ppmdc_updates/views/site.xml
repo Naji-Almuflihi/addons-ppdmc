@@ -1,0 +1,46 @@
+<odoo>
+
+    <record id="site_solution_view_form" model="ir.ui.view">
+        <field name="name">site.solution.form</field>
+        <field name="model">site.solution</field>
+        <field name="arch" type="xml">
+            <form string="supplier site solution form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="site_supplier_name"/>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- List View-->
+    <record id="quantity_table_view_list" model="ir.ui.view">
+        <field name="name">site.solution.List</field>
+        <field name="model">site.solution</field>
+        <field name="arch" type="xml">
+            <tree string="supplier site solution Tree" editable="bottom">
+                <field name="code"/>
+                <field name="site_supplier_name"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Actions opening views on models -->
+    <record id="site_solution_action" model="ir.actions.act_window">
+        <field name="name">Supplier Site Solution</field>
+        <field name="res_model">site.solution</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem
+            name="Supplier Site Solution"
+            id="site_solution_menu"
+            parent="account.menu_finance_configuration"
+            sequence="150"
+            action="site_solution_action"/>
+</odoo>

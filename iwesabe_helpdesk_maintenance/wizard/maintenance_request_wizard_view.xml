@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="form_view_maintenance_request_wizard" model="ir.ui.view">
+        <field name="name">maintenance.request.wizard.form</field>
+        <field name="model">maintenance.request.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="note"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="note_done" string="Add Note" type="object"/> or
+                    
+                    <button special="cancel" string="Cancel"/></footer>
+            </form>
+        </field>
+    </record>
+</odoo>

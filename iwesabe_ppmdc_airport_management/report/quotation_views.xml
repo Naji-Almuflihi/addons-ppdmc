@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_quotation" model="ir.actions.report">
+        <field name="name">Quotation / Order</field>
+        <field name="model">service.application</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">iwesabe_ppmdc_airport_management.report_quotation</field>
+        <field name="report_file">iwesabe_ppmdc_airport_management.report_quotation</field>
+        <field name="print_report_name">(object.state in ('qu_draft', 'sent') and 'Quotation - %s' % (object.name)) or
+            'Order - %s' % (object.name)
+        </field>
+        <field name="binding_model_id" ref="model_service_application"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <report
+            id="report_tenant_tenancy_quotation"
+            model="tenant.tenancy"
+            report_type="qweb-pdf"
+            string="Quotation"
+            name="iwesabe_ppmdc_airport_management.tenant_quotation_template"
+            file="iwesabe_ppmdc_airport_management.tenant_quotation_template"
+    />
+
+    <report
+            id="report_tenant_tenancy_contract"
+            model="tenant.tenancy"
+            report_type="qweb-pdf"
+            string="Contract"
+            name="iwesabe_ppmdc_airport_management.tenant_contract_template"
+            file="iwesabe_ppmdc_airport_management.tenant_contract_template"
+    />
+
+
+    <report
+            id="report_tenancy_service_contract"
+            model="tenancy.service.contract"
+            report_type="qweb-pdf"
+            string="Quotation"
+            name="iwesabe_ppmdc_airport_management.tenant_service_template"
+            file="iwesabe_ppmdc_airport_management.tenant_service_template"
+    />
+
+
+</odoo>

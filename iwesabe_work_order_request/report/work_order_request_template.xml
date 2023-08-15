@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_work_order_request_report">
+		<t t-call="web.html_container">
+			<t t-as="doc" t-foreach="docs">
+				<t t-call="web.basic_layout">
+					<div class="page">
+						<div class="header">
+							<div class="row">
+								<table width="100%" style="border:1px solid black;top-padding:10px;">
+									<tr style="border:1px solid black">
+										<td width="20%" style="border:1px solid black">
+											<span t-field="doc.din"/>
+										</td>
+										<td width="5%" style="border:1px solid black">
+											:Din
+										</td>
+										<td width="55%" rowspan="3" style="border:1px solid black; text-align:center;font-size:20px;">
+											<strong>Work Order Request<br/>نموذج طلب تنفيذ أعمال</strong>
+										</td>
+										<td width="20%" rowspan="3" style="border:1px solid black;text-align:center;">
+											<img alt="set company logo" height="10%" t-attf-src="data:image/gif;base64, #{user_id.company_id.logo}" width="90%"/>
+										</td>
+									</tr>
+									<tr style="border:1px solid black">
+										<td style="border:1px solid black">
+											<span t-field="doc.rn"/>
+										</td>
+										<td style="border:1px solid black">
+											:RN
+										</td>
+									</tr>
+									<tr style="border:1px solid black">
+										<td style="border:1px solid black">
+											<span t-field="doc.date"/>
+										</td>
+										<td style="border:1px solid black">
+											:ED
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<table style="border:1px solid black;" width="100%">
+							<tr style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+								<td>
+									<strong>Date
+									</strong>
+								</td>
+								<td>
+									<strong><span t-field="doc.request_date"/>
+									</strong>
+								</td>
+								<td style="border:1px solid black;">
+									<strong>Work Order No.
+									</strong>
+								</td>
+								<td style="border:1px solid black;">
+									<strong><span t-field="doc.name"/>
+									</strong>
+								</td>
+								<td style="border:1px solid black;text-align:center;">
+	                                <t t-if="doc.mode == 'new'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span> NEW </span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.mode == 'renewal'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span> RENEWAL </span>
+								</td>
+								<td style="border:1px solid black;">
+									<strong><span t-field="doc.request_date_hijri"/>التاريخ
+									</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+								<td colspan="6">
+									<strong>Work Typeنوع العمل</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;">
+								<td colspan="6">
+									<t t-if="doc.work_type == 'new'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span> (New Installations/Projects) تركيبات ومشاريع </span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.work_type == 'emergency'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(Emergency) صيانة طارئة</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.work_type == 'cm'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(CM)صيانة تصحيحية</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.work_type == 'pm'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(PM)صيانة وقائية</span>&#160;&#160;&#160;&#160;
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+								<td colspan="6">
+									<strong>Contractor مقاول التنفيذ</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;">
+								<td colspan="6">
+									<t t-if="doc.sscl_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(SSCL) السعودية للخدمات المحدودة</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.btam_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(BTAM) بيتام</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.iblic_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(VLI/IBLIC) فاندرلاند/ إيبلك</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.kone_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(KONE) كوني</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.satco_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(SATCO) ساتكو</span>&#160;&#160;&#160;&#160;
+									<br/>
+									<t t-if="doc.abtss_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(ABTSS)المعمرون العرب</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.tilad_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(ALTILAD)التلاد</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.other_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(Other) أخرى</span>&#160;&#160;&#160;&#160;
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Category تصنيف العمل</strong>
+								</td>
+								<t t-if="doc.category == 'other'">
+									<td colspan="4">
+										<t t-if="doc.category == 'mech'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(MECH) ميكانيكا</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'elect'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(ELECT) كهرباء</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'civil'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(CIVIL) مدني</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'ulv'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(ULV) ألكتروني</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'other'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(OTHER)أخرى</span>&#160;&#160;&#160;&#160;
+									</td>
+									<td>
+		                                <span t-field="doc.other_category"/>
+		                            </td>
+		                        </t>
+		                        <t t-else ="">
+		                        	<td colspan="5">
+										<t t-if="doc.category == 'mech'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(MECH) ميكانيكا</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'elect'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(ELECT) كهرباء</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'civil'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(CIVIL) مدني</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'ulv'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(ULV) ألكتروني</span>&#160;&#160;&#160;&#160;
+										<t t-if="doc.category == 'other'">
+		                                   	<input type="checkbox" checked="True"/>
+		                              	</t>
+		                             	<t t-else ="">
+		                                   	<input type="checkbox" />
+		                              	</t>
+										<span>(OTHER)أخرى</span>&#160;&#160;&#160;&#160;
+									</td>
+		                        </t>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;">
+								<td style="border:1px solid black;text-align:center;" width="10%">
+									<strong>Name الاسم</strong>
+								</td>
+								<td style="border:1px solid black;text-align:center;" width="20%">
+									<span t-field="doc.employee_id.name"/>
+								</td>
+								<td style="border:1px solid black;text-align:center;" width="10%">
+									<strong>Contact No. رقم التواصل</strong>
+								</td>
+								<td style="border:1px solid black;text-align:center;" width="20%">
+									<span t-field="doc.contact_no"/>
+								</td>
+								<td style="border:1px solid black;text-align:center;" width="10%">
+									<strong>Signature التوقيع</strong>
+								</td>
+								<td style="border:1px solid black;text-align:center;" width="30%">
+									<span/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+								<td colspan="6">
+									<strong>Work Area منطقة العمل</strong>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="6">
+									<t t-if="doc.terminal_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(Terminal) صالات</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.plaza_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(Plaza) بلازا</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.apron_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(Apron) ساحة</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.roof_top_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(Roof Top) سطح</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.ra_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(RA) منطقة الموازيين</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.other_work_area_bool">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>(OTHER)أخرى</span>&#160;&#160;&#160;&#160;
+								</td>
+							</tr>
+							<tr>
+								<td style="border:1px solid black;" colspan="2">
+									<strong>عدد العمال (Manpower):</strong>
+									<span t-field="doc.man_power"/>
+								</td>
+								<td style="border:1px solid black;" colspan="4">
+									<strong>مدة تنفيذ العمل (Period):</strong>
+									<t t-if="doc.period == 'day'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>يوم (Day):</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.period == 'hour'">
+	                                   	<input type="checkbox" checked="True"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>ساعة (Hour):</span>&#160;&#160;&#160;&#160;
+									<t t-if="doc.period == 'day'">
+	                                   	<span t-field="doc.period_day"/>
+	                              	</t>
+	                             	<t t-else ="">
+	                                   	<span t-field="doc.period_hour"/>
+	                              	</t>
+								</td>
+							</tr>
+							<tr >
+								<td colspan="6" style="border-left:hidden;border-right:hidden;">
+									<strong><br/></strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;">
+								<td colspan="3" style="border:1px solid black;">
+									<strong>Starting Date: <span t-field="doc.start_date"/><br/>
+											Time: <span t-field="doc.start_time"/>
+											<t t-if="doc.start_am_pm == 'am'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>AM</span>&#160;&#160;&#160;&#160;
+											<t t-if="doc.start_am_pm == 'pm'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>PM</span>&#160;&#160;&#160;&#160;
+									</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									<strong>:بدء العمل <span t-field="doc.start_date_hijri"/><br/>
+											الساعة: <span t-field="doc.start_time_hijri"/>
+											<t t-if="doc.start_am_pm_hijri == 'am'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>صباحاً</span>&#160;&#160;&#160;&#160;
+											<t t-if="doc.start_am_pm_hijri == 'pm'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>مساءاً</span>&#160;&#160;&#160;&#160;
+									</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;">
+								<td colspan="3" style="border:1px solid black;">
+									<strong>Ending Date: <span t-field="doc.end_date"/><br/>
+											Time: <span t-field="doc.end_time"/>
+											<t t-if="doc.end_am_pm == 'am'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>AM</span>&#160;&#160;&#160;&#160;
+											<t t-if="doc.end_am_pm == 'pm'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>PM</span>&#160;&#160;&#160;&#160;
+									</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									<strong>:إنتهاء العمل <span t-field="doc.end_date_hijri"/><br/>
+											الساعة: <span t-field="doc.end_time_hijri"/>
+											<t t-if="doc.end_am_pm_hijri == 'am'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>صباحاً</span>&#160;&#160;&#160;&#160;
+											<t t-if="doc.end_am_pm_hijri == 'pm'">
+			                                   	<input type="checkbox" checked="True"/>
+			                              	</t>
+			                             	<t t-else ="">
+			                                   	<input type="checkbox" />
+			                              	</t>
+											<span>مساءاً</span>&#160;&#160;&#160;&#160;
+									</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;">
+								<td colspan='6' style="border:1px solid black;">
+									<strong>وصف العمل Work Description:
+									</strong>
+									<span t-raw="doc.work_description"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;">
+								<td colspan="3" style="border:1px solid black;">
+									<strong>Used Equipment / Tools :<br/></strong>
+									<t t-foreach="doc.equipment_ids" t-as="line">
+ 										<span t-esc="line.equipment_id.name"/><br/>
+									</t>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									<strong>المعدات / الأدوات المستخدمة:<br/></strong>
+									<t t-foreach="doc.equipment_ids" t-as="line">
+ 										<span t-esc="line.equipment_id.name"/><br/>
+									</t>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;">
+								<td colspan="3" style="border:1px solid black;">
+									<strong>Spare Part :<br/></strong>
+									<t t-if="doc.spare_part == 'required'">
+			                            <input type="checkbox" checked="True"/>
+			                        </t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>Required (Attach Warehouse Requisition Form)</span>&#160;&#160;&#160;&#160;<br/>
+									<t t-if="doc.spare_part == 'not_required'">
+			                            <input type="checkbox" checked="True"/>
+			                        </t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>Not Required</span>&#160;&#160;&#160;&#160;<br/>
+									<t t-if="doc.spare_part == 'required'">
+										<t t-foreach="doc.product_ids" t-as="line">
+     										<span t-esc="line.name"/><br/>
+										</t>
+			                        </t>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									<strong>استخدام قطع الغيار:<br/></strong>
+									<t t-if="doc.spare_part == 'required'">
+			                            <input type="checkbox" checked="True"/>
+			                        </t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>نعم (الرجاء إرفاق نموذج طلب قطع من المخازن)</span>&#160;&#160;&#160;&#160;<br/>
+									<t t-if="doc.spare_part == 'not_required'">
+			                            <input type="checkbox" checked="True"/>
+			                        </t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>لا</span>&#160;&#160;&#160;&#160;<br/>
+									<t t-if="doc.spare_part == 'required'">
+										<t t-foreach="doc.product_ids" t-as="line">
+     										<span t-esc="line.name"/><br/>
+										</t>
+			                        </t>
+								</td>
+							</tr>
+							<tr style="border:1px solid black; border-bottom:hidden;">
+								<td colspan="6" style="border:1px solid black;">
+									<strong>الأنظمة / المناطق المتأثرة: Affected Systems / Locations <br/></strong>
+									<t t-if="doc.affected_system_location == 'yes'">
+			                            <input type="checkbox" checked="True"/>
+			                        </t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox"/>
+	                              	</t>
+									<span>Yes (please mention)</span><span>يوجد</span>&#160;&#160;&#160;&#160;<br/>
+									<t t-if="doc.affected_system_location == 'no'">
+			                            <input type="checkbox" checked="True"/>
+			                        </t>
+	                             	<t t-else ="">
+	                                   	<input type="checkbox" />
+	                              	</t>
+									<span>No</span><span>لا</span>&#160;&#160;&#160;&#160;<br/>
+									<t t-if="doc.affected_system_location == 'yes'">
+									<!-- <span t-field="doc.product_ids"/> -->
+			                        </t>
+								</td>
+							</tr>
+							<t t-if="doc.affected_system_location == 'yes'">
+								<tr>
+									<td colspan="2">
+										<strong>System Category<br/>
+										</strong>
+										<t t-foreach="doc.system_category_ids" t-as="line">
+     										<span t-esc="line.name"/><br/>
+										</t>
+									</td>
+									<td colspan="2">
+										<strong>Property<br/>
+										</strong>
+										<t t-foreach="doc.property_ids" t-as="line">
+     										<span t-esc="line.name"/><br/>
+										</t>
+									</td>
+									<td colspan="2"></td>
+								</tr>
+							</t>
+							<!-- <tr style="border:0px;">
+								<td colspan="6">
+									<strong><br/></strong>
+								</td>
+							</tr> -->
+						</table>
+						<table width="100%" style="page-break-after:always;">
+							<tr>
+								<td colspan="12" style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+									<strong>For PPMDC Approval only&#160;&#160;&#160;</strong><strong>للاعتماد من قبل (PPMDC) فقط</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+								<td colspan="4" style="border:1px solid black;">
+									<strong>Operation Management</strong>&#160;&#160;&#160;<strong>إدارة العمليات</strong>								
+								</td>
+								<td colspan="4" style="border:1px solid black;background-color:#bbbbbb">
+									<strong>Safety Management</strong>&#160;&#160;&#160;<strong>إدارة السلامة</strong>								
+								</td>
+								<td colspan="4" style="border:1px solid black;background-color:#bbbbbb">
+									<strong>Maintenance Management</strong>&#160;&#160;&#160;<strong>إدارة الصيانة</strong>								
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:right;">
+								<td colspan="4" style="border:1px solid black;">
+									<span t-field="doc.maintenance_management_user_id.name"/>&#160;&#160;&#160;<strong>الاسم:</strong>								
+								</td>
+								<td colspan="4" style="border:1px solid black;">
+									<span t-field="doc.safety_management_user_id.name"/>&#160;&#160;&#160;<strong>الاسم:</strong>								
+								</td>
+								<td colspan="4" style="border:1px solid black;">
+									<span t-field="doc.operation_management_user_id.name"/>&#160;&#160;&#160;<strong>الاسم:</strong>								
+								</td>
+							</tr>
+							<tr style="border:1px solid black;text-align:right;">
+								<td colspan="4" style="border:1px solid black;">
+									<span></span>&#160;&#160;&#160;<strong>التوقيع:</strong>								
+								</td>
+								<td colspan="4" style="border:1px solid black;">
+									<span></span>&#160;&#160;&#160;<strong>التوقيع:</strong>								
+								</td>
+								<td colspan="4" style="border:1px solid black;">
+									<span></span>&#160;&#160;&#160;<strong>التوقيع:</strong>								
+								</td>
+							</tr>
+							<br/>
+							<tr>
+								<td colspan="12" style="border:1px solid black;text-align:center;background-color:#bbbbbb">
+									<strong>(الجهات المعنية (للعلم/ للاعتماد</strong>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>التاريخ</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>التوقيع</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>الاسم</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>الجهة</strong>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>التاريخ</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>التوقيع</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>الاسم</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>الجهة</strong>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>التاريخ</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>التوقيع</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>الاسم</strong>
+								</td>
+								<td colspan="3" style="border:1px solid black;text-align:right;">
+									..............<strong>الجهة</strong>
+								</td>
+							</tr>
+						</table>
+						<table width="100%">
+							<tr style="border:0px;text-align:center;">
+								<td style="border:0px;text-align:center;" colspan="3"><strong>Work Order Request Instruction</strong>
+								</td>
+								<td style="border:0px;text-align:center;" colspan="3"><strong>الخاصة بطلب تنفيذ الأعمال</strong>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_1"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_1"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_2"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_2"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_3"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_3"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_4"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_4"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_5"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_5"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_6"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_6"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_7"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_7"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_8"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_8"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_9"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_9"/>
+								</td>
+							</tr>
+							<tr style="border:1px solid black">
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_10"/>
+								</td>
+								<td colspan="3" style="border:1px solid black">
+									<span t-field="doc.instruction_arabic_10"/>
+								</td>
+							</tr>
+						</table>
+						<div class="row">
+							<div class="col-6 text-left">
+								<p><strong>Work Plan Description</strong></p>
+								<p>
+									<strong>(For additional and excavation works)</strong>
+								</p>
+							</div>
+							<div class="col-6 text-right">
+								<p><strong>شرح خطة تنفيذ الأعمال</strong></p>
+								<p><strong>  (للأعمال الإضافية والحفريات)</strong></p>
+							</div>
+						</div>
+						<div class="footer">
+							<table width="100%" style="text-align:center;">
+								<tr>
+									<td>
+  			                          Page: <span class="page"/> of <span class="topage"/>
+            			            </td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+</odoo>

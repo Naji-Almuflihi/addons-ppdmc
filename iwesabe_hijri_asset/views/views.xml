@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--Form-->
+    <record id="view_form_hijri_field_edit_wizard" model="ir.ui.view">
+        <field name="name">hijri.field.edit.wizard.view.form</field>
+        <field name="model">hijri.field.edit.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <label for="day" string="New Date"/>
+                        <div class="o_row">
+                            <field name="day"/>
+                            <field name="month"/>
+                            <field name="year"/>
+                        </div>
+                    </group>
+                </group>
+                <group/>
+                <footer>
+                    <button string="Write" name="write_date_in_field" type="object" class="oe_highlight"/>
+                    <button string="Delete" name="delete_date_from_field" type="object" class="btn-danger"/>
+                    <button string="Discard" special="cancel"/>
+                    butt
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="call_field_edit" model="ir.actions.act_window">
+        <field name="name">Edit Hijri</field>
+        <field name="res_model">hijri.field.edit.wizard</field>
+        <!--<field name="view_type">form</field>-->
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

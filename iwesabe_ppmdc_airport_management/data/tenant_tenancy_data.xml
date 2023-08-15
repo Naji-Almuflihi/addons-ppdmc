@@ -1,0 +1,76 @@
+<odoo>
+	<data noupdate="1">
+        <record id="seq_property" model="ir.sequence">
+        	<field name="name">Property</field>
+        	<field name="code">property</field>
+        	<field name="prefix">P/</field>
+        	<field name="padding">5</field>
+        </record>
+
+		<record id="eq_tenancy" model="ir.sequence">
+			<field name="name">Tenant Tenancy</field>
+			<field name="code">tenant.tenancy</field>
+			<field name="prefix">T</field>
+			<field name="padding">5</field>
+			<field name="number_next_actual">1</field>
+			<field name="number_increment">1</field>
+			<field eval="False" name="company_id"/>
+		</record>
+
+		<record id="eq_tenancy_service_appication" model="ir.sequence">
+			<field name="name">Tenant Tenancy Service Application</field>
+			<field name="code">service.application</field>
+			<field name="prefix">TSA</field>
+			<field name="padding">5</field>
+			<!-- <field name="number_next_actual">1</field> -->
+			<!-- <field name="number_increment">1</field> -->
+			<field eval="False" name="company_id"/>
+		</record>
+
+
+		<!-- Telephone Service -->
+		<record id="local" model="telephone.service.service">
+			<field name="name">Local</field>
+		</record>
+		<record id="national_mobile" model="telephone.service.service">
+			<field name="name">National and Mobile</field>
+		</record>
+		<record id="international" model="telephone.service.service">
+			<field name="name">International</field>
+		</record>
+		<record id="direct_line" model="telephone.service.service">
+			<field name="name">Direct Line</field>
+		</record>
+		<record id="fax" model="telephone.service.service">
+			<field name="name">Fax</field>
+		</record>
+		<record id="ext_line" model="telephone.service.service">
+			<field name="name">Ext Line</field>
+     	</record>
+
+
+		<!--  information.data.service -->
+		<record id="real_ip_address" model="information.data.service">
+			<field name="name">Real IP Address</field>
+     	</record>
+		<record id="additional_net_points" model="information.data.service">
+			<field name="name">Additional Net Points</field>
+     	</record>
+		<record id="private_wlan" model="information.data.service">
+			<field name="name">Private WLAN</field>
+     	</record>
+		<record id="internet_office" model="information.data.service">
+			<field name="name">Internet for Office</field>
+     	</record>
+		<record id="internet_office" model="information.data.service">
+			<field name="name">Internet for Office</field>
+     	</record>
+		<record id="internet_business" model="information.data.service">
+			<field name="name">Internet Business</field>
+     	</record>
+		<record id="private_office_net" model="information.data.service">
+			<field name="name">Private Office Net</field>
+     	</record>
+
+    </data>
+</odoo>

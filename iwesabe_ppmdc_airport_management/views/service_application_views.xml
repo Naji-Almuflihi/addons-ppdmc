@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <!-- Service Application Form -->
+     <record id="service_application_form" model="ir.ui.view">
+          <field name="name">service.application.form</field>
+          <field name="model">service.application</field>
+          <field name="arch" type="xml">
+               <form string="">
+                    <header>
+                         <!-- <button name="action_quotations" type="object" attrs="{'invisible':[('quotation', '=', False),('state', 'not in', ('draft'))]}"/> -->
+                         <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" attrs="{'invisible':['|',('quotation', '=', True),('state', 'in', ('draft','confirm'))]}"/>
+                         <button name="action_quotation_send" string="Send by Email" type="object" states="draft"/>
+                         <button name="action_confirm" string="Confirm" type="object" states="sent" class="oe_highlight"/>
+                         <button name="action_service_application" string="Service Application" type="object" states="confirm" class="oe_highlight"/>
+                         <button name="action_create_tenancy" type="object" string="Create Tenancy" states="service_application" class="oe_highlight"/>
+                         <field name="state" widget="statusbar" statusbar_visible="draft,sent,confirm,service_application"/>
+                    </header>
+                    <sheet>
+                         <div class="oe_button_box" name="button_box">
+                              <button name="action_view_tenancy" type="object" class="oe_stat_button" icon="fa-pencil-square-o" string="Tenancy" states="service_application"/>
+                         </div>
+                         <div class="oe_title">
+                              <h1>
+                                   <field name="name" readonly="1" />
+                              </h1>
+                         </div>
+                         <group>
+                              <group>
+                                   <field name="partner_id"/>
+                                   <field name="tenancy_id"  />
+                                   <field name="service_type" />
+                                   <label for="from_property_id" string="Property" attrs="{'invisible': [('state' ,'not in', ('tenancy', 'confirm'))]}"/>
+                                   <div class="o_row">
+                                        <field name="from_property_id" placeholder="From Property"  options="{'no_create':True}" attrs="{'invisible': [('state' ,'not in', ('tenancy', 'confirm'))]}" />
+                                        <field name="to_property_id" placeholder="To Property" options="{'no_create':True}" attrs="{'invisible': ['|',('service_type' , '!=', 'transfer'),('state' ,'not in', ('tenancy', 'confirm'))]}"/>
+                                       
+                                   </div>
+                              </group>
+                              <group>
+                                   <field name="date" readonly="1" />
+                                   <field name="user_id" />
+                                   <field name="applicant" />
+                                   <field name="quotation" invisible="1" />
+                              </group>
+                             
+                         </group>  
+                         <group>
+                              <group string="Information">
+                                   <field name="annual_rate" />
+                                   <field name="rent_type_id"/>
+                                   <field name="total_rent"/>
+                              </group>
+                              <group string="Date" attrs="{'readonly':[('state','in',('open','close'))]}">
+							<div>
+								<div class="o_row">
+									<label for="date_order" string="Order Date(Gregorian/Hijri)"/>
+									<field name="date_order"  required="1"/>
+									<field name="date_order_hijri" required="1" placeholder="Order Date Hijri"/>
+									<button context="{'field_to':'date_order','field_from':'date_order_hijri'}" name="hijri2Gregorian" type="object"  string=" " icon="fa-refresh" class="oe_edit_only" help="Conversion with hijri; There is a small probability of one day error"/>
+									<button context="{'date_field': 'date_order_hijri'}" name="%(iwesabe_hijri_asset.call_field_edit)d" type="action"  string=" " icon="fa-pencil" class="oe_edit_only"/>
+								</div>
+							
+								<div class="o_row">
+									<label for="date_start" string="Start Date(Gregorian/Hijri)"/>
+									<field name="date_start"  required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+									<field name="date_start_hijri"  required="1" placeholder="Start Date Hijri" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+									<button context="{'field_to':'date_start','field_from':'date_start_hijri'}" name="hijri2Gregorian" type="object"  string=" " icon="fa-refresh" class="oe_edit_only" help="Conversion with hijri; There is a small probability of one day error"/>
+									<button context="{'date_field': 'date_start_hijri'}" name="%(iwesabe_hijri_asset.call_field_edit)d" type="action"  string=" " icon="fa-pencil" class="oe_edit_only"/>
+								</div>
+								
+								<div class="o_row">
+									<label for="date_end" string="End Date(Gregorian/Hijri)"/>
+									<field name="date_end"  required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+									<field name="date_end_hijri"  required="1" placeholder="End Date Hijri" attrs="{'readonly':[('state','!=','draft')]}"/>
+									<button context="{'field_to':'date_end','field_from':'date_end_hijri'}" name="hijri2Gregorian" type="object"  string=" " icon="fa-refresh" class="oe_edit_only" help="Conversion with hijri; There is a small probability of one day error"/>
+									<button context="{'date_field': 'date_end_hijri'}" name="%(iwesabe_hijri_asset.call_field_edit)d" type="action"  string=" " icon="fa-pencil" class="oe_edit_only"/>
+								</div>
+							</div>
+						</group>
+                         </group>
+                         <notebook>
+                              <page name="property" string="Property">
+							<field name="property_ids" context="{'default_rent_type_id': rent_type_id}" attrs="{'readonly':[('state','not in',['draft'])]}">
+								<tree editable="bottom">
+									<field name="property_id" />
+									<field name="rent_type_id" />
+									<field name="season_year_id"/>
+									<field name="date_start" />
+									<field name="date_end" />
+									<field name="gfa_meter"/>
+									<field name="rent" />
+									<field name="total"/>
+								</tree>	
+							</field>
+						</page>
+                              <page name="telephone_service" string="Telephone Service &amp;  Type of Sets" invisible="1">
+                                   <field name="telephone_service_ids">
+                                        <tree editable="bottom">
+                                             <!-- <field name="property_id" options="{'no_create':True}" /> -->
+                                             <field name="equipment_id" options="{'no_create':True}"/>
+                                             <field name="phone_extention_id" options="{'no_create':True}"/>
+                                             <field name="extention_number_id" options="{'no_create':True}"/>
+                                             <field name="service_contract_id" invisible="1"/>
+                                             <field name="quantity" />
+                                             <field name="rent" />
+                                             <field name="total" sum="Total"/>
+                                        </tree> 
+                                   </field>
+                              </page>
+                              <page name="information_data" string="Information &amp; Data Services" invisible="1">
+                                   <field name="information_data_ids" >
+                                        <tree editable="bottom">
+                                             <!-- <field name="property_id"/> -->
+                                             <field name="product_id" context="{'default_type': 'service'}"/>
+                                             <field name="points"/>
+                                             <field name="vlan"/>
+                                             <field name="quantity" />
+                                             <field name="rent" />
+                                             <field name="total" sum="Total"/>
+                                        </tree> 
+                                   </field>
+
+                              </page>
+                              <page name="equipments" string="Equipments" invisible="1">
+                                   <field name="equipment_ids" attrs="{'readonly':[('state', 'in', ('close', 'cancelled'))]}">
+                                        <tree editable="bottom">
+                                             <field name="equipment_id" />
+                                             <!-- <field name="property_id" options="{'no_create':True}" attrs="{'readonly': [('parent.state', 'in', ('close'))]}"/> -->
+                                             <field name="quantity" />
+                                             <field name="rent" />
+                                             <field name="total" sum="Total"/>
+                                             <field name="service_contract_id" invisible="1"/>
+                                        </tree>
+                                   </field>
+                              </page>
+                               <page name="applicant" string="Applicant" states="service_application">
+                                   <group col="4">
+                                        <field name="applicant_name" />
+                                        <field name="applicant_phone" />
+                                        <field name="applicant_mobile" />
+                                        <field name="applicant_address" />
+                                        <field name="applicant_job_title" />
+                                   </group>
+                                   <group>
+                                        <field name="signature" />
+                                   </group>
+                                   <separator string="Instructions"/>
+                                   <field name="instructions"/>
+                              </page>
+                              <page name="property_management_approval" string="Property Management Approval" states="service_application">
+                                   <group >
+                                        <group>
+                                             <field name="property_side" />
+                                             <field name="office_no" />
+                                             <field name="contract_no" />
+                                        </group>
+                                        <group>
+                                             <field name="manager_name" />
+                                             <field name="signature_date" />
+                                        </group>
+                                   </group>
+                                   <group>
+                                        <field name="manager_signature" />
+                                   </group>
+                              </page>
+                              <page name="other_info" string="Other Info" attrs="{'invisible':[('state', 'in', ('draft', 'sent'))]}">
+                                   <group col="4">
+                                        <field name="customer_po_number" attrs="{'required':[('state', 'not in', ('confirm'))]}"/>
+                                        <field name="customer_po_number_attach"  attrs="{'required':[('state', 'not in', ('confirm'))]}"/>
+                                   </group>
+                              </page>
+                              <page name="notes" string="Notes">
+                                   <field name="notes" />
+                              </page>
+                         </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                         <field name="message_follower_ids" widget="mail_followers"/>
+                         <field name="activity_ids" widget="mail_activity"/>
+                         <field name="message_ids" widget="mail_thread"/>
+                    </div>
+               </form>
+          </field>
+     </record>
+     
+
+     <!-- Service Application Tree -->
+     <record id="service_application_tree" model="ir.ui.view">
+          <field name="name">service.application.tree</field>
+          <field name="model">service.application</field>
+          <field name="arch" type="xml">
+               <tree string="Service Application">
+                    <field name="name" />
+                    <field name="partner_id"/>
+                    <field name="tenancy_id" />
+                    <field name="user_id" optional="show" widget="many2one_avatar_user"/>
+                    <field name="date" />
+                    <field name="state" decoration-success="state == 'confirm'" decoration-info="state == 'draft'" decoration-warning="state == 'tenancy'" widget="badge" optional="show"/>
+
+               </tree>
+          </field>
+     </record>
+
+
+     <!-- Service Application Action -->
+     <record id="action_service_application" model="ir.actions.act_window">
+          <field name="name">Service Application</field>
+          <field name="res_model">service.application</field>
+          <field name="view_mode">tree,form</field>
+          <field name="domain">[('quotation', '=', False)]</field>
+          <field name="context">{'create':False}</field>
+     </record>
+
+     <!-- Quotation Action -->
+     <record id="action_quotation" model="ir.actions.act_window">
+          <field name="name">Quotations</field>
+          <field name="res_model">service.application</field>
+          <field name="view_mode">tree,form</field>
+          <field name="domain">[('quotation', '=', True)]</field>
+          <field name="context">{'default_quotation':True}</field>
+     </record>
+
+
+
+     <!-- tree telephone service service -->
+     <record id="telephone_service_service_tree" model="ir.ui.view">
+          <field name="name">telephone.service.service.tree</field>
+          <field name="model">telephone.service.service</field>
+          <field name="arch" type="xml">
+               <tree string="Telephone Service" editable="top">
+                    <field name="name" />
+               </tree>
+          </field>
+     </record>
+
+     <!-- Tree information data service -->
+     <record id="information_data_service_tree" model="ir.ui.view">
+          <field name="name">information.data.service.tree</field>
+          <field name="model">information.data.service</field>
+          <field name="arch" type="xml">
+               <tree string=""  editable="top">
+                    <field name="name" />
+               </tree>
+          </field>
+     </record>
+
+
+     <!-- Action telephone.service.service -->
+     <record id="action_telephone_service_service" model="ir.actions.act_window">
+          <field name="name">Telephone Service</field>
+          <field name="res_model">telephone.service.service</field>
+          <field name="view_mode">tree,form</field>
+     </record>
+
+     <!-- Action information.data.service -->
+     <record id="action_information_data_service" model="ir.actions.act_window">
+          <field name="name">Information Data</field>
+          <field name="res_model">information.data.service</field>
+          <field name="view_mode">tree,form</field>
+     </record>
+
+
+</odoo>

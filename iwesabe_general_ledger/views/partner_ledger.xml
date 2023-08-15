@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+         <template id="search_template_supplier_site">
+<!--                <button t-if="options.get('partner')" type="button" class="o_dropdown_toggler_btn btn btn-secondary dropdown-toggle-->
+<!--                account_supplier_site_filter" data-toggle="dropdown">-->
+<!--                    <span class="fa fa-folder-open"/>Supplier Site-->
+<!--                </button>-->
+                <ul class="dropdown-menu o_filter_menu" role="menu">
+                    <li class="o_account_report_search js_account_supplier_site_m2m"/>
+                </ul>
+            </template>
+
+
+        <template id="search_template_partner_ledger_supplier_site" inherit_id="account_reports.search_template">
+
+
+            <xpath expr="//div[@class='btn-group o_dropdown o_account_reports_filter_partner']" position="after">
+                <div class="btn-group o_dropdown o_account_reports_filter_supplier_site" t-if="options.get('partner')">
+                    <t t-call="iwesabe_general_ledger.search_template_supplier_site"/>
+                </div>
+            </xpath>
+
+
+        </template>
+    </data>
+</odoo>

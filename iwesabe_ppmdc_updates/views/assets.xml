@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+<template id="assets_backend" name="accounting assets" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/addons-ppdmc/iwesabe_ppmdc_updates/static/src/required.css"/>
+<!--        <script type="text/javascript" src="/hr_timesheet_sheet/static/src/js/timesheet.js"></script>-->
+    </xpath>
+
+    </template>
+
+</odoo>

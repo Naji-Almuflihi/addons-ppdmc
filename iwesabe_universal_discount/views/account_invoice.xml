@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+
+        <record id="global_discount_invoice_view_form" model="ir.ui.view">
+            <field name="name">global.discount.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]/group" position="after">
+                    <div class="lax_container">
+                        <field name="enable_discount" invisible="1"/>
+                        <field name="amount_discount" invisible="1"/>
+                        <label for="global_discount_type" string="Universal Discount Type:"
+                               attrs="{'invisible':[('enable_discount','!=',True),('amount_discount','=',0)]}"/>
+                        <field name="global_discount_type" class="oe_inline"
+                               attrs="{'invisible':[('enable_discount','!=',True),('amount_discount','=',0)],'readonly':['|',('enable_discount','!=',True),('state', 'in', ['posted', 'cancel'])]}"/>
+                    </div>
+                    <div class="lax_container">
+                        <label for="global_discount_rate" string="Universal Discount :"
+                               attrs="{'invisible':[('enable_discount','!=',True),('amount_discount','=',0)]}"/>
+                        <field name="global_discount_rate" class="oe_inline"
+                               attrs="{'invisible':[('enable_discount','!=',True),('amount_discount','=',0)],'readonly':['|','|',('enable_discount','!=',True),('state', 'in', ['posted', 'cancel']), ('global_discount_type', 'in', [None, False])]}"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='amount_by_group']" position="after">
+                    <field name="amount_discount" attrs="{'invisible':[('enable_discount','!=',True),('amount_discount','=',0)]}" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
+

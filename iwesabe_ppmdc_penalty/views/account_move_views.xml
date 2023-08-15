@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_move_form_inherit_ppmdc_penalty" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_post']" position="after">
+                <button class="btn-primary" name="compute_penalty_disc" type="object"
+                        string="Compute Discount"
+                        attrs="{'invisible': ['|',('contract_id', '=', False), ('state', '!=', 'draft')]}">
+                </button>
+                <button name="ask_to_support_approvals" string="Ask To Approval"
+                        attrs="{'invisible':['|',('contract_id','=',False),('state','not in' , ('discount_computation','draft'))]}"
+                        type="object" class="oe_highlight">
+                </button>
+                <button name="approve_billing_manager" string="Support Service Approval"
+                        attrs="{'invisible':['|',('contract_id','=',False),('state','not in' , ('waiting_approval'))]}"
+                        type="object" class="oe_highlight"
+                        groups="iwesabe_ppmdc_penalty.group_account_billing_manager">
+                </button>
+                <button name="waiting_for_ceo_approval" type="object"
+                        string="Ask To CEO Approval"
+                        attrs="{'invisible':['|',('contract_id','=',False),('state','not in' , ('support_approved'))]}"
+                        groups="iwesabe_ppmdc_penalty.group_account_billing_manager">
+                </button>
+                <button name="ceo_approved" type="object" string="CEO Approved" class="oe_highlight"
+                        groups="account.group_account_manager"
+                        attrs="{'invisible':['|',('contract_id','=',False),('state','not in' , ('waiting_for_ceo_approval'))]}"
+                >
+
+                </button>
+
+            </xpath>
+<!--            <xpath expr="//button[@name='button_draft']" position="replace">-->
+<!--                <button name="button_draft" string="Reset to Draft" type="object" groups="account.group_account_invoice"-->
+<!--                        attrs="{'invisible' : ['|', ('show_reset_to_draft_button', '=', False), ('state', '=', 'posted')]}"/>-->
+<!--            </xpath>-->
+
+            <xpath expr="//button[@name='action_post']" position="replace">
+                <button name="action_post" string="Confirm" class="oe_highlight"
+                        attrs="{'invisible':[('contract','=',False)]}"
+                        type="object" groups="iwesabe_ppmdc_penalty.group_billing_confirmation_user"/>
+                <!-- attrs="{'invisible': ['|', ('contract', '=', True), ('state', 'not in', [('approved', 'discount_computation')])]}" -->
+            </xpath>
+            <xpath expr="//button[@name='action_post'][2]" position="replace">
+            </xpath>
+            <xpath expr="//form/header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+            </xpath>
+            <!--<xpath expr="//button[@name='action_post']" position="replace">
+                  <button class="btn-primary" name="action_post_custom" type="object" string="Confirm" states="discount_computation" attrs="{'invisible':['|','|',('state','in',('draft','posted')),('auto_post','=',True),('move_type','=','entry')]}"></button>
+              </xpath> -->
+            <!-- <xpath expr="//button[@name='action_post']" position="replace">
+                <button name="action_post" string="Confirm" class="oe_highlight"
+                                attrs="{'invisible': ['|', ('contract', '=', True), ('state', '!=', 'draft')]}"
+                                type="object" groups="account.group_account_invoice">
+                </button>
+
+            </xpath>  -->
+
+            <!--  <xpath expr="//button[@name='action_post']" position="replace">
+                  <button class="btn-primary" name="action_post" type="object" string="Confirm2" states="discount_computation" > </button>
+              </xpath>
+              <xpath expr="//button[@name='action_post']" position="replace">
+                  <button name="action_post" string="Confirm" class="oe_highlight"
+                                  attrs="{'invisible': ['|',('contract', '=', True), ('state', '!=', 'draft')]}"
+                                  type="object" groups="account.group_account_invoice">
+                  </button>
+
+              </xpath> -->
+            <xpath expr="//group/group/field[@name='payment_reference']" position="after">
+                <field name="contract_id" invisible="1"/>
+                <field name="contract" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_residual']" position="replace">
+                <field name="amount_residual" class="oe_subtotal_footer_separator"
+                       attrs="{'invisible': [('state', 'in', ['draft', 'discount_computation'])]}"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object"
+                        name="action_get_penalty_sheet"
+                        class="oe_stat_button"
+                        icon="fa-money"
+                        attrs="{'invisible': [('contract_id', '=', False)]}">
+                    <field name="total_penalty" widget="statinfo" attrs="{'invisible': [('contract_id', '=', False)]}"
+                           string="Total Penalty"/>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

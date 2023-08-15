@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_employee_form_inherit_ppmdc" model="ir.ui.view">
+        <field name="name">employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_title']" position="before">
+                <group>
+                    <field name="arabic_name" nolabel="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='mobile_phone']" position="before">
+                <field name="employee_code"/>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="section"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

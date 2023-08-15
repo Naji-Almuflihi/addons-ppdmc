@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="view_aircraft_category_form" model="ir.ui.view">
+            <field name="name">view_aircraft_category_form</field>
+            <field name="model">aircraft.category</field>
+            <field name="arch" type="xml">
+                <form string="">
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_aircraft_category_tree" model="ir.ui.view">
+            <field name="name">view_aircraft_category_tree</field>
+            <field name="model">aircraft.category</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_aircraft_category_view" model="ir.actions.act_window">
+            <field name="name">Aircraft Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">aircraft.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_aircraft_category_view" name="Aircraft Category" parent="iwesabe_billing_system.menu_billing_configuration" action="action_aircraft_category_view" sequence="14"/>
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<odoo>
+    <!-- invoice for Other Customer Form View -->
+    <record id="wizard_invoice_other_customer_form_view" model="ir.ui.view">
+        <field name="name">invoice.other.customer.form</field>
+        <field name="model">invoice.other.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field domain="[('is_non_airline', '=', True)]" name="partner_id" options="{'no_create': True, 'no_open': True}" placeholder="Select Customer" required="1"/>
+                    
+                    <group>
+                        <field name="term_facilities_utilization"/>
+                        <field name="system"/>
+                        <field name="is_400hz"/>
+                        <field name="ground_handling"/>
+                        <field name="aircraft_parking_not_registered"/>
+                    </group>
+                    <group>
+                        <field name="aircraft_registered"/>
+                        <field name="plbs_busses"/>
+                        <field name="security_services"/>
+                        <field name="bus_transportation"/>
+                    </group>
+                     <field name="invoice_appendix_ids"  readonly="1">
+                        <tree>
+                            <field name="partner_id"/>
+                            <field name="invoice_id"/>
+                        </tree>
+                     </field>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="create_invoice" string="Create Invoice" type="object"/>or
+                    
+                    
+                    <button class="oe_link" special="cancel" string="Cancel"/></footer>
+            </form>
+        </field>
+    </record>
+    <!--Action for Wizard -->
+    <record id="action_invoice_other_customer" model="ir.actions.act_window">
+        <field name="name">Invoice Other Customer</field>
+        <field name="res_model">invoice.other.customer</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

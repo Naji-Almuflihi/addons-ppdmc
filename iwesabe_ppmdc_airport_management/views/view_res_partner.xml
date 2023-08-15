@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Inherited res partner form view-->
+    <record id="inherited_view_partner_form_tenant_id" model="ir.ui.view">
+        <field name="name">inherited.view.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_property" type="object" class="oe_stat_button" icon="fa-money">
+					<field name="tenant_count" string="Tenant" widget="statinfo"/>
+				</button>
+            </xpath>
+           
+           <!--  <xpath expr="//field[@name='website']" position="after">
+                <field name="occupation" />
+            </xpath> -->
+            <xpath expr="//page[@name='sales_purchases']/group/group[@name='sale']/field[@name='user_id']" position="before">
+                <field name="tenant" string='Is a Tenant' />
+            </xpath>
+            <field name="name" position="after">
+                <field name="arabic_name" placeholder="Arabic Name"/>
+            </field>
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="tenant_code" readonly="1" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+       <!--Action For Tenant Partner Views -->
+    <record id="action_tenant_view" model="ir.actions.act_window">
+        <field name="name">Tenant Details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <!-- <field name="search_view_id" ref="property_tenant_view_search"/> -->
+        <field name="context">{'search_default_customer': 1,'res_partner_search_mode': 'customer', 'default_is_company': True, 'default_customer_rank': 1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a Tenant Details
+          </p><p>
+            Create Tenant keep track.
+          </p>
+        </field>
+    </record>
+
+
+
+    <record id="form_View_res_company_inherit" model="ir.ui.view">
+        <field name="name">name.res.company.inherit.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="cancellation_tenancy_approval_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

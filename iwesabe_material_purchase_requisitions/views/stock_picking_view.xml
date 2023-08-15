@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="internal_requisition_stock_form_view" model="ir.ui.view">
+            <field name="name">stock.picking.form.view</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="custom_requisition_id"/>
+                </xpath>
+                <xpath expr="//form" position="attributes">
+                	<attribute name="delete">false</attribute>
+                </xpath>
+               <xpath expr="//page/field[@name='move_ids_without_package']//tree/field[@name='product_qty']" position="attributes">
+                	<attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="vpicktree_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.tree.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+            	<attribute name="delete">false</attribute>
+            </xpath>
+            </field>
+        </record>
+</odoo>

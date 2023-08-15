@@ -1,0 +1,46 @@
+<odoo>
+    <record id="wizard_invoice_customer_form_view" model="ir.ui.view">
+        <field name="name">invoice.customer.form</field>
+        <field name="model">invoice.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field attrs="{'invisible': [('appendix_id', '=', False)]}" domain="[('is_airline', '=', True)]" name="partner_id" options="{'no_create': True, 'no_open': True}" placeholder="Select Customer"/>
+                        <field attrs="{'invisible': [('appendix_id', '=', False)]}" name="appendix_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                    </group>
+                    <field attrs="{'invisible': [('appendix_id', '=', True)]}" name="invoice_line_ids" readonly="1">
+                        <tree>
+                            <field domain="[('is_airline', '=', True)]" name="partner_id"/>
+                            <field name="invoice_id"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <field name="term_facilities_utilization"/>
+                        <field name="system"/>
+                        <field name="is_400hz"/>
+                        <field name="ground_handling"/>
+                        <field name="aircraft_parking_not_registered"/>
+                    </group>
+                    <group>
+                        <field name="aircraft_registered"/>
+                        <field name="plbs_busses"/>
+                        <field name="security_services"/>
+                        <field name="bus_transportation"/>
+                    </group>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="create_invoice" string="Create Invoice" type="object" attrs="{'invisible': [('appendix_id', '=', False)]}"/> <button class="oe_highlight" name="create_invoice_multi" string="Create Invoice" type="object" attrs="{'invisible': [('appendix_id', '=', True)]}"/>or
+                    
+                    <button class="oe_link" special="cancel" string="Cancel"/></footer>
+            </form>
+        </field>
+    </record>
+    <!--Action for Wizard -->
+    <record id="action_invoice_customer" model="ir.actions.act_window">
+        <field name="name">Invoice Customer</field>
+        <field name="res_model">invoice.customer</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

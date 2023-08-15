@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="action_view_phone_equipment" model="ir.actions.act_window">
+            <field name="name">Phones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.equipment</field>
+            <field name="domain">[('is_equipment','=',True)]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_view_phone_equipment" id="menu_action_equipment_property" name="Phones" parent="iwesabe_ppmdc_airport_management.menu_configuration_main" sequence="11"/>
+    </data>
+</odoo>

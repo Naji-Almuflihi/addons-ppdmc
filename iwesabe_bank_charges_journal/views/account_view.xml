@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="account_journal_form_in" model="ir.ui.view">
+            <field name="name">account.journal.form.in</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//notebook" position="inside">
+					<page name='paymentcharges' string="Payment Charges">
+                    	<group>
+	               			<group>
+			               		<field name="apply_charges" />
+				               	<field name="fees_amount" attrs="{'invisible':[('apply_charges' ,'!=',True)]}"/>
+				               	<field name="default_card_account_id" attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+				               	<field name="default_tax_account_id" attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+		               		</group>
+		               		<group>
+		               		<field name="fees_type" attrs="{'invisible':[('apply_charges' ,'!=',True)],'required':[('apply_charges' ,'=',True)]}"/>
+			               		<field name="optional" invisible="True"/>
+		               		</group>
+		               	</group>
+		            </page>
+                </xpath>
+                <field name="default_account_id" position="after">
+
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

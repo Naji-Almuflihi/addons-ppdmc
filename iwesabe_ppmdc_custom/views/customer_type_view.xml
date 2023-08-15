@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="customer_type_form_view" model="ir.ui.view">
+        <field name="name">customer.type.form.view</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <form delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+	<record id="customer_type_tree_view" model="ir.ui.view">
+	    <field name="name">customer.type.view.tree</field>
+	    <field name="model">customer.type</field>
+	    <field name="arch" type="xml">
+	        <tree>
+	            <field name="name"/>
+	        </tree>
+	    </field>
+	</record>
+
+	<record id="customer_type_action" model="ir.actions.act_window">
+            <field name="name">Customer Type</field>
+            <field name="res_model">customer.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                </p>
+            </field>
+        </record>
+	<menuitem id="menu_customer_type" name="Customer Type" parent="contacts.res_partner_menu_config"
+                  action="customer_type_action" sequence="7"/>
+
+
+    <menuitem id="menu_action_payment_term_form_pur" action="account.action_payment_term_form" sequence="1" parent="purchase.menu_purchase_config"/>
+</odoo>

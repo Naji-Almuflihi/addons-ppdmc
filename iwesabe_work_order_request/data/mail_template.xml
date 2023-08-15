@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<odoo>
+	<data noupdate="1">
+		<record id="email_group_user_reminder" model="mail.template">
+	        <field name="name">Work Order Request: Approval Mail</field>
+	        <field name="model_id" ref="iwesabe_work_order_request.model_work_order_request"/>
+	        <field name="subject">Work Order Request : ${ object.din }</field>
+	        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+	        <field name="body_html" type="html">
+	            <div style="margin: 0px; padding: 0px;">
+	               <p style="margin: 0px; padding: 0px; font-size: 13px;">Dear,
+	                    <br/>Kindly inform you that the Work order (${ object.din }) is submitted. Please check below link for more details
+	                </p>
+	                <a style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px" href="/web?#id=${ object.id }&amp;view_type=form&amp;model=work.order.request">View</a>
+	            </div>
+	        </field>
+	        <field name="auto_delete" eval="False"/>
+	    </record>
+	</data>
+</odoo>

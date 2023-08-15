@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="form_View_account_payment_inherit" model="ir.ui.view">
+            <field name="name">name.account.payment.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='mark_as_sent']" position="after">
+                    <button attrs="{'invisible':[('state','=','draft')]}" class="oe_highlight" name="open_partial_payment" string="Partial Payment" type="object"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <record id="form_view_res_partner_inherit" model="ir.ui.view">
+            <field name="name">name.res.partner.inherit.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after"/>
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

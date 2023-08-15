@@ -1,0 +1,45 @@
+<odoo>
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">name.product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="inside">
+                <div>
+                    <field name="is_phone_extention_servie"/>
+                    <label for="is_phone_extention_servie"/>
+                </div>
+                <div>
+                    <field name="is_vlan"/>
+                    <label for="is_vlan"/>
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page attrs="{'invisible': [('is_vlan', '=', False)]}" string="VLAN Packaging Pricing">
+                    <field name="vlan_line_ids">
+                        <tree editable="bottom">
+                            <field name="minimum_point"/>
+                            <field name="maximum_point"/>
+                            <field name="rent_type_id"/>
+                            <field name="price"/>
+                            <field name="product_id" domain="[('product_tmpl_id', '=', parent.id)]"/>
+                            <field name="price_per_point"/>
+                        </tree>
+                    </field>
+                </page>
+                <page attrs="{'invisible': [('is_vlan', '=', False)]}" string="Phone Extention Detail">
+                    <field name="phone_extention_number_ids" mode="tree, form">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="tenancy_id"/>
+                            <field name="partner_id"/>
+                            <field name="implemetation_service_applcation_id"/>
+                            <field name="used_by"/>
+                            <field name="reserverd"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

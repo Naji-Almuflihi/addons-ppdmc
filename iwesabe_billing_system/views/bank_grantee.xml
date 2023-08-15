@@ -1,0 +1,85 @@
+<odoo>
+    <data>
+        <record id="view_bank_grantee_form" model="ir.ui.view">
+            <field name="name">view_bank_grantee_form</field>
+            <field name="model">bank.grantee</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <field name="payment_bank_grantee_count" invisible="1"/>
+                        <button name="confirm_button" type="object" class="btn-primary" string="Confirm" states="draft,under_renew"/>
+                        <button name="renew_button" type="object" class="btn-primary" string="Renew" states="confirmed"/>
+                        <button name="liquefaction_button" type="object" class="btn-primary" string="Liquidation" states="confirmed,under_renew"/>
+                        <button name="create_payment" type="object" class="btn-primary" string="Create Payment" attrs="{'invisible':['|',('state','!=','liquefaction'),('payment_bank_grantee_count','!=',0)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,under_renew,liquefaction,closed"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="open_payment_bank_grantee" icon="fa-arrow-circle-right" attrs="{'invisible':[('payment_bank_grantee_count','=',0)]}">
+                                <field string="Payments" name="payment_bank_grantee_count" widget="statinfo"
+                            />
+                            </button>
+
+                        </div>
+
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <group >
+                            <group>
+                                <field name="partner_id" attrs="{'readonly':[('state','in',['confirmed','closed'])]}"/>
+                                <field name="bank_id" attrs="{'readonly':[('state','in',['confirmed','closed'])]}"/>
+                                <field name="amount" attrs="{'readonly':[('state','in',['confirmed','closed'])]}"/>
+                                <field name="bank_grantee_ref" attrs="{'readonly':[('state','in',['confirmed','closed'])]}"/>
+                                
+                            </group>
+                            <group>
+                                <field name="start_date" attrs="{'readonly':[('state','in',['confirmed','closed'])]}" required="True"/>
+                                <field name="end_date" attrs="{'readonly':[('state','in',['confirmed','closed'])]}" required="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="view_bank_grantee_tree" model="ir.ui.view">
+            <field name="name">view_bank_grantee_tree</field>
+            <field name="model">bank.grantee</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="bank_id"/>
+                    <field name="bank_grantee_ref"/>
+                    <field name="amount"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_bank_grantee_view" model="ir.actions.act_window">
+            <field name="name">Bank Grantee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bank.grantee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_bank_grantee_view" name="Bank Grantee" parent="iwesabe_billing_system.menu_airline_services_contract_categ" action="action_bank_grantee_view" sequence="2"/>
+    </data>
+</odoo>

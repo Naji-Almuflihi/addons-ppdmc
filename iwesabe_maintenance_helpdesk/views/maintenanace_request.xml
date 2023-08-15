@@ -1,0 +1,44 @@
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+   
+
+      <!-- Inherit Form View to Modify it -->
+      <record id="view_inherit_hr_equipment_view_form" model="ir.ui.view">
+          <field name="name">view_inherit_hr_equipment_view_form</field>
+          <field name="model">maintenance.equipment</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+          <field name="arch" type="xml">
+
+              <!-- position: after|before|replace|attributes|inside -->
+              <xpath expr="//field[@name='maintenance_team_id']" position="attributes">
+                  <attribute name="string">Maintenance Team / Subcontractor</attribute>
+              </xpath>
+
+          </field>
+      </record>
+       <!-- equipment.team : actions -->
+    <record id="maintenance.maintenance_team_action_settings" model="ir.actions.act_window">
+        <field name="name">Subcontractor</field>
+        <field name="res_model">maintenance.team</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="maintenance.maintenance_team_view_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('maintenance.maintenance_team_view_tree')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('maintenance.maintenance_team_view_kanban')})]"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Add a team in the maintenance request
+          </p>
+        </field>
+    </record>
+
+      <menuitem
+        id="maintenance.menu_maintenance_teams"
+        name="Maintenance Teams / Subcontractor"
+        parent="maintenance.menu_maintenance_configuration"
+        action="maintenance.maintenance_team_action_settings"
+        groups="maintenance.group_equipment_manager"
+        sequence="1"/>
+  </data>
+</odoo>

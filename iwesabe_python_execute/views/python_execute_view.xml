@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--Form -->
+    <record id="view_form_python_execute" model="ir.ui.view">
+        <field name="name">python.execute.view.form</field>
+        <field name="model">python.execute</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <notebook>
+                        <page string="File">
+                            <br/>
+                            <button name="execute_file" string="Execute File" type="object" class="btn-danger pull-right" icon="fa-play"/>
+                            <field name="py_file"/>
+                            <field name="output"/>
+                        </page>
+                        <page string="Code">
+                            <button name="execute_code" string="Execute Code" type="object" class="btn-danger pull-right" icon="fa-play"/>
+                            <field name="code" widget="ace"/>
+                        </page>
+                    </notebook>
+                    <br/><br/><br/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="action_python_execute" model="ir.actions.act_window">
+        <field name="name">Execute Python</field>
+        <field name="res_model">python.execute</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+
+
+    <!--Menu-->
+    <menuitem  name="Execute Python" id="menu_python_execute"
+               parent="base.next_id_6"
+               sequence="100"
+               action="action_python_execute"/>
+
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--Main FORM view-->
+    <record id="contract_contract_form_view_inherit" model="ir.ui.view">
+        <field name="name">contract.contract form view (in contract)</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="contract.contract_contract_form_view"/>
+        <field name="arch" type="xml">
+        	
+        	<xpath expr="//form/header/button[@name='action_contract_send']" position="after">
+        		<button
+                        name="recurring_create_invoice"
+                        type="object"
+                        string="Create invoices"
+                    />
+        	</xpath>
+        	<xpath expr="//group/group/field[@name='recurring_invoicing_type']" position="after">
+	        	<field name="total_contract"/>
+	        </xpath>
+	        <xpath expr="//form" position="attributes">
+	        	<attribute name="delete">false</attribute>
+	        </xpath>
+        </field>
+        </record>
+</odoo>
+        

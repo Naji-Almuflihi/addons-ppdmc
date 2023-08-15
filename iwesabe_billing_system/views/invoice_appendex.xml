@@ -1,0 +1,307 @@
+<odoo>
+    <data>
+        <menuitem id="menu_revenue_view" name="Revenue" parent="iwesabe_billing_system.menu_billing_main" sequence="10"/>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_inherit_view_move_form" model="ir.ui.view">
+            <field name="name">view_inherit_view_move_form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field force_save="1" invisible="1" name="partner_contacts_ids"/>
+                    <field attrs="{'invisible':[('move_type','!=','in_invoice')]}" domain="[('id','in',partner_contacts_ids)]" name="customer_contact_id"/>
+                    <field attrs="{'invisible':[('move_type','!=','in_invoice')]}" name="contract_ref"/>
+                    <field attrs="{'invisible':[('move_type','!=','in_invoice')]}" name="invoice_details"/>
+                    <field name="customer_code"/>
+                </xpath>
+                <xpath expr="//field[@name='ref'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('move_type', 'not in', ('in_invoice', 'in_receipt', 'in_refund'))],'required':[('move_type','=','in_invoice')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field invisible="1" name="is_services_contract"/>
+                    <field attrs="{'invisible':[('is_services_contract','=',False)]}" name="airline_services_contract_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_invoice_appendix_form" model="ir.ui.view">
+            <field name="name">view_invoice_appendix_form</field>
+            <field name="model">invoice.appendix</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button attrs="{'invisible': [('state', '!=', 'draft')]}" class="btn-primary" name="action_compute" string="compute" type="object"/>
+                        <button attrs="{'invisible': [('state', '!=', 'draft')]}" class="btn-primary" confirm="Are you sure you want to do this?" name="action_confirm" string="Confirm" type="object"/>
+                        <button attrs="{'invisible': [('state', '=', 'draft')]}" class="btn-primary" confirm="Are you sure you want to do this?" name="action_reset_draft" string="Reset To Draft" type="object"/>
+                        <button attrs="{'invisible':[('state', '!=', 'confirm')]}" class="btn-primary" groups="purchase.group_purchase_manager,sales_team.group_sale_manager,account.group_account_user" name="create_invoice" string="Create Invoice" type="object"/>
+                        <button class="btn-primary" groups="purchase.group_purchase_manager,sales_team.group_sale_manager,account.group_account_user" invisible="1" name="create_invoice_for_another_customer" string="Create Invoice For Other Customer" type="object"/>
+                        <!-- <button name="create_credit_note" string="Credit Note" class="btn-primary" type="object" attrs="{'invisible':[('state', '!=', 'confirm')]}" roups="purchase.group_purchase_manager,sales_team.group_sale_manager,account.group_account_user"/>-->
+                        <button attrs="{'invisible': [('state', 'not in', ['done', 'confirm'])]}" class="btn-primary" name="action_invoice_appendix_send" string="Send By Mail" type="object"/>
+                        <!--   <button class="btn-primary" name="send_mail_appendix_and_invoice" string="Send By Mail app" type="object" attrs="{'invisible': [('state', 'not in', ['done', 'confirm'])]}"/>-->
+                        <button attrs="{'invisible': [('state', 'in', ['draft', 'cancel'])]}" class="btn-primary" name="action_cancel" string="Cancel" type="object"/>
+                        <field name="state" widget="statusbar"/>
+                        <field name="is_gmt_customer" invisible="1"/>
+                    </header>
+                    <div class="oe_button_box" name="button_box">
+                        <button attrs="{'invisible':[('invoice_count','=',0)]}" class="oe_stat_button" icon="fa-truck" name="action_open_related_invoices" type="object">
+                            <field name="invoice_count" string="Invoices" widget="statinfo"/>
+                        </button>
+                        <button attrs="{'invisible':[('invoice_count_other_customer','=',0)]}" class="oe_stat_button" icon="fa-truck" name="action_open_related_invoices_other_customer" type="object">
+                            <field name="invoice_count_other_customer" string="Other Cust INV" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <center>
+                        <div class="oe_title">
+                            <h3>
+                                <field name="name"/>
+                            </h3>
+                            <!-- <field name="number"/>-->
+                        </div>
+                    </center>
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                            <field domain="['|', ('is_airline', '=', True), ('is_non_airline', '=', True)]" name="partner_id"/>
+                            <field name="revenue_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="to_date"/>
+                            <field name="company_id" readonly="1"/>
+                            <field name="billing_pricing_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <div>
+                            <field name="invoice_appendix_line_ids">
+                                <tree editable="bottom">
+                                    <field name="serial_number"/>
+                                    <field name="ams_id" widget="integer" options="{'format': 0}"/>
+                                    <field name="last_updated_date"/>
+                                    <field name="actual_a_time" attrs="{'column_invisible': [('parent.is_gmt_customer', '=', True)]}"/>
+                                    <field name="actual_d_time" attrs="{'column_invisible': [('parent.is_gmt_customer', '=', True)]}"/>
+                                    <field name="actual_a_time_gmt"/>
+                                    <field name="actual_d_time_gmt"/>
+                                    <field name="mode"/>
+                                    <field name="apron"/>
+                                    <field name="parking_stand"/>
+                                    <field name="aircraft_registration"/>
+                                    <field name="actual_aircraft"/>
+                                    <field name="actual_category"/>
+                                    <field name="amtow" string="MTOW"/>
+                                    <field name="airline"/>
+                                    <field name="airline_partner_id"/>
+                                    <field name="buss_pbb"/>
+                                    <field name="agha"/>
+                                    <field name="flight_no"/>
+                                    <field name="arrival_airline_to"/>
+                                    <field name="departure_airline_from"/>
+                                    <field name="flight_type"/>
+                                    <field name="pax"/>
+                                    <field name="terminal"/>
+                                    <field name="counter"/>
+                                    <field name="ground_time" widget="float_time"/>
+                                    <field name="FLT_type"/>
+                                    <field name="term_facilities_utilization" sum="sum" invisible="1"/>
+                                    <field name="systems" sum="sum" invisible="1"/>
+                                    <field name="field_400_hz" sum="sum" invisible="1"/>
+                                    <field name="ground_handling" sum="sum" invisible="1"/>
+                                    <field name="aircraft_parking_not_registered" sum="sum" invisible="1"/>
+                                    <field name="aircraft_registered" sum="sum" invisible="1"/>
+                                    <field name="plb_busses" sum="sum" invisible="1"/>
+                                    <field name="security_services" sum="sum" invisible="1"/>
+                                    <field name="fees_total" sum="sum"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <!-- Totals (only invoices / receipts) -->
+                    <group class="oe_subtotal_footer oe_right">
+                        <field invisible="1" name="term_facilities_utilization_total"/>
+                        <field invisible="1" name="systems_total"/>
+                        <field invisible="1" name="field_400_hz_total"/>
+                        <field invisible="1" name="ground_handling_total"/>
+                        <field invisible="1" name="aircraft_parking_not_registered_total"/>
+                        <field invisible="1" name="aircraft_registered_total"/>
+                        <field invisible="1" name="plb_busses_total"/>
+                        <field invisible="1" name="security_services_total"/>
+                        <field invisible="1" name="bus_transportation"/>
+                        <field class="oe_subtotal_footer_separator" name="fees_total_total"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_invoice_appendix_tree" model="ir.ui.view">
+            <field name="name">view_invoice_appendix_tree</field>
+            <field name="model">invoice.appendix</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="number"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="create_date"/>
+                    <field name="partner_id"/>
+                    <field name="revenue_id"/>
+                    <field name="fees_total_total" sum="total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_invoice_appendix_view" model="ir.actions.act_window">
+            <field name="name">Revenue Appendix</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">invoice.appendix</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create"/>
+                <p/>
+            </field>
+        </record>
+        <menuitem action="action_invoice_appendix_view" id="menu_invoice_appendix_view" name="Revenue Appendix" parent="iwesabe_billing_system.menu_revenue_view" sequence="2"/>
+        <record id="view_revenue_appendix_form" model="ir.ui.view">
+            <field name="name">view.revenue.appendix.form</field>
+            <field name="model">revenue.appendix</field>
+            <field name="arch" type="xml">
+                <form string="Revenue">
+                    <header>
+                        <button attrs="{'invisible': [('state', '!=', 'draft')]}" name="action_compute_data" string="Get Data" type="object"/>
+                        <button attrs="{'invisible': [('state', '!=', 'draft')]}" name="action_confirm" string="Confirm" type="object"/>
+                        <button attrs="{'invisible': [('state', 'in', ['draft', 'done', 'cancel'])]}" name="action_generate_appendix" string="Generate Bulk Appendix" type="object"/>
+                        <button attrs="{'invisible': [('state', 'in', ['draft', 'done', 'cancel'])]}" class="btn-primary" groups="purchase.group_purchase_manager,sales_team.group_sale_manager,account.group_account_user" name="create_invoice_for_airline_customer" string="Create Invoice" type="object"/>
+                        <button attrs="{'invisible': [('state', 'in', ['draft', 'done', 'cancel'])]}" class="btn-primary" groups="purchase.group_purchase_manager,sales_team.group_sale_manager,account.group_account_user" name="create_invoice_for_another_customer" string="Create Invoice For Other Customer" type="object"/>
+                        <button attrs="{'invisible': [('state', '!=', 'invoice')]}" class="btn-primary" name="action_done" string="Done" type="object"/>
+                        <button attrs="{'invisible': [('state', 'in', ['draft', 'done', 'cancel'])]}" class="btn-primary" name="action_cancel" string="Cancel" type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+
+                             <button class="oe_stat_button" icon="fa-money" name="action_view_credit_note" type="object">
+                                <field name="cn_count" string="Credit Note" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-money" name="action_view_invoice_new" type="object">
+                                <field name="invoice_count" string="Invoice" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-money" name="action_view_appendix_invoice_new" type="object">
+                                <field name="appendix_count" string="Appendix" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-money" name="action_view_revenue_invoice_new" type="object">
+                                <field name="revenue_invoice_count" string="Revenue Invoice" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="from_date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="to_date" required="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="partner_list" string="Partner">
+                                <field mode="tree, form" name="line_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="partner_id"/>
+                                        <field name="airline_code"/>
+                                        <field invisible="1" name="is_appendix_created"/>
+                                        <button attrs="{'invisible': ['|', '|', ('invoice_id', '=', True), ('parent.state', '=', 'cancel'), ('is_appendix_created', '=', True)]}" name="action_generate_revenue_appendix" string="Generate Appendix" type="object"/>
+                                        <field name="invoice_id"/>
+                                        <field invisible="1" name="term_facilities_utilization"/>
+                                        <field invisible="1" name="system"/>
+                                        <field invisible="1" name="is_400hz"/>
+                                        <field invisible="1" name="ground_handling"/>
+                                        <field invisible="1" name="aircraft_parking_not_registered"/>
+                                        <field invisible="1" name="aircraft_registered"/>
+                                        <field invisible="1" name="plbs_busses"/>
+                                        <field invisible="1" name="security_services"/>
+                                        <field invisible="1" name="bus_transportation"/>
+                                        <button attrs="{'invisible': [('is_canceled', '=', True)]}" name="action_cancel" string="Cancel" type="object"/>
+                                        <button name="create_invoice_from_appendix" string="Create Invoice" type="object" attrs="{'invisible': [('is_canceled', '=', True)]}"/>
+                                        <button name="action_view_invoice_from_appendx" string="View Invoice" type="object" attrs="{'invisible': [('is_canceled', '=', True)]}"/>
+                                        
+                                        <field invisible="1" name="is_canceled"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="partner_id"/>
+                                            <field name="airline_code"/>
+                                            <field invisible="1" name="is_appendix_created"/>
+                                            <button attrs="{'invisible': ['|', '|', ('invoice_id', '=', True), ('parent.state', '=', 'cancel'), ('is_appendix_created', '=', True)]}" name="action_generate_revenue_appendix" string="Generate Appendix" type="object"/>
+                                            <field name="invoice_id"/>
+                                            <group>
+                                                <field name="term_facilities_utilization"/>
+                                                <field name="system"/>
+                                                <field name="is_400hz"/>
+                                                <field name="ground_handling"/>
+                                                <field name="aircraft_parking_not_registered"/>
+                                            </group>
+                                            <group>
+                                                <field name="aircraft_registered"/>
+                                                <field name="plbs_busses"/>
+                                                <field name="security_services"/>
+                                                <field name="bus_transportation"/>
+                                                <field name="is_canceled"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_revenue_appendix_tree" model="ir.ui.view">
+            <field name="name">view.revenue.appendix.tree</field>
+            <field name="model">revenue.appendix</field>
+            <field name="arch" type="xml">
+                <tree string="Revenue">
+                    <field name="name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_revenue_appendix_view" model="ir.actions.act_window">
+            <field name="name">Revenue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">revenue.appendix</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create"/>
+                <p/>
+            </field>
+        </record>
+        <menuitem action="action_revenue_appendix_view" id="menu_revenue_appendix_view" name="Revenue" parent="iwesabe_billing_system.menu_revenue_view" sequence="1"/>
+        <!--invoice appendix by mail-->
+        <record id="send_mail_invoice_appendix_wizard_form" model="ir.ui.view">
+            <field name="name">send_mail_invoice_appendix_wizard_form</field>
+            <field name="model">mail.invoice_appendix</field>
+            <field eval="[(4,ref('base.group_user'))]" name="groups_id"/>
+            <field name="arch" type="xml">
+                <form string="Send Invoice appendix and its related invoice by Mail">
+                    <group string="Send Invoice appendix and its related invoice by Mail for all selected records">
+                        <field name="invoice_appendixs" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button class="btn-primary o_mail_send" name="send_invoice_appendix_by_mail" string="Send Appendix by Mail" type="object"/>
+                        <button class="btn-secondary" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="invoice_appendix_send" model="ir.actions.act_window">
+            <field name="name">Invoice Appendix By Mail</field>
+            <field name="res_model">mail.invoice_appendix</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="iwesabe_billing_system.model_invoice_appendix"/>
+            <field name="binding_view_types">list</field>
+        </record>
+    </data>
+</odoo>

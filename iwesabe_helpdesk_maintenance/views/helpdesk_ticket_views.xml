@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="helpdesk_ticket_view_form_imnherit" model="ir.ui.view">
+          <field name="name">helpdesk.ticket.form.inherit</field>
+          <field name="model">helpdesk.ticket</field>
+          <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+          <field name="arch" type="xml">
+               <xpath expr="//field[@name='legend_blocked']" position="before">
+                    <div class="oe_button_box" name="button_box">
+                         <button name="action_view_maintenance" type="object" class="oe_stat_button" icon="fa-gear" string="Maintenace"/>        
+                    </div>
+               </xpath>
+               <xpath expr="//button[@name='assign_ticket_to_self']" position="after">
+                    <button name="action_create_maintenance" type="object" string="Create Maintenance Request"/>
+                    <button name="action_create_work_order_request" type="object" string="Create Work Order Request"/>
+               </xpath>
+          </field>
+     </record>
+
+</odoo>

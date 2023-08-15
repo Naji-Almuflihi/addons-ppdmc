@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--Tree-->
+    <record id="view_tree_ams_billing_instance" model="ir.ui.view">
+        <field name="name">ams.billing.instance.tree</field>
+        <field name="model">ams.billing.instance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="server"/>
+                <field name="database_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form-->
+    <record id="view_form_ams_billing_instance" model="ir.ui.view">
+        <field name="name">ams.billing.form</field>
+        <field name="model">ams.billing.instance</field>
+        <field name="arch" type="xml">
+            <form string="Instance">
+                <header>
+                    <button name="check_connection" type="object" string="Check Connection" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Instance Name"/>
+                        <h1>
+                            <field name="name" placeholder="Instance Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="server"/>
+                            <field name="database_name"/>
+                            <field name="user"/>
+                            <field name="password" password="True"/>
+                            <field name="gaca_tbc"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="action_ams_billing_instance" model="ir.actions.act_window">
+        <field name="name">Instance</field>
+        <field name="res_model">ams.billing.instance</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click here to create a new instance !</p>
+        </field>
+    </record>
+
+    <!--Menu-->
+    <menuitem name="Billing System" id="menu_billing_main" web_icon="account,static/description/icon.png"
+        sequence="40" groups="base.group_user"/>
+    <menuitem name="Configuration" parent="menu_billing_main" id="menu_billing_configuration" sequence="100"/>
+    <menuitem name="Billing System Report" parent="menu_billing_main" id="billing_system_report" sequence="100"/>
+    <menuitem name="AMS" parent="menu_billing_configuration" id="ams_instance" sequence="4" action="action_ams_billing_instance"/>
+
+</odoo>

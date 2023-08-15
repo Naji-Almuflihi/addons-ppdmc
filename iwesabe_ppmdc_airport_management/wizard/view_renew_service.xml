@@ -1,0 +1,33 @@
+<odoo>
+
+	<!--Renew Tenancy service Wizard Form View -->
+	<record model="ir.ui.view" id="view_renew_tenancy_service_wizard">
+		<field name="name">renew.tenancy.service.view</field>
+		<field name="model">renew.tenancy.service</field>
+		<field name="arch" type="xml">
+			<form string="Renew Tenancy Wizard">
+				<p colspan="2" class="oe_edit_only oe_grey">
+					Fill up Start date, End date and Periods To Renew Tenancy.
+				</p>
+				<group col="2" colspan="2">
+					<field name="start_date" required="1"/>
+					<field name="end_date" required="1"/>
+				</group>
+				<footer>
+					<button name="renew_contract" type="object" string="Renew" class="oe_highlight"/>
+					or
+					<button string="Cancel" class="oe_link" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- Action for Renew Tenancy service Wizard -->
+	<record model="ir.actions.act_window" id="action_renew_tenancy_service_wiz">
+		<field name="name">Renew Tenancy Service Wizard</field>
+		<field name="res_model">renew.tenancy.service</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+
+</odoo>

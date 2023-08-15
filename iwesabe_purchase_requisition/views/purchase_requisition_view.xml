@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>	
+	 <record model="ir.ui.view" id="view_purchase_requisition_form_inherit">
+        <field name="name">purchase.requisition.form</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//form" position="attributes">
+        		<attribute name="delete">false</attribute>
+        		<attribute name="duplicate">false</attribute>
+        	</xpath>
+			<!--<xpath expr="//button[1][@name='%(purchase_requisition.action_purchase_requisition_to_so)d']" position="attributes">-->
+        		<!--<attribute name="context">{'default_picking_type_id':material_picking_type_id}</attribute>-->
+        	<!--</xpath>-->
+			<!--<xpath expr="//button[2][@name='%(purchase_requisition.action_purchase_requisition_to_so)d']" position="attributes">-->
+        		<!--<attribute name="context">{'default_picking_type_id':material_picking_type_id}</attribute>-->
+        	<!--</xpath>-->
+        	<xpath expr="//form/sheet/group/group/field[@name='user_id']" position="attributes">
+        		<attribute name="readonly">1</attribute>
+        	</xpath>
+        	<xpath expr="//form/sheet/group/group/field[@name='type_id']" position="attributes">
+        		<attribute name="readonly">1</attribute>
+        	</xpath>
+        	<xpath expr="//form/sheet/group/group/field[@name='origin']" position="attributes">
+        		<attribute name="readonly">1</attribute>
+        	</xpath>
+        	
+        	<xpath expr="//form/sheet/group/group/field[@name='origin']" position="after">
+        		<field name="requisition_emp_id"/>
+        		<field name="material_picking_type_id"/>
+
+        	</xpath>
+			<xpath expr="//field[@name='type_id']" position="after">
+				<field name="is_requisition_agreement" invisible="1"/>
+			</xpath>
+			<xpath expr="//field[@name='line_ids']" position="attributes">
+				<attribute name="attrs">{'readonly':[('origin','!=',False)]}</attribute>
+			</xpath>
+				<xpath expr="//field[@name='line_ids']//tree//field[@name='product_id']" position="after">
+				<field name="is_requisition_agreement" invisible="1"/>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='product_id']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='product_description_variants']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='product_qty']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='product_uom_id']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='qty_ordered']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='analytic_tag_ids']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='schedule_date']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']//tree//field[@name='account_analytic_id']" position="attributes">
+				<attribute name="attrs">{'readonly':[('is_requisition_agreement','=',True)]}</attribute>
+			</xpath>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_purchase_requisition_tree_inherit">
+        <field name="name">purchase.requisition.tree.inherit</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+        <field name="arch" type="xml">
+        <xpath expr="//tree" position="attributes">
+        	<attribute name="delete">false</attribute>
+        	<attribute name="duplicate">false</attribute>
+        </xpath>
+        <xpath expr="//tree/field[@name='date_end']" position="after">
+        	<field name="requisition_emp_id"/>
+<!--			<field name="is_requisition_agreement" />-->
+
+        </xpath>
+        </field>
+    </record>
+
+     <record model="ir.ui.view" id="purchase_order_form_in">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='origin']" position="attributes">
+        		<attribute name="force_save">1</attribute>
+        	</xpath>
+        	<xpath expr="//form/sheet/group/group/field[@name='origin']" position="after">
+        		<field name="requisition_emp_id"/>
+        	</xpath>
+		</field>
+	</record>
+		
+     <record model="ir.actions.act_window" id="purchase_requisition.action_purchase_requisition">
+        <field name="name">Purchase Request</field>
+     </record>
+     <menuitem
+        id="purchase_requisition.menu_purchase_requisition_pro_mgt"
+        name='Purchase Request'
+        sequence="10"
+        parent="purchase.menu_procurement_management"
+        action="purchase_requisition.action_purchase_requisition"
+        />
+</odoo>

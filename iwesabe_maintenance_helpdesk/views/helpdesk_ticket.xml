@@ -1,0 +1,34 @@
+<odoo>
+  <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_inherit_helpdesk_ticket_view_form" model="ir.ui.view">
+        <field name="name">view_inherit_helpdesk_ticket_view_form</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <div class="oe_button_box" name="button_box">
+                <button class="oe_stat_button" type="object" icon="fa-truck" name="action_open_related_maintenance" attrs="{'invisible':[('maintenance_count','=',0)]}">
+                    <field string="Maintenance" name="maintenance_count" widget="statinfo"
+                />
+                </button>
+
+            </div>
+            <xpath expr="//field[@name='sla_status_ids']" position="before">
+                <h2><field name="sequence" class="field_name" placeholder="Number..."/></h2>
+            </xpath>
+            <!-- position: after|before|replace|attributes|inside -->
+            <xpath expr="//field[@name='email_cc']" position="after">
+                <field name="property_id"/>
+                <field name="maintenance_id"/>
+            </xpath>
+
+          <!-- position: after|before|replace|attributes|inside -->
+            <!-- <xpath expr="//button[@name='assign_ticket_to_self']" position="after">
+                <button name="create_maintenance" string="Create Maintenance Request" type="object" class="btn-primary" attrs="{'invisible':[('maintenance_count','!=',0)]}"/>
+            </xpath> -->
+
+
+        </field>
+    </record>
+  </data>
+</odoo>

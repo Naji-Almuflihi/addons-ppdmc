@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+
+
+        <record id="form_view_site_site" model="ir.ui.view">
+            <field name="name">name.site.site.form</field>
+            <field name="model">site.site</field>
+            <field name="arch" type="xml">
+                <form string="Site">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_sit" model="ir.actions.act_window">
+            <field name="name">Site</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">site.site</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="menu_action_site" name="Site" parent="menu_configuration_main" action="action_view_sit"/>
+
+
+    </data>
+</odoo>

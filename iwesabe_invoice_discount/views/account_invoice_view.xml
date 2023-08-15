@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+         <record id="discount_invoice_view_form" model="ir.ui.view">
+            <field name="name">discount.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]/group" position="after">
+                    <!-- <div class="container"> -->
+                    <div>
+                        <label for="global_discount_type" string="Discount Type:"/>
+                        <field name="global_discount_type" class="oe_inline"
+                               attrs="{'readonly':[('state', 'in', ['posted', 'cancel'])]}"/>
+                    </div>
+                    <!-- <div class="container"> -->
+                    <div>
+                        <label for="global_discount_rate" string="Discount :"
+                               />
+                        <field name="global_discount_rate" class="oe_inline"
+                               attrs="{'readonly':['|', ('state', 'in', ['posted', 'cancel']), ('global_discount_type', 'in', [None, False])]}"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position="after">
+                    <field name="amount_discount" attrs="{'invisible':[('amount_discount','=',0)]}" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

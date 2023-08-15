@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+         Inherit Form View to Modify it
+        <record id="view_inherit_view_order_form" model="ir.ui.view">
+            <field name="name">view_inherit_view_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][2]" position="attributes">
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,320 @@
+<odoo>
+    <data>
+        <template id="tenant_service_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div style="width:100%;font-size: 12px;">
+
+                                <center>
+                                    <div style="width:50%;">
+                                        <h3>
+                                            <strong>
+                                                Tenant Service Quotation
+                                            </strong>
+                                            <br/>
+                                            <span t-esc="o.name"/>
+                                        </h3>
+                                    </div>
+                                </center>
+                                <br/>
+                                <br/>
+
+                                <div style="width:100%">
+                                    <div style="float:left;width:50%;">
+                                        <strong style="float:left;width:30%;">Tenancy :</strong>
+                                        <span t-esc="o.tenancy_id.name"/>
+                                        <br/>
+                                        <strong style="float:left;width:30%;">Customer :</strong>
+                                        <span t-esc="o.partner_id.name"/>
+                                        <br/>
+                                        <strong style="float:left;width:30%;">خطاب صادر رقم :</strong>
+                                        <span t-esc="o.import_number"/>
+                                        <br/>
+                                        <strong style="float:left;width:30%;">Implementation Service :</strong>
+                                        <span t-esc="o.implementation_service_id.name"/>
+
+                                    </div>
+                                    <div style="float:right;width:50%;">
+                                        <strong style="float:left;width:45%;">Date(Gregorian/Hijri) :</strong>
+                                        <span t-esc="o.date"/>
+                                        <br/>
+                                        <strong style="float:left;width:45%;">Start Date(Gregorian/Hijri) :</strong>
+                                        <span t-esc="o.date_start"/>-
+                                        <span t-esc="o.date_start_hijri"/>
+                                        <br/>
+                                        <strong style="float:left;width:45%;">End Date(Gregorian/Hijri) :</strong>
+                                        <span t-esc="o.date_end"/>-
+                                        <span t-esc="o.date_end_hijri"/>
+                                        <br/>
+
+                                    </div>
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+
+                                    <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                           class="table table-sm table-bordered oe_inline">
+                                        <header>
+                                            <strong style="font-size:15px;">Service</strong>
+                                        </header>
+                                        <tr>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Service
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Points
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Rent
+                                                    </b>
+                                                </center>
+                                            </th>
+
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Total
+                                                    </b>
+                                                </center>
+                                            </th>
+
+                                        </tr>
+                                        <t t-foreach="o.service_ids" t-as="line">
+                                            <tr>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.product_id.name"/>
+                                                    </center>
+                                                </th>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.points"/>
+                                                    </center>
+                                                </th>
+
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.rent"/>
+                                                    </center>
+                                                </th>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.total"/>
+                                                    </center>
+                                                </th>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                    <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                           class="table table-sm table-bordered oe_inline">
+                                        <header>
+                                            <strong style="font-size:15px;">Equipments</strong>
+                                        </header>
+                                        <tr>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Equipment
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Quantity
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Rent
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Total
+                                                    </b>
+                                                </center>
+                                            </th>
+
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Reserved
+                                                    </b>
+                                                </center>
+                                            </th>
+
+                                        </tr>
+                                        <t t-foreach="o.equipment_ids" t-as="line">
+                                            <tr>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.equipment_id.name"/>
+                                                    </center>
+                                                </th>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.quantity"/>
+                                                    </center>
+                                                </th>
+
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.rent"/>
+                                                    </center>
+                                                </th>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.total"/>
+                                                    </center>
+                                                </th>
+
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.number_reserved"/>
+                                                    </center>
+                                                </th>
+                                            </tr>
+                                        </t>
+                                    </table>
+
+                                    <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                           class="table table-sm table-bordered oe_inline">
+                                        <header>
+                                            <strong style="font-size:15px;">Telephone Service &amp; Type Of Sets</strong>
+                                        </header>
+                                        <tr>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Phone Extention Services
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Quantity
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Rent
+                                                    </b>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Total
+                                                    </b>
+                                                </center>
+                                            </th>
+
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center>
+                                                    <b style="font-size:15px;">
+                                                        Reserved
+                                                    </b>
+                                                </center>
+                                            </th>
+
+                                        </tr>
+                                        <t t-foreach="o.service_phone_extention_ids" t-as="line">
+                                            <tr>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.phone_extention_id.name"/>
+                                                    </center>
+                                                </th>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.quantity"/>
+                                                    </center>
+                                                </th>
+
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.rent"/>
+                                                    </center>
+                                                </th>
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.total"/>
+                                                    </center>
+                                                </th>
+
+                                                <th colspan="1"
+                                                    style="text-align:center;border-width:1px;border-color:black;">
+                                                    <center style="font-size:10px;">
+                                                        <span t-esc="line.number_reserved"/>
+                                                    </center>
+                                                </th>
+                                            </tr>
+                                        </t>
+
+
+                                    </table>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+
+</odoo>

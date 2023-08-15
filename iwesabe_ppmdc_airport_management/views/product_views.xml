@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- Product -->
+     <record id="product_airport_form" model="ir.ui.view">
+          <field name="name">product.airport.form</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="product.product_template_form_view" />
+          <field name="arch" type="xml">
+               <xpath expr="//div[@name='options']" position="inside">
+                         <div modifiers="{}">
+                              <field name="is_furniture" on_change="1" modifiers="{}" id="is_furniture"/>
+                              <label for="is_furniture" modifiers="{}"/>
+                         </div>
+               </xpath>
+          </field>
+     </record>
+
+
+     <!--Action Product  -->
+     <record id="action_furniture" model="ir.actions.act_window">
+          <field name="name">Furniture</field>
+          <field name="res_model">product.template</field>
+          <field name="view_mode">kanban,tree,form,activity</field>  
+          <field name="domain">[('is_furniture', '=', True)]</field>
+          <field name="context">{'default_is_furniture': True}</field>        
+     </record>
+
+     
+</odoo>

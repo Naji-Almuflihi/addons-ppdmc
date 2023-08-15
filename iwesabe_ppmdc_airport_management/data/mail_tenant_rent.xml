@@ -1,0 +1,75 @@
+<odoo>
+    <record id="mail_tenant_rent" model="mail.template">
+        <field name="name">Mail to Tenant.</field>
+        <field name="model_id" ref='iwesabe_ppmdc_airport_management.model_tenancy_rent_schedule'/>
+        <!-- <field name='email_from'>${object.issue_email}</field> -->
+        <!-- <field name='email_to'>${object.student_id.email}</field> -->
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Rent Schedule on ${object.start_date}</field>
+        <field name="body_html">
+            <![CDATA[
+            <p> Dear ${object.tenancy_id.tenant_id.name}<br/> 
+               Your rent is scheduled on ${object.start_date}. So please pay before the due date.<br/></p>
+                From<br/>
+                ${object.tenancy_id.property_id.property_manager.name}
+            ]]>
+        </field>
+    </record>
+
+    <record id="email_send_for_creation_mail" model="mail.template">
+        <field name="name">Tenancy Service Quotation Created</field>
+        <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_tenancy_service_contract"/>
+        <field name="subject">Email - ${object.name}</field>
+        <field name="email_from">${(user.email_formatted) | safe}</field>
+        <field name='email_to'>${object.partner_id.email | safe}</field>
+        <field name="body_html"><![CDATA[
+        <p>Implementation Service Application request is created- ${object.name}.</p>
+        <p>Please Check it</p>
+        <p>Thank You,</p>
+        <br/>
+
+        ]]></field>
+        <field name="report_template" ref="iwesabe_ppmdc_airport_management.report_tenancy_service_contract"/>
+        <field name="report_name">${(object.name or '').replace('/','_')}</field>
+      <field name="lang">${object.partner_id.lang}</field>
+      <field name="auto_delete" eval="True"/>
+    </record>
+
+
+    <record id="email_send_for_ims_creation_mail" model="mail.template">
+        <field name="name">Implementation Service Application Created</field>
+        <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_implementation_service_application"/>
+        <field name="subject">Email - ${object.name}</field>
+        <field name="email_from">${(user.email_formatted) | safe}</field>
+        <!-- <field name='email_to'>${object.partner_id.email | safe}</field> -->
+        <field name="email_to">${object.get_email_to()}</field>
+        <field name="body_html"><![CDATA[
+        <p>Implementation Service Application:- ${object.name}. for ${object.tenancy_id.name} created and in right now that was in ${object.state} Stage </p>
+        <p>Please Check it</p>
+        <p>Thank You,</p>
+        <br/>
+        ]]></field>
+        
+      <field name="lang">${object.partner_id.lang}</field>
+      <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="email_rant_pay_user_reminder" model="mail.template">
+        <field name="name">Soft Reminder for season Rent</field>
+        <field name="email_from">${(object.company_id.email_formatted or user.email_formatted) | safe}</field>
+        <field name="subject">Season Rent Expired soon</field>
+        <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_season_year"/>
+        <field eval="True" name="auto_delete"/>
+        <field name="body_html">
+            <![CDATA[
+            <p>Hello,
+            this is remind you that the season rent for the year ${object.name} has been expired on ${object.date_to} (${object.date_to_hijri}).</p>
+            <br/>
+            please renew as soon as possible
+            <br/>
+            if already done then please ignore mail
+            <br/>
+            ]]>
+        </field>
+    </record>
+</odoo>

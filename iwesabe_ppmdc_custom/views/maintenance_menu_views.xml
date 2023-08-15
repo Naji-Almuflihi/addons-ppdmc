@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- Action Setting -->
+     <record id="action_setting_maintenance" model="ir.actions.act_window">
+          <field name="name">Setting</field>
+          <field name="res_model">res.config.settings</field>
+          <field name="view_mode">form</field>
+     </record>
+
+     <!-- Setting -->
+     <menuitem 
+          id="menu_setting_maintenance" 
+          name="Settings" 
+          parent="maintenance.menu_maintenance_configuration" 
+          action="action_setting_maintenance" 
+          sequence="1"/>
+
+
+</odoo>

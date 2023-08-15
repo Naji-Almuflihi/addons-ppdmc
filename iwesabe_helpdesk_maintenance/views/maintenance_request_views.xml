@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="maintenance.hr_equipment_request_view_form" model="ir.ui.view">
+        <field name="name">equipment.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Request">
+                <header>
+                    <button attrs="{'invisible': [('is_repair_stage', '=', False)]}" class="oe_highlight" name="send_mail_repair" string="Send Mail For Repair" type="object"/>
+                    <button attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight" name="submit_button" string="Submit" type="object"/>
+                    <button attrs="{'invisible': [('state', '=', ('draft'))]}" class="oe_highlight" name="submit_set_to_new_requests" string="Set To New Request" type="object"/>
+                    <button attrs="{'invisible': ['|', ('state', '!=', 'submit'), ('is_able_to_start', '=', False)]}" class="oe_highlight" name="start_repair_button" string="Start Repair" type="object"/>
+                    <button attrs="{'invisible': ['|', ('is_request_validation', '=', False), ('is_request_approve', '=', False)]}" class="oe_highlight" name="validation_button" string="Request Approve" type="object"/>
+                    <button attrs="{'invisible': ['|', ('is_ask_approve', '=', False), ('state', '!=', 'in_progress')]}" class="oe_highlight" name="ask_approve_button" string="Ask Approve" type="object"/>
+                    <button attrs="{'invisible': ['|', ('state', '!=', 'under_validation'), ('is_access_validation', '=', False)]}" class="oe_highlight" name="under_validation_button" string="Validation" type="object"/>
+                    <button attrs="{'invisible': [('state', 'not in', ['in_progress', 'under_validation'])]}" class="oe_highlight" name="create_spare_parts" string="Create Spare Parts" type="object"/>
+                    <button attrs="{'invisible': ['|', ('state', '!=', 'under_validation'), ('is_access_validation', '=', False)]}" class="oe_highlight" name="return_repair_button" string="Return To Repair" type="object"/>
+                    <button attrs="{'invisible': [('archive', '=', True)]}" invisible="1" name="archive_equipment_request" string="Cancel" type="object"/>
+                    <button attrs="{'invisible': [('archive', '=', False)]}" name="reset_equipment_request" string="Reopen Request" type="object"/>
+                    <field attrs="{'invisible': [('archive', '=', True)]}" name="stage_id" options="{'clickable': '1'}" widget="statusbar" invisible="1"/>
+                    <field name="state" readonly="1" statusbar_visible="draft,submit,in_progress,ask_approve,repaired" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="o_stat_button" icon="fa-cog" name="maintenance_spare_records" type="object">
+                            <field name="spare_parts_count" string="Spare Parts" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div attrs="{'invisible': [('archive', '=', False)]}">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_right">
+                        <field class="oe_inline" name="kanban_state" widget="state_selection"/>
+                    </div>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="number" string="Number"/>
+                        <field name="number" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                        <br/>
+                        <label class="oe_edit_only" for="ticket_id" string="Ticket"/>
+                        <field name="ticket_id" options="{'no_create': 1, 'no_open': 1, 'no_create_edit': 1}" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                    </div>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Title"/>
+                        <h1>
+                            <field name="name" placeholder="Maintenance Request" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="maintenance_team_id" options="{'no_create': True, 'no_open': True}" string="SubContractor / Team"  attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+
+                            <field name="module_porperty_zone_id" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="main_zone_location_id" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="property_type_id" attrs="{'required': [('state','=','submit')], 'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="sub_2"/>
+                            <field name="property_id" string="Location Number" attrs="{'required': [('state','=','submit')], 'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="equipment_category_id" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field context="{'default_company_id':company_id, 'default_category_id':category_id}" name="equipment_id" domain="[('category_id', '=', equipment_category_id)]" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+
+                            
+
+                            <field attrs="{'required': [('state', '=', 'under_validation')]}" name="location_id" readonly="1"/>
+                           
+                            
+                             
+                            <field name="system_category_id" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            
+                            <field attrs="{'invisible': [('equipment_id', '=', False)],'readonly': [('state', '=', 'in_progress')]}" context="{'default_company_id':company_id}" groups="maintenance.group_equipment_manager" name="category_id"/>
+                            <field name="request_date" readonly="1"/>
+                            <field name="closed_date" invisible="1"/>
+                            <field invisible="1" name="done"/>
+                            <field attrs="{'required':[('is_repair_stage','=',True)], 'readonly': [('state', '=', 'in_progress')]}" name="close_date" readonly="True"/>
+                            <field invisible="1" name="archive"/>
+                            <field name="maintenance_type" widget="radio" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="execution_time" readonly="True"/>
+                            <field force_save="1" name="execution_day" readonly="True"/>
+                            <label for="actual_duration"/>
+                            <div class="o_row">
+                                <field name="actual_duration" nolabel="1" readonly="1" /><span class="ml8">Hours</span>
+                            </div>
+                            <field name="request_validation" readonly='1'/>
+                            <field name="note" invisible='1'/>
+                        </group>
+                        <group>
+                            <field invisible="1" name="owner_user_id" string="Requested By"/>
+                            <field name="department_section_id" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="user_id" string="Technician/SubContract" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="user_assistant_id" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field invisible="True" name="check_day_time"/>
+                            <field invisible="True" name="is_validation_stage"/>
+                            <field invisible="True" name="is_repair_stage"/>
+                            <field invisible="1" name="is_request_validation"/>
+                            <field name="schedule_date" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <label for="duration"/>
+                            <div>
+                                <field class="oe_inline" name="duration" widget="float_time" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                                <span class="ml8">hours</span>
+                            </div>
+                            <field name="priority" widget="priority" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field groups="base.group_no_one" name="email_cc" string="Email cc" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field groups="base.group_multi_company" name="company_id" options="{'no_create': True}" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="is_able_to_start" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                            <field name="is_request_approve" invisible="1"/>
+                            <field name="is_access_validation" invisible="1"/>
+                            <field name="is_ask_approve" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Internal Notes" invisible="1"/>
+                <notebook>
+                    <page string="Internal Notes">
+                        <field name="internal_note" widget="html" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                    </page>
+                    <page attrs="{'invisible': [('state', 'in',('draft','submit'))],'readonly': [('state', '=', 'in_progress')]}" string="Team/SubContract Comment">
+                        <field name="subcontract_comment" widget="html" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                    </page>
+                </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                    <field name="activity_ids" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                    <field name="message_ids" attrs="{'readonly': [('state', '=', 'in_progress')]}"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="form_view_maintenance_equipment_inherit" model="ir.ui.view">
+        <field name="name">name.maintenance.equipment.inherit.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="string">Department/Section Head</attribute>
+            </xpath>
+        </field>
+    </record>
+    <menuitem active="False" id="maintenance.menu_maintenance_stage_configuration"/>
+
+    <record id="form_view_maintenance_request_inherit_employee_id" model="ir.ui.view">
+        <field name="name">name.maintenance.request.inherit.employee.id.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="hr_maintenance.maintenance_request_view_form_inherit_hr"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '=', 'in_progress')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

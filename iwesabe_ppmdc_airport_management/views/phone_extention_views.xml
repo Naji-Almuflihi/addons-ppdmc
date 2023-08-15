@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form Phone Extentions -->
+    <record id="phone_extention_form" model="ir.ui.view">
+        <field name="name">phone.extention.form</field>
+        <field name="model">phone.extention</field>
+        <field name="arch" type="xml">
+            <form string="Phone Extention">
+                <header>
+                </header>
+                <sheet>
+                    <!-- <widget name="web_ribbon" text="Rented" bg_color="bg-success" attrs="{'invisible': [('rented', '=', False)]}"/> -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Phone Number ..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="rent"/>
+                        </group>
+                        <group>
+                            <field name="tenancy_phone_id" invisible="1"/>
+                            <!-- <field name="rented" /> -->
+                            <field name="product_id" domain="[('is_phone_extention_servie', '=', True)]"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page name="extention_numbers" string="Extention Numbers">
+                            <field name="extention_number_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="used_by"/>
+                                    <field name="type"/>
+                                    <field name="tenancy_id" readonly="1"/>
+                                    <field name="partner_id"/>
+                                    <field name="service_contract_id" readonly="1"/>
+                                    <field name="reserverd" readonly="1"/>
+                                    <field name="implementation_application_number_id" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree Phone Extention -->
+    <record id="phone_extention_tree" model="ir.ui.view">
+        <field name="name">phone.extention.tree</field>
+        <field name="model">phone.extention</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="rent"/>
+                <field name="tenancy_phone_id" invisible="1"/>
+                <!-- <field name="rented" /> -->
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Action Phone Extention -->
+    <record id="action_phone_extention" model="ir.actions.act_window">
+        <field name="name">Phone Extention</field>
+        <field name="res_model">phone.extention</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Phone Extention invoice form -->
+    <!-- <record id="phone_extention_invoice_form" model="ir.ui.view">
+        <field name="name">phone.extention.invoice.form</field>
+        <field name="model">phone.extention.invoice</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="calculate_invoice" type="object" string="Calculate Invoice" class="oe_highlight"
+                            icon="fa-gear"/>
+                    <button name="create_invoice" type="object" string="Create Invoice" class="oe_highlight"/>
+                </header>
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-money">
+                            <field name="invoice_count" string="Invoice" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_service_application" type="object" class="oe_stat_button" icon="fa-pencil-square-o" string="Service Application" />
+
+
+                    </div>
+
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Description ..."/>
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="date"/>
+                        <field name="partner_id"/>
+                        <field name="implementation_service_application_id"/>
+                        <field name="tenancy_id"/>
+                        <field name="tenancy_contract_id"/>
+                        <field name="phone_extention_numbers_ids" widget="many2many_tags" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page name="line_ids" string="Invoice Line">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="extention_number_id"  />
+
+                                    <field name="tenancy_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="price"/>
+                                    <field name="invoiced"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+
+
+    <!-- Phone extention invoice tree -->
+   <!--  <record id="phone_extention_invoice_tree" model="ir.ui.view">
+        <field name="name">phone.extention.invoice.tree</field>
+        <field name="model">phone.extention.invoice</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="line_ids"
+                       widget="many2many_tags"
+                />
+            </tree>
+        </field>
+    </record> -->
+
+    <!-- Phone extention invoice action -->
+   <!--  <record id="action_phone_extention_invoice" model="ir.actions.act_window">
+        <field name="name">Phone Extention Invoice</field>
+        <field name="res_model">phone.extention.invoice</field>
+        <field name="view_mode">tree,form</field>
+    </record> -->
+
+</odoo>

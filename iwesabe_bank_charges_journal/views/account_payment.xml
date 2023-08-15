@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_account_payment_form_bank_charge" model="ir.ui.view">
+            <field name="name">account.payment.form.bank.charge</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="before">
+                    <field name="is_journal_bank" invisible="1"/>
+                    <field name="is_bank_charge" attrs="{'invisible':['|',('payment_type','=','inbound'),('is_journal_bank','=',False)],'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="bank_charge" attrs="{'invisible':[('is_bank_charge','=',False)],'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="bank_tax_id" attrs="{'invisible':[('is_bank_charge','=',False)],'readonly': [('state', '!=', 'draft')]}" domain="[('type_tax_use', '=', 'purchase')]"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_account_payment_from_invoices_bank_charge" model="ir.ui.view">
+            <field name="name">account.register.payments.wizard.bank.charge</field>
+            <field name="model">account.payment.register</field>
+            <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='communication']" position="after">
+                    <field name="is_journal_bank" invisible="1"/>
+                    <field name="is_bank_charge" attrs="{'invisible':['|',('payment_type','=','inbound'),('is_journal_bank','=',False)]}"/>
+                    <field name="bank_charge" attrs="{'invisible':[('is_bank_charge','=',False)]}"/>
+                    <field name="bank_tax_id" attrs="{'invisible':[('is_bank_charge','=',False)]}" domain="[('type_tax_use', '=', 'purchase')]"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

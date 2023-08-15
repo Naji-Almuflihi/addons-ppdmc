@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <report
+            id="revenue_report_vat_xlsx"
+            model="wizard.revenue_report.vat"
+            string="Revenue Report Vat"
+            report_type="xlsx"
+            name="iwesabe_billing_system.revenue_report_vat_xlsx"
+            file="iwesabe_billing_system.revenue_report_vat_xlsx"
+            attachment_use="True"
+            menu = "False"
+        />
+
+         <record id="revenue_report_vat_xlsx_view_form" model="ir.ui.view">
+            <field name="name">revenue_report_vat_xlsx_view_form.form</field>
+            <field name="model">wizard.revenue_report.vat</field>
+            <field name="arch" type="xml">
+                <form>
+
+                        <group string="Generate Revenue Vat Excel Report">
+                            <group>
+                                <field name="from_date"/>
+                                <field name="with_vat"/>
+                            </group>
+                            <group>
+                                <field name="to_date"/>
+                            </group>
+                        </group>
+
+                    <footer>
+                        <button name="print_revenue_report_vat_xls" type="object" string="Export Excel" class="oe_highlight"/> OR
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!--TODO the most powerfull window action-->
+        <record id="revenue_report_vat_wizard_action" model="ir.actions.act_window">
+            <field name="name">Revenue Report Vat</field>
+            <field name="res_model">wizard.revenue_report.vat</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="revenue_report_vat_wizard_rep_xls" name="Revenue Report Vat" parent="iwesabe_billing_system.billing_system_report" action="revenue_report_vat_wizard_action" sequence="21"/>
+
+
+
+    </data>
+</odoo>

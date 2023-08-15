@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="payment_account_inherit_view" model="ir.ui.view">
+		<field name="name">account.payment.view.form</field>
+		<field name="model">account.payment</field>
+		<field name="inherit_id" ref="account.view_account_payment_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='payment_type']" position="after">
+				<field attrs="{'invisible':[('is_internal_transfer','=',False)],      'required':[('is_internal_transfer','=',True)]}" name="internal_transfer_type"/>
+				<field attrs="{      'invisible':       ['|',('is_internal_transfer','=',False),('internal_transfer_type','not in',['a_to_a','a_to_j'])],      'required' :       [('is_internal_transfer','=',True),('internal_transfer_type','in',['a_to_a','a_to_j'])]}" name="from_account_id"/>
+				<field attrs="{      'invisible':      ['|',('is_internal_transfer','=',False),('internal_transfer_type','not in',['j_to_j','j_to_a'])],      'required' :[('is_internal_transfer','=',True),('internal_transfer_type','in',['j_to_j','j_to_a'])] }" name="from_journal_id"/>
+				<field attrs="{      'invisible':      ['|',('is_internal_transfer','=',False),('internal_transfer_type','not in',['a_to_a','j_to_a'])],      'required' : [('is_internal_transfer','=',True),('internal_transfer_type','in',['a_to_a','j_to_a'])]      }" name="to_account_id"/>
+				<field attrs="{'invisible':      ['|',('is_internal_transfer','=',False),('internal_transfer_type','not in',['j_to_j','a_to_j'])],      'required' :[('is_internal_transfer','=',True),('internal_transfer_type','in',['j_to_j','a_to_j'])]      }" name="to_journal_id"/>
+			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="attributes">
+				<attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+			</xpath>
+		</field>
+	</record>
+	<!-- <record id="view_account_payment_form_bank_charge" model="ir.ui.view">
+	<field name="name">account.payment.form.bank.charge</field>
+	<field name="model">account.payment</field>
+	<field name="inherit_id" ref="account.view_account_payment_form"/>
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='date']" position="before">
+			<field invisible="1" name="is_journal_bank"/>
+			<field attrs="{'invisible':['|','|',('payment_type','=','inbound'),('is_journal_bank','=',False),('is_internal_transfer','=',True)],'required':[('is_internal_transfer','=',False)]}" name="is_bank_charge"/>
+			<field attrs="{'invisible':[('is_bank_charge','=',False)],'required':[('is_bank_charge','!=',False)]}" name="bank_charge"/>
+			<field attrs="{'invisible':[('is_bank_charge','=',False)]}" name="bank_tax_id"/>
+		</xpath>
+	</field>
+</record> -->
+	<record id="view_account_payment_from_invoices_bank_charge" model="ir.ui.view">
+		<field name="name">account.register.payments.wizard.bank.charge</field>
+		<field name="model">account.payment.register</field>
+		<field name="inherit_id" ref="account.view_account_payment_register_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='communication']" position="after">
+				<field invisible="1" name="is_journal_bank"/>
+				<field attrs="{'invisible':['|','|',('payment_type','=','inbound'),('is_journal_bank','=',False)],'required':['|',('payment_type','!=','inbound'),('is_journal_bank','!=',False)]}" name="is_bank_charge"/>
+				<field attrs="{'invisible':[('is_bank_charge','=',False)],'required':[('is_bank_charge','!=',False)]}" name="bank_charge"/>
+				<field attrs="{'invisible':[('is_bank_charge','=',False)],'required':[('is_bank_charge','!=',False)]}" name="bank_tax_id"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

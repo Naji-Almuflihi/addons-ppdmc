@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+
+        <record id="form_view_repair_order_inherit" model="ir.ui.view">
+            <field name="name">name.repair.order.inherit.form</field>
+            <field name="model">repair.order</field>
+            <field name="inherit_id" ref="repair.view_repair_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook//page[@name='operations']" position="replace">
+
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="maintenance_id" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='location_id']" position="attributes">
+                    <attribute name="string">Warehouse/Location</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="before">
+                   <field name="location_property_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

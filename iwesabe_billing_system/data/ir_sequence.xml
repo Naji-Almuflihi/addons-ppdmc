@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="bank_grantee_seq_record" model="ir.sequence">
+            <field name="name">Bank Grantee</field>
+            <field name="code">bank.grantee.seq</field>
+            <field name="prefix">BG</field>
+            <field name="padding">5</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="airline_service_contract_seq_record" model="ir.sequence">
+            <field name="name">Airline Service Contract</field>
+            <field name="code">airline.service.contract.seq</field>
+            <field name="prefix">ASC</field>
+            <field name="padding">5</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="invoice_appendix_seq_record" model="ir.sequence">
+            <field name="name">Invoice Appendix</field>
+            <field name="code">invoice.appendix</field>
+            <field name="prefix">AAPX</field>
+            <field name="padding">4</field>
+            <field eval="False" name="company_id"/>
+        </record>
+
+        <record id="revenue_appendix_seq_record" model="ir.sequence">
+            <field name="name">Revenue Appendix</field>
+            <field name="code">revenue.appendix</field>
+            <field name="prefix">REPX</field>
+            <field name="padding">4</field>
+            <field eval="False" name="company_id"/>
+        </record>
+    </data>
+</odoo>

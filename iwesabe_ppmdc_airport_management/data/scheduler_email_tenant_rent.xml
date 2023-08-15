@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <record id="scheduler_email_rent_user_scheduled" model="ir.cron">
+            <field name="name">Scheduled Rent User</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_season_year"/>
+            <field name="code">model.send_mail_rent_reminder_schedule()</field>
+        </record>
+        <record id="scheduler_email_tenant_rent_scheduled" model="ir.cron">
+            <field name="name">Scheduled Rent</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_tenancy_rent_schedule"/>
+            <field name="code">model.send_mail_tenant_rent_schedule()</field>
+        </record>
+        <record id="check_end_date_email_tenant_tenancy" model="ir.cron">
+            <field name="name">tenant Tenancy</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_tenant_tenancy"/>
+            <field name="code">model.send_mail_notification_tenant()</field>
+        </record>
+        <record id="email_send_to_tenancy_partner" model="mail.template">
+            <field name="name">Tenant Tenancy Email</field>
+            <field name="subject">Email - ${object.name}</field>
+            <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_tenant_tenancy"/>
+            <field name="body_html">
+                <![CDATA[
+            <p>This Tenant Tenancy  - ${object.name} will ended after 15 days.</p><p>Please Check it</p><p>Thank You,</p><br/>]]>
+            </field>
+        </record>
+        <record id="email_send_to_tenancy_partner_cancel_requisition" model="mail.template">
+            <field name="name">Tenant Email To Cancellation Tenancy Approval User</field>
+            <field name="subject">Email - ${object.name}</field>
+            <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_tenant_tenancy"/>
+            <field name="body_html">
+                <![CDATA[
+            <p>Dear   - ${object.company_id.cancellation_tenancy_approval_id.name} .</p><p>This Tenant Tenancy  - ${object.name} in cancellation Requisition.</p><p>Please Check it</p><p>Thank You,</p><br/>]]>
+            </field>
+        </record>
+        <record id="email_send_to_tenancy_partner_cancelled" model="mail.template">
+            <field name="name">Tenant Email To Finance Group</field>
+            <field name="subject">Email - ${object.name}</field>
+            <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_tenant_tenancy"/>
+            <field name="body_html">
+                <![CDATA[
+            <p>This Tenant Tenancy  - ${object.name} IS Cancelled.</p><p>Please Check it</p><p>Thank You,</p><br/>]]>
+            </field>
+        </record>
+        <record id="email_send_to_tenancy_started" model="mail.template">
+            <field name="name">Tenant Tenancy Start</field>
+            <field name="subject">Email - ${object.name}</field>
+            <field name="model_id" ref="iwesabe_ppmdc_airport_management.model_tenant_tenancy"/>
+            <field name="body_html">
+                <![CDATA[
+            <p>This Tenant Tenancy  - ${object.name} in Progress .</p><p>Please Check it</p><p>Thank You,</p><br/>]]>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- LOAD [FORM]-->
+    <record id="view_ams_instance_load" model="ir.ui.view">
+        <field name="name">ams.instance.load.form</field>
+        <field name="model">ams.instance.load</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group><group><field name="date_from"/><field name="date_to"/></group><group/></group>
+                    <field name="show_reimport" invisible="1"/>
+                    <field name="show_load" invisible="1"/>
+                    <group>
+                        <group>
+                            <label for="instance_id"/>
+                            <div class="o_row">
+                                <field name="instance_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                                <button name="check_ams_conn" string="Check" type="object" icon="fa-plug" class="oe_stat_button"/>
+                            </div>
+                        </group>
+                        <group>
+                            <button name="validate_ams_data" string="Load Ams Data" type="object" class="oe_highlight" attrs="{'invisible':[('show_load','=',False)]}"/>
+                            <br/>
+                            <button name="reimport_data" string="Reimport Data" attrs="{'invisible':[('show_reimport','=',False)]}" type="object" class="oe_highlight"/>
+
+                        </group>
+
+                        <group>
+                            <button name="run_validation" string="Run Validate" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="summary" string=" "/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- LOAD [ACTION]-->
+    <record id="action_ams_instance_load" model="ir.actions.act_window">
+        <field name="name">Load From AMS</field>
+        <field name="res_model">ams.instance.load</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+    <!-- LOAD [MENU]-->
+    <menuitem  name="Billing" id="menu_billing" parent="iwesabe_billing_system.menu_billing_main" sequence="1"/>
+
+    <menuitem  name="Load From AMS" id="menu_ams_data_load" parent="iwesabe_billing_system.menu_billing" sequence="5" action="action_ams_instance_load"/>
+
+</odoo>

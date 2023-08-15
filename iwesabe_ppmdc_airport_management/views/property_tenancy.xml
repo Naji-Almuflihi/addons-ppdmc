@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+
+
+        <record id="tree_view_tenancy_property" model="ir.ui.view">
+            <field name="name">name.tenancy.property.tree</field>
+            <field name="model">tenancy.property</field>
+            <field name="arch" type="xml">
+                <tree string="Property Summary Per Season Tenancy" create="false" edit="false">
+                    <field name="property_id"/>
+                    <field name="partner_id"/>
+                    <field name="tenancy_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="rent_type_id"/>
+                    <field name="season_year_id"/>
+                    <field name="rent"/>
+                    <field name="gfa_meter"/>
+                    <field name="total"/>
+                    <field name="amount_total"/>
+                    <field name="paid_amount"/>
+                    <field name="amount_residual"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="form_view_tenancy_property" model="ir.ui.view">
+            <field name="name">name.tenancy.property.form</field>
+            <field name="model">tenancy.property</field>
+            <field name="arch" type="xml">
+                <form string="Property Summary Per Season Tenancy" create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="property_id"/>
+                                <field name="tenancy_id"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="rent_type_id"/>
+                            </group>
+                            <group>
+                                <field name="season_year_id"/>
+                                <field name="rent"/>
+                                <field name="gfa_meter"/>
+                                <field name="total"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_property_tenancy" model="ir.actions.act_window">
+            <field name="name">Property Summary Per Season Tenancy</field>
+            <field name="res_model">tenancy.property</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem
+                id="menu_property_tenancy"
+                name="Property Summary Per Season Tenancy"
+                action="action_property_tenancy"
+                parent="menu_report_sub"
+        />
+
+
+    </data>
+</odoo>

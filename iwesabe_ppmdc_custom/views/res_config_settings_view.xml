@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_manufacture" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.Manufacture</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Equipment" string="Manufacture" data-key="Manufacture" >
+                    
+                    <h2>Equipment</h2>
+                    <div class="row mt16 o_settings_container">
+                    	    
+                            <group col="2">
+                                <field name="equipment_income_account"/>
+                            </group>
+
+                           
+                        </div>
+                   
+                    </div>
+
+            </xpath>
+        </field>
+    </record>
+
+
+
+     <!-- Action Setting -->
+     <record id="action_setting_airport" model="ir.actions.act_window">
+          <field name="name">Setting</field>
+          <field name="res_model">res.config.settings</field>
+          <field name="view_mode">form</field>
+     </record>
+
+</odoo>

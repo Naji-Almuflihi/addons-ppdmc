@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+        <record id="view_generate_revenue_form" model="ir.ui.view">
+            <field name="name">view_generate_revenue_form</field>
+            <field name="model">generate.revenue</field>
+            <field name="arch" type="xml">
+                <form string="Create Invoice Appendix">
+                    <sheet>
+                        <group>
+                            <group>
+                                 <field name="from_date"/>
+                                <field name="to_date"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+
+                            </group>
+
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="generate_revenue" string="Confirm" class="btn-primary" type="object"/>
+                        <button class="btn-primary" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_generate_revenue_view" model="ir.actions.act_window">
+            <field name="name">Generate Revenue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">generate.revenue</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+       <!--  <menuitem id="menu_generate_revenue_view" name="Generate Revenue" parent="iwesabe_billing_system.menu_billing_main" action="action_generate_revenue_view" sequence="11"/> -->
+    </data>
+</odoo>

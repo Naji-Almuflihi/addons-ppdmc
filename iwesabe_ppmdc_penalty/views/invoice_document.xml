@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <template id="report_invoice_document_inherited_temp" inherit_id="account.report_invoice_document">
+            <xpath expr="//t/div/p[@name='incoterm']" position="after">
+                <t t-if="o.contract_id">
+                    <br/>
+                    <span>Supplier Contract Penalty</span>
+                    <table style="border:.1px solid black" class="table table-sm" name="penalty_line_table">
+                        <thead>
+                            <tr style="font-size:12px;background-color:#a8d5e5">
+                                <!-- TODO: remove in master -->
+                                <th class="text-center" style="border:1px solid gray;">
+                                    <span>Position Description</span>
+                                </th>
+                                <th class="text-center" style="border:1px solid gray;">
+                                    <span>Responsible User</span>
+                                </th>
+                                <th class="text-center" style="border:1px solid gray;">
+                                    <span>Penalty P/DAY (SAR)</span>
+                                </th>
+                                <th class="text-center" style="border:1px solid gray;">
+                                    <span>Contract</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.contract_id.contract_penalty_line_ids" t-as="line">
+                                <tr style="font-size:12px;">
+                                        <td class="text-center" style="border:1px solid gray;">
+                                            <span t-esc="line.position_description_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid gray;">
+                                            <span t-esc="line.responsible_id.name"/>
+                                        </td>
+                                         <td class="text-center" style="border:1px solid gray;">
+                                            <span t-esc="line.penalty_per_day"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid gray;">
+                                            <span t-esc="line.contract_id.name"/>
+                                        </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+
+            </xpath>
+        </template>
+    </data>
+</odoo>

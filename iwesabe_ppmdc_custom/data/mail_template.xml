@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_send_for_picking_validate" model="mail.template">
+        <field name="name">Stock Picking transfer record, send mail and notification</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="email_from">${(object.company_id.email_formatted or user.email_formatted) | safe}</field>
+        <field name="subject">Stock Transfer Done - ${object.name}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">Hello,
+                    The delivery order <strong t-out="object.name or ''"/>
+                    has been shipped to  <strong t-out="object.partner_id.name or ''"/>,
+                    Please find delivery note attached for more details.</p>
+                 <br/>   
+                <a t-attf-href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=stock.picking" style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">View</a>
+            </div>
+        </field>
+        <field name="report_template" ref="stock.action_report_delivery"/>
+        <field name="report_name">${(object.name or '').replace('/','-')}</field>
+        <field name="lang">${object.user_id.lang}</field>
+        <field eval="True" name="auto_delete"/>
+    </record>
+</odoo>

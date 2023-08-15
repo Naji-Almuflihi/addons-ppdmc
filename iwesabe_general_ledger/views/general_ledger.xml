@@ -1,0 +1,30 @@
+<odoo>
+  <data>
+
+
+    <template id="search_template_general_partners">
+<!--        <a type="button" class="dropdown-toggle account_partner_filter"-->
+<!--           data-toggle="dropdown">-->
+<!--            <span class="fa fa-folder-open"/>-->
+<!--            Partner-->
+<!--        </a>-->
+        <ul class="dropdown-menu o_filters_menu" role="menu">
+            <li class="o_account_report_search js_account_partner_m2m"/>
+        </ul>
+    </template>
+
+
+
+    <template id="search_template_general_ledger_partners" inherit_id="account_reports.search_template">
+        <xpath expr="//div[@class='btn-group o_dropdown o_account_reports_filter_journals']" position="after">
+
+            <div class="btn-group o_dropdown o_account_reports_filter_partners_general_ledger">
+                <t t-call="iwesabe_general_ledger.search_template_general_partners"/>
+            </div>
+
+        </xpath>
+    </template>
+
+
+  </data>
+</odoo>

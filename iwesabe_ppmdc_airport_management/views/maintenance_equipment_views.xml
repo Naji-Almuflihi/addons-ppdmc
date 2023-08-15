@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- Inherit Form View to Modify it -->
+     <record id="form_view_maintenance_equipment_custom_inherit" model="ir.ui.view">
+          <field name="name">name.maintenance.equipment.inherit.custom</field>
+          <field name="model">maintenance.equipment</field>
+          <field name="inherit_id" ref="iwesabe_ppmdc_custom.hr_equipment_view_form_inherit_ppmdc"/>
+          <field name="arch" type="xml">
+               <xpath expr="//field[@name='property_type_id']" position="after">
+                    <field name="location_id" options="{'no_create':True}" string="Location Number"/>
+                    <field name="main_zone_location_id"/>
+                    <field name="module_property_zone_id"/>
+               </xpath>
+          </field>
+     </record>
+     <record id="hr_equipment_view_form_inherit_property" model="ir.ui.view">
+          <field name="name">hr.equipment.view.form.inherit.property</field>
+          <field name="model">maintenance.equipment</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+          <field name="arch" type="xml">
+               <xpath expr="//field[@name='device_activation']" position="after">
+                    <field name="is_equipment"/>
+               </xpath>
+               <xpath expr="//notebook/page[3]" position="after">
+                    <page name="property" string="Property">
+                         <group>
+                              <group>
+                                   <field name="rent"/>
+                                   <field name="rented"/>
+                                   <field name="property_id"/>
+                              </group>
+                         </group>
+                    </page>
+               </xpath>
+          </field>
+     </record>
+     <record id="hr_equipment_view_tree_int" model="ir.ui.view">
+          <field name="name">hr.equipment.view.tree.next</field>
+          <field name="model">maintenance.equipment</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
+          <field name="arch" type="xml">
+               <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="next_action_date"/>
+               </xpath>
+          </field>
+     </record>
+     <!-- Search  -->
+     <record id="hr_equipment_view_search_inherit" model="ir.ui.view">
+          <field name="name">maintenance.equipment.search.inherit</field>
+          <field name="model">maintenance.equipment</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_view_search"/>
+          <field name="arch" type="xml">
+               <xpath expr="//filter[@name='category']" position="after">
+                    <filter context="{'group_by': 'location_id'}" domain="[]" name="location" string="Location"/>
+                    <filter context="{'group_by': 'property_id'}" domain="[]" name="property" string="Property"/>
+                    <filter context="{'group_by': 'technician_user_id'}" domain="[]" name="technician" string="Technician"/>
+               </xpath>
+          </field>
+     </record>
+     <!-- Service Application Action -->
+     <record id="action_service_application_maintenanct" model="ir.actions.act_window">
+          <field name="name">Service Application</field>
+          <field name="res_model">service.application</field>
+          <field name="view_mode">tree,form</field>
+          <field name="domain">[('state', '=', 'service_application')]</field>
+          <field name="context">{'create':False}</field>
+     </record>
+     <record id="maintenanct_model_form_view" model="ir.ui.view">
+          <field name="name">maintenance.model.form.view</field>
+          <field name="model">maintenance.model</field>
+          <field name="arch" type="xml">
+               <form string="description">
+                    <sheet>
+                         <group>
+                              <field name="name" required="1"/>
+                              <field name="code"/>
+                         </group>
+                    </sheet>
+               </form>
+          </field>
+     </record>
+     <record id="maintenanct_model_tree_view" model="ir.ui.view">
+          <field name="name">maintenance.model.tree.view</field>
+          <field name="model">maintenance.model</field>
+          <field name="arch" type="xml">
+               <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+               </tree>
+          </field>
+     </record>
+     <record id="action_maintenanct_model" model="ir.actions.act_window">
+          <field name="name">Maintenance Model</field>
+          <field name="res_model">maintenance.model</field>
+          <field name="view_mode">tree,form</field>
+     </record>
+     <menuitem action="action_maintenanct_model" id="menu_maintenanct_model" name="Model" parent="maintenance.menu_maintenance_configuration"/>
+
+</odoo>

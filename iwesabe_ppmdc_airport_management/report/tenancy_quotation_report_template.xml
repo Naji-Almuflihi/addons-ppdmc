@@ -1,0 +1,254 @@
+<odoo>
+    <data>
+
+        <template id="tenant_quotation_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <div style="width:100%;font-size: 12px;">
+
+                                <center>
+                                    <div style="width:50%;">
+                                        <h3>
+                                            <strong>
+                                                Tenancy Quotation
+                                            </strong>
+                                            <br/>
+                                            <span t-esc="o.name"/>
+                                        </h3>
+                                    </div>
+                                </center>
+                                <br/>
+                                <br/>
+
+                                <div style="width:100%">
+                                    <div style="float:left;width:50%;">
+                                        <strong style="float:left;width:30%;">Tenant :</strong>
+                                        <span t-esc="o.tenant_id.name"/>
+                                        <br/>
+                                        <strong style="float:left;width:30%;">Contact :</strong>
+                                        <span t-esc="o.contact_id.name"/>
+                                        <br/>
+                                        <strong style="float:left;width:30%;">Season Rent :</strong>
+                                        <span t-esc="o.rent_type_id.name"/>
+                                        <br/>
+                                        <strong style="float:left;width:30%;">Total Rent :</strong>
+                                        <span t-esc="o.total_rent"/>
+
+                                    </div>
+                                    <div style="float:right;width:50%;">
+                                        <strong style="float:left;width:45%;">Order Date(Gregorian/Hijri) :</strong>
+                                        <span t-esc="o.date_order"/>-
+                                        <span t-esc="o.date_order_hijri"/>
+                                        <br/>
+                                        <strong style="float:left;width:45%;">Start Date(Gregorian/Hijri) :</strong>
+                                        <span t-esc="o.date_start"/>-
+                                        <span t-esc="o.date_start_hijri"/>
+                                        <br/>
+                                        <strong style="float:left;width:45%;">End Date(Gregorian/Hijri) :</strong>
+                                        <span t-esc="o.date_end"/>-
+                                        <span t-esc="o.date_end_hijri"/>
+                                        <br/>
+                                        <strong style="float:left;width:45%;">Annual increase rate(%) :</strong>
+                                        <span t-esc="o.annual_rate"/>
+                                    </div>
+
+                                </div>
+                                <div style="width:100%;">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <strong style="float:left;width:15%;">خطاب صادر رقم :</strong>
+                                    <span t-esc="o.import_number"/>
+                                </div>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <table style="width:100%;border-width:1px;border-color:black;font-size:12px;"
+                                       class="table table-sm table-bordered oe_inline">
+                                    <tr>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Property
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Season Rent
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Season Year
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Start Date
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    End Date
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    GFQ(M2)
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Rent
+                                                </b>
+                                            </center>
+                                        </th>
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Tax
+                                                </b>
+                                            </center>
+                                        </th>
+
+                                        <th colspan="1"
+                                            style="text-align:center;border-width:1px;border-color:black;">
+                                            <center>
+                                                <b style="font-size:15px;">
+                                                    Total
+                                                </b>
+                                            </center>
+                                        </th>
+
+                                    </tr>
+                                    <t t-foreach="o.property_ids" t-as="line">
+                                        <tr>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.property_id.name"/>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.rent_type_id.name"/>
+
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.season_year_id.name"/>
+
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.date_start"/>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.date_end"/>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.gfa_meter"/>
+                                                </center>
+                                            </th>
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.rent"/>
+                                                </center>
+                                            </th>
+
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-foreach="line.vat_ids" t-as="vat">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <center style="font-size:10px;">
+                                                        <t t-if="counter >1 ">-</t>
+                                                        <span t-esc="vat.name"/>
+                                                    </center>
+                                                </t>
+                                            </th>
+
+                                            <th colspan="1"
+                                                style="text-align:center;border-width:1px;border-color:black;">
+                                                <center style="font-size:10px;">
+                                                    <span t-esc="line.total"/>
+                                                </center>
+                                            </th>
+
+
+                                        </tr>
+                                    </t>
+
+
+                                </table>
+
+                                <div style="width:40%;float:right">
+                                    <table style="width:100%;font-size:12px;"
+                                           class="table table-sm">
+                                        <tr>
+                                            <th colspan="1"
+                                                style="text-align:left;border-top:0px;">
+                                                    <strong style="font-size:15px;">
+                                                        Property
+                                                    </strong>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="1"
+                                                style="text-align:left;">
+                                                    <strong style="font-size:15px;">
+                                                        Property
+                                                    </strong>
+                                            </th>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,359 @@
+<odoo>
+	<!--Property Tenancy Tree View -->
+	<record id="property_analytic_view_tree" model="ir.ui.view">
+		<field name="name">Tencnay.tenenct.view.tree</field>
+		<field name="model">tenant.tenancy</field>
+		<field name="arch" type="xml">
+			<tree string="Tenancy Details">
+				<field name="date_order"/>
+				<field name="name" string="Tenancy Name"/>
+				<field name="code" string="Code"/>
+				<field name="tenant_id"/>
+				<field name="date_start"/>
+				<field name="date_end"/>
+				<field name="rent_type_id"/>
+				<field name="total_rent" sum="Total Rent"/>
+				<field name="state"/>
+				<field invisible="1" name="currency_id"/>
+			</tree>
+		</field>
+	</record>
+	<!--Property Tenancy Form View -->
+	<record id="view_tenant_tenancy_form" model="ir.ui.view">
+		<field name="name">tenant.tenancy.view.form</field>
+		<field name="model">tenant.tenancy</field>
+		<field name="arch" type="xml">
+			<form string="Tenancy Details">
+				<header>
+					<button name="create_service_contract" states="open" string="Create Service Quotation" type="object"/>
+					<button class="oe_highlight" colspan="2" icon="fa-play" name="button_start" states="draft" string="Start" type="object"/>
+					<button class="oe_highlight" name="create_invoice" states="open" string="Create Invoice" type="object"/>
+					<button class="oe_highlight" colspan="2" icon="fa-undo" name="button_set_to_renew" states="close" string="Renew" type="object"/>
+					<button attrs="{'invisible':[('state','=','draft'),]}" class="oe_highlight" colspan="2" icon="fa-undo" name="button_set_to_draft" string="Set To Draft" type="object"/>
+					<button class="oe_highlight" icon="fa-undo" name="button_open_insurance_payment" string="Open Insurance Payment" type="object"/>
+					<button attrs="{'invisible':[('state','!=','open')]}" class="oe_highlight" name="button_cancel_requests" string="Cancel Tenancy Request" type="object"/>
+					
+					<button attrs="{'invisible':['|','|',('tenancy_cancelled','!=',False),('state','!=','cancel_requisition'),('is_cancel_tenancy_user','=',False)]}" class="oe_highlight" colspan="2" confirm="Are you sure you want to Cancel?" icon="fa-times" name="button_cancel_tenancy" string="Approve Cancel Tenancy" type="object"/>
+					
+					<button class="oe_highlight" colspan="2" icon="fa-times" name="button_close" states="open" string="Close" type="object"/>
+					
+					<field name="state" select="1" statusbar_colors="{&quot;draft&quot;:&quot;red&quot;, &quot;open&quot;:&quot;blue&quot;, &quot;close&quot;:&quot;red&quot;}" statusbar_visible="draft,open,close" widget="statusbar"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" icon="fa-gear" name="action_view_service" type="object">
+							<field name="service_contract_count" string="Service Quotation" widget="statinfo"/>
+						</button>
+						<button attrs="{'invisible': [('invoice_count','=', 0)]}" class="oe_stat_button" icon="fa-money" name="action_view_invoice" type="object">
+							<field name="invoice_count" string="Invoice" widget="statinfo"/>
+						</button>
+
+						<button attrs="{'invisible': [('payment_count','=', 0)]}" class="oe_stat_button" icon="fa-money" name="action_view_payment" type="object">
+							<field name="payment_count" string="Payment" widget="statinfo"/>
+						</button>
+					</div>
+					<div class="oe_title oe_left">
+						<label class="oe_edit_only" for="name" string="Tenant Tenancy"/>
+						<h1>
+							<field class="oe_inline" force_save="1" name="name" placeholder="Tenancy Name" readonly="1"/>
+						</h1>
+						<h4>
+							<field name="code" readonly="1"/>
+						</h4>
+						<h4>
+							<field force_save="1" invisible="1" name="name_seq" readonly="1"/>
+						</h4>
+					</div>
+					<div class="oe_right oe_button_box" name="button_box">
+						<field invisible="1" name="rent_entry_chck"/>
+					</div>
+					<group attrs="{'readonly':[('state','=','close')]}" colspan="2">
+						<group col="4" colspan="4">
+							<separator colspan="4" string="Property Information"/>
+							<field attrs="{'readonly':[('state','!=','draft')]}" context="{'default_tenant':True,}" domain="[('parent_id', '=', False)]" name="tenant_id" placeholder="Tenant Name" required="1"/>
+							<field invisible="1" name="company_id"/>
+							<field invisible="1" name="is_cancel_tenancy_user"/>
+							<field invisible="1" name="hijri_date"/>
+							<field invisible="1" name="name_seq_start"/>
+							<field invisible="1" name="currency_id"/>
+							<field invisible="1" name="multi_prop"/>
+							<field invisible="1" name="is_property"/>
+							<field invisible="1" name="tenancy_cancelled"/>
+							<field invisible="1" name="service_application_id"/>
+						</group>
+					</group>
+					<group>
+						<group attrs="{'readonly':[('state','=','close')]}" string="Tenancy Information">
+							<field name="annual_rate"/>
+							<field name="insurance_rate"/>
+							<field name="insurance_value"/>
+							<field name="import_number"/>
+							<field colspan="2" domain="[('parent_id', '=', tenant_id)]" name="contact_id"/>
+							<field invisible="1" name="main_cost"/>
+							<field invisible="1" name="acc_pay_dep_rec_id"/>
+							<field invisible="1" name="acc_pay_dep_ret_id"/>
+						</group>
+						<group attrs="{'readonly':[('state','in',('open','close'))]}" string="Date">
+							<div>
+								<div class="o_row">
+									<label for="date_order" string="Order Date(Gregorian/Hijri)"/>
+									<field name="date_order" required="1"/>
+									<field name="date_order_hijri" placeholder="Order Date Hijri" required="1"/>
+									<button class="oe_edit_only" context="{'field_to':'date_order','field_from':'date_order_hijri'}" help="Conversion with hijri; There is a small probability of one day error" icon="fa-refresh" name="hijri2Gregorian" string=" " type="object"/>
+									<button class="oe_edit_only" context="{'date_field': 'date_order_hijri'}" icon="fa-pencil" name="%(iwesabe_hijri_asset.call_field_edit)d" string=" " type="action"/>
+								</div>
+								<div class="o_row">
+									<label for="date_start" string="Start Date(Gregorian/Hijri)"/>
+									<field attrs="{'readonly':[('state','!=','draft')]}" name="date_start" required="1"/>
+									<field attrs="{'readonly':[('state','!=','draft')]}" name="date_start_hijri" placeholder="Start Date Hijri" required="1"/>
+									<button class="oe_edit_only" context="{'field_to':'date_start','field_from':'date_start_hijri'}" help="Conversion with hijri; There is a small probability of one day error" icon="fa-refresh" name="hijri2Gregorian" string=" " type="object"/>
+									<button class="oe_edit_only" context="{'date_field': 'date_start_hijri'}" icon="fa-pencil" name="%(iwesabe_hijri_asset.call_field_edit)d" string=" " type="action"/>
+								</div>
+								<div class="o_row">
+									<label for="date_end" string="End Date(Gregorian/Hijri)"/>
+									<field attrs="{'readonly':[('state','!=','draft')]}" name="date_end" required="1"/>
+									<field attrs="{'readonly':[('state','!=','draft')]}" name="date_end_hijri" placeholder="End Date Hijri" required="1"/>
+									<button class="oe_edit_only" context="{'field_to':'date_end','field_from':'date_end_hijri'}" help="Conversion with hijri; There is a small probability of one day error" icon="fa-refresh" name="hijri2Gregorian" string=" " type="object"/>
+									<button class="oe_edit_only" context="{'date_field': 'date_end_hijri'}" icon="fa-pencil" name="%(iwesabe_hijri_asset.call_field_edit)d" string=" " type="action"/>
+								</div>
+							</div>
+						</group>
+					</group>
+					<group string="Contract Information">
+						<group>
+							<field name="rent_type_id" required="True" widget="selection"/>
+							<field name="total_rent"/>
+							<field name="customer_balance"/>
+							<field name="contract_attachment"/>
+							<field invisible="1" name="amount_residual"/>
+							<field invisible="1" name="amount_total"/>
+							<field invisible="1" name="paid_amount"/>
+						</group>
+					</group>
+					<notebook>
+						<page name="property" string="Property">
+							<field context="{'default_rent_type_id': rent_type_id, 'default_date_start':date_start, 'default_date_end':date_end}" name="property_ids">
+								<tree editable="bottom">
+									<field domain="[('state','=','draft')]" name="property_id"/>
+									<field name="rent_type_id"/>
+									<field name="season_year_id"/>
+									<field name="date_start"/>
+									<field name="date_end"/>
+									<field name="gfa_meter"/>
+									<field name="rent"/>
+									<field domain="[('type_tax_use','=','sale')]" name="vat_ids" widget="many2many_tags"/>
+									<field name="total"/>
+								</tree>
+							</field>
+							<group>
+								<group/>
+								<group>
+									<group/>
+									<group>
+										<field name="amount_untaxed" options="{'currency_field': 'company_currency_id'}" style="width:200%%;" widget="monetary"/>
+										<field name="amount_tax" options="{'currency_field': 'company_currency_id'}" style="width:200%%;" widget="monetary"/>
+										<field name="amount_taxed_total" options="{'currency_field': 'company_currency_id'}" style="width:200%%;" widget="monetary"/>
+									</group>
+								</group>
+							</group>
+						</page>
+						<page name="rent_schedule" string="Rent Schedule">
+							<separator colspan="4" string="Rent Schedule Details"/>
+							<field name="rent_schedule_ids" nolabel="1">
+								<tree decoration-danger="paid == True" decoration-info="inv == True" editable="bottom" limit="12" string="Rent Schedule">
+									<field name="start_date"/>
+									<field name="amount" sum="Total Amount"/>
+									<field invisible="1" name="pen_amt"/>
+									<field invisible="1" name="cheque_detail"/>
+									<field name="note"/>
+									<field invisible="1" name="paid" readonly="True" track_visibility="onchange"/>
+									<field name="move_check" readonly="True" track_visibility="onchange"/>
+									<field invisible="1" name="inv"/>
+									<field invisible="1" name="company_id"/>
+									<field invisible="1" name="currency_id"/>
+									<field invisible="1" name="is_readonly"/>
+									<button attrs="{'invisible':[('inv','=',True)]}" context="{'asset':1,'is_tenancy':1}" name="create_invoice" string="Creat Invoice" type="object"/>
+									<button attrs="{'invisible':[('inv','=',False)]}" context="{'openinvoice':1}" name="open_invoice" string="Open Invoice" type="object"/>
+								</tree>
+							</field>
+						</page>
+						<page name="history" string="History">
+							<separator colspan="4" string="Account History"/>
+							<field name="account_move_line_ids" readonly="1">
+								<tree create="false" string="Journal Items">
+									<field name="date"/>
+									<field name="name"/>
+									<field name="ref" string="Reference"/>
+									<field name="move_id" required="0"/>
+									<field name="journal_id" options="{&quot;no_open&quot;:True}"/>
+									<field domain="[('company_id', '=', company_id)]" name="account_id" options="{&quot;no_open&quot;:True}"/>
+									<field name="debit" sum="Total Debit" widget="monetary"/>
+									<field name="credit" sum="Total Credit"/>
+									<field invisible="1" name="reconciled"/>
+									<field invisible="1" name="company_currency_id"/>
+									<field invisible="1" name="currency_id" options="{'no_create': True}"/>
+									<field invisible="1" name="company_id" options="{'no_create': True}"/>
+								</tree>
+							</field>
+							<group/>
+							<group class="oe_subtotal_footer oe_right">
+								<field name="total_credit_amt"/>
+								<field name="total_debit_amt"/>
+								<field class="oe_subtotal_footer_separator" name="total_deb_cre_amt"/>
+							</group>
+						</page>
+						<page name="contract_page" string="Terms &amp; Conditions">
+							<separator name="description" string="Terms and Conditions"/>
+							<field name="description" placeholder="Enter Terms and Conditions..."/>
+						</page>
+					</notebook>
+					<separator colspan="4" string="Notes"/>
+					<field colspan="4" name="duration_cover" nolabel="1" placeholder="Additional notes..."/>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"/>
+					<field name="activity_ids" widget="mail_activity"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+			</form>
+		</field>
+	</record>
+	<!-- KANBAN VIEWS -->
+	<record id="analytic_kanban_view" model="ir.ui.view">
+		<field name="name">Tenant Tenancy Kanban</field>
+		<field name="model">tenant.tenancy</field>
+		<field name="arch" type="xml">
+			<kanban class="o_kanban_mobile" default_group_by="state" group_create="0">
+				<field name="name" string="Tenancy Name "/>
+				<field name="code" string="Code"/>
+				<field name="tenant_id"/>
+				<field name="date_start"/>
+				<field name="date_end"/>
+				<field name="rent_type_id"/>
+				<field name="total_rent" sum="Total Rent"/>
+				<field name="state"/>
+				<field name="stage"/>
+				<field invisible="1" name="currency_id"/>
+				<templates>
+					<t t-name="kanban-box">
+						<div t-attf-class="oe_kanban_card oe_kanban_global_click">
+							<div class="o_kanban_record_top mb16">
+								<div class="o_kanban_record_headings mt4">
+									<strong class="o_kanban_record_title">
+										<span>
+											<strong>[
+												<field name="code"/>
+												]
+												
+												<t t-esc="record.name.value"/></strong>
+										</span>
+									</strong>
+								</div>
+								<strong>
+									<field name="total_rent" widget="monetary"/>
+								</strong>
+							</div>
+							
+							<div class="o_kanban_record_bottom">
+								<div class="oe_kanban_bottom_left text-muted">
+									<span>
+										<t t-esc="record.tenant_id.value"/>
+										<br/>
+										<t t-esc="record.date_start.value and record.date_start.value.split(' ')[0] or False"/>-
+										
+										<t t-esc="record.date_end.value and record.date_end.value.split(' ')[0] or False"/></span>
+								</div>
+								<div class="oe_kanban_bottom_right">
+									<field name="state" options="{'classes': {'draft': 'success', 'close': 'default', 'cancelled': 'danger', 'pending': 'warning'}}" widget="label_selection"/>
+								</div>
+							</div>
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+	<!--Property Tenancy Search View -->
+	<record id="property_analytic_search_view" model="ir.ui.view">
+		<field name="name">property.analytic.search.view</field>
+		<field name="model">tenant.tenancy</field>
+		<field name="arch" type="xml">
+			<search string="Property Tenancy">
+				<filter domain="[('state','=','draft')]" name="draft" string="Draft"/>
+				<filter domain="[('state','=','open')]" name="open" string="Open"/>
+				<filter domain="[('state','=','close')]" name="close" string="Close"/>
+				<field name="name" string="Tenancy Name"/>
+				<field name="code" string="Code"/>
+				<field name="tenant_id"/>
+				<field name="rent_type_id"/>
+				<field name="date_order"/>
+				<field name="state"/>
+				<newline/>
+				<group col="10" colspan="4" expand="0" string="Group By...">
+					<filter context="{'group_by':'tenant_id'}" domain="[]" icon="terp-personal" name="tenant" string="Tenant"/>
+					<filter context="{'group_by':'rent_type_id'}" domain="[]" icon="terp-personal" name="renttype" string="Rent Type"/>
+					<filter context="{'group_by':'state'}" domain="[]" icon="terp-personal" name="state" string="State"/>
+					<filter context="{'group_by':'stage'}" domain="[]" icon="terp-personal" name="stage" string="Stage"/>
+					<filter context="{'group_by':'date_order'}" name="date" string="Date"/>
+				</group>
+			</search>
+		</field>
+	</record>
+	<!--Property Tenancy gantt View -->
+	<record id="view_analytic_gantt_new" model="ir.ui.view">
+		<field name="name">view.analytic.gantt</field>
+		<field name="model">tenant.tenancy</field>
+		<field name="arch" type="xml">
+			 <gantt date_start="date_start" date_stop="date_end" default_group_by="tenant_id"></gantt>
+		</field>
+	</record>
+	<!--Action For Property Tenancy -->
+	<record id="action_tenancy_tenant_view" model="ir.actions.act_window">
+		<field name="name">Tenant Tenancy</field>
+		<field name="res_model">tenant.tenancy</field>
+		<field name="view_mode">kanban,tree,form,gantt</field>
+		<field name="search_view_id" ref="iwesabe_ppmdc_airport_management.property_analytic_search_view"/>
+		<field name="context">{'search_default_stage':1}</field>
+	</record>
+	<record id="action_analytic_kanaban_view" model="ir.actions.act_window.view">
+		<field eval="1" name="sequence"/>
+		<field name="view_mode">kanban</field>
+		<field name="view_id" ref="iwesabe_ppmdc_airport_management.analytic_kanban_view"/>
+		<field name="act_window_id" ref="iwesabe_ppmdc_airport_management.action_tenancy_tenant_view"/>
+	</record>
+	<!--Action For Property Tenancy Form view -->
+	<record id="action_analytic_form_view" model="ir.actions.act_window.view">
+		<field eval="2" name="sequence"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_tenant_tenancy_form"/>
+		<field name="act_window_id" ref="action_tenancy_tenant_view"/>
+	</record>
+	<!--Action For Property Tenancy Tree View -->
+	<record id="action_analytic_tree_view" model="ir.actions.act_window.view">
+		<field eval="1" name="sequence"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="property_analytic_view_tree"/>
+		<field name="act_window_id" ref="action_tenancy_tenant_view"/>
+	</record>
+	<!--Action For Property Tenancy gantt View -->
+	<record id="action_analytic_gantt_view" model="ir.actions.act_window.view">
+		<field eval="3" name="sequence"/>
+		<field name="view_mode">gantt</field>
+		<field name="view_id" ref="iwesabe_ppmdc_airport_management.view_analytic_gantt_new"/>
+		<field name="act_window_id" ref="iwesabe_ppmdc_airport_management.action_tenancy_tenant_view"/>
+	</record>
+	<record id="view_currency_form_inherit" model="ir.ui.view">
+		<field name="name">res.currency.form</field>
+		<field name="model">res.currency</field>
+		<field name="inherit_id" ref="base.view_currency_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='rate']" position="attributes">
+				<attribute name="readonly">0</attribute>
+			</xpath>
+			<xpath expr="/form/sheet/group[2]" position="attributes">
+				<attribute name="groups"/>
+			</xpath>
+		</field>
+	</record>
+	<!-- <record id="view_account_move_prop_form_inherits1" model="ir.ui.view"><field name="name">account.move.prop.form.inherit</field><field name="model">account.move</field><field name="inherit_id" ref="account.view_move_form"/><field name="arch" type="xml"><field name='partner_id' position="attributes"><attribute name="domain">['|',('customer_rank', '>', 0),('tenant','=', True)]</attribute></field></field></record>-->
+</odoo>

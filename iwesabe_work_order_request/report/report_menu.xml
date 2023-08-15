@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data noupdate="1">
+          <record id="paperformat_work_order_request" model="report.paperformat">
+               <field name="name">Work Order Request Paperformat</field>
+               <field eval="False" name="default"/>
+               <field name="format">custom</field>
+               <field name="orientation">Portrait</field>
+               <field name="margin_top">25</field>
+               <field name="margin_bottom">10</field>
+               <field name="margin_left">1</field>
+               <field name="margin_right">1</field>
+               <field eval="True" name="header_line"/>
+               <field name="header_spacing">25</field>
+               <field name="page_height">297</field>
+               <field name="page_width">210</field>
+               <field name="dpi">90</field>
+          </record>
+     </data>
+     <data>
+          <record id="action_report_work_order_request_report" model="ir.actions.report">
+               <field name="name">Work Order Request</field>
+               <field name="model">work.order.request</field>
+               <field name="report_type">qweb-pdf</field>
+               <field name="report_name">iwesabe_work_order_request.report_work_order_request_report</field>
+               <field name="report_file">iwesabe_work_order_request.report_work_order_request_report</field>
+               <field name="binding_model_id" ref="iwesabe_work_order_request.model_work_order_request"/>
+               <field name="binding_type">report</field>
+               <field name="print_report_name">'WorkOrderRequest - %s' % (object.din)</field>
+          </record>
+
+          <record id="iwesabe_work_order_request.action_report_work_order_request_report" model="ir.actions.report">
+               <field name="paperformat_id" ref="iwesabe_work_order_request.paperformat_work_order_request"/>
+          </record>
+     </data>
+</odoo>

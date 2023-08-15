@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_maintenance_location_equipment_form_inherit_ppmdc" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.inherit</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="iwesabe_ppmdc_airport_management.hr_equipment_view_form_inherit_property"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='property']//group[1]" position="inside">
+                <group>
+                    <field name="dest_location_id" options="{'no_create':True}"/>
+                    <field name="dest_loc"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

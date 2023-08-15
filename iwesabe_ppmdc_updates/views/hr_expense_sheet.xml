@@ -1,0 +1,40 @@
+<odoo>
+
+    <data>
+
+
+
+        <record id="form_view_hr_expense_sheet_inherit" model="ir.ui.view">
+            <field name="name">name.hr.expense.sheet.inherit.form</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_submit_sheet']" position="after">
+                    <widget name="attach_document" string="Attach Receipt" action="message_post" highlight="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='expense_line_ids']//tree//button[@name='action_get_attachment_view']" position="replace">
+
+                </xpath>
+                <xpath expr="//field[@name='expense_line_ids']//tree//field[@name='attachment_number']" position="replace">
+
+                </xpath>
+
+
+
+            </field>
+        </record>
+
+
+
+        <menuitem id="hr_expense.menu_hr_expense_my_expenses"
+                  name="My Expenses" sequence="1"
+                  parent="hr_expense.menu_hr_expense_root" groups="iwesabe_ppmdc_updates.group_hide_my_expense_menu"/>
+
+
+
+
+    </data>
+
+</odoo>

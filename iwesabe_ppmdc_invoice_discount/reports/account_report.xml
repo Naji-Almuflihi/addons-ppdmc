@@ -1,0 +1,19 @@
+<odoo>
+    <template id="global_discount_invoice_report" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='total']/div/table/t" position="after">
+            <t t-if="o.amount_discount&gt;0">
+                <tr>
+                    <td>
+                        <span>Universal Discount </span>
+                        <t t-if="o.global_discount_type == 'percent'">(
+                            <span t-field="o.global_discount_rate"/>
+                            %)</t>
+                    </td>
+                    <td class="text-right">
+                        <span t-field="o.amount_discount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+    </template>
+</odoo>

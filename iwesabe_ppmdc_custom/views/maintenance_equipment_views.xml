@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_equipment_view_form_inherit_ppmdc" model="ir.ui.view">
+        <field name="name">hr.equipment.view.form.inherit</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="before">
+                <field name="equipment_id"/>
+                <field invisible="1" name="number"/>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="equipment_tag"/>
+                <field name="item_type_id"/>
+                <field name="system_cat_id"/>
+                <field name="system_id"/>
+                <field name="sub_system_id"/>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="replace">
+                <field invisible="1" name="equipment_location_id"/>
+                <field name="owned_by_id"/>
+                <field name="kia_equip"/>
+                <field name="device_activation"/>
+                <field name="property_type_id"/>
+                <!--                <field name="department_id"/>-->
+            </xpath>
+            <xpath expr="//field[@name='serial_no']" position="after">
+                <field name="equipment_make"/>
+            </xpath>
+            <xpath expr="//field[@name='note']" position="after">
+                <group>
+                    <field name="area_description" string="Area Description"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='equipment_make']" position="after">
+                <field name="voltage_final"/>
+                <field name="amps_final"/>
+                <field name="frequency_final"/>
+                <field name="watts_final"/>
+                <field name="site_location"/>
+                <field name="fdr_number"/>
+                <field name="model_number"/>
+            </xpath>
+            <xpath expr="//field[@name='warranty_date']" position="after">
+                <field name="phase_final"/>
+                <field name="btu_final"/>
+                <field name="hp_final"/>
+                <field name="psi_final"/>
+                <field name="rpm_final"/>
+                <field name="ip_address"/>
+                <field name="mac_address"/>
+            </xpath>
+            <xpath expr="//notebook/page[3]" position="after">
+                <page name="inventory" string="Inventory">
+                    <group>
+                        <group>
+                            <field name="warehouse_location_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <!-- equipment.item.type : views -->
+    <record id="hr_equipment_category_view_form_inherit" model="ir.ui.view">
+        <field name="name">equipment.category.form.inherit</field>
+        <field name="model">maintenance.equipment.category</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/field[@name='technician_user_id']" position="after">
+                <field name="code"/>
+                <field class="oe_inline" name="department_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="hr_equipment_category_view_tree_inherit" model="ir.ui.view">
+        <field name="name">equipment.category.form.inherit</field>
+        <field name="model">maintenance.equipment.category</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_category_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='technician_user_id']" position="after">
+                <field name="code"/>
+                <field name="department_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="equipment_item_type_view_form" model="ir.ui.view">
+        <field name="name">equipment.item.type.form</field>
+        <field name="model">equipment.item.type</field>
+        <field name="arch" type="xml">
+            <form string="Equipment Locations">
+                <sheet>
+                    <group style="width:60%">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="equipment_item_type_view_tree" model="ir.ui.view">
+        <field name="name">equipment.item.type.tree</field>
+        <field name="model">equipment.item.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="equipment_item_type_view_search" model="ir.ui.view">
+        <field name="name">equipment.item.type.search</field>
+        <field name="model">equipment.item.type</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field filter_domain="[('name','ilike',self)]" name="name" string="Name"/>
+            </search>
+        </field>
+    </record>
+    <!-- equipment.item.type : actions -->
+    <record id="equipment_item_type_action" model="ir.actions.act_window">
+        <field name="name">Item Type</field>
+        <field name="res_model">equipment.item.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="equipment_item_type_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new equipment location
+            </p>
+        </field>
+    </record>
+    <menuitem action="equipment_item_type_action" id="menu_equipment_item_type" name="Item Type" parent="maintenance.menu_maintenance_configuration" sequence="10"/>
+    <!--    equipment.location : views-->
+    <record id="equipment_location_view_form" model="ir.ui.view">
+        <field name="name">equipment.location.form</field>
+        <field name="model">equipment.location</field>
+        <field name="arch" type="xml">
+            <form string="Equipment Locations">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="level"/>
+                            <field name="module"/>
+                        </group>
+                        <group>
+                            <field name="site"/>
+                            <field name="zone"/>
+                            <field name="room"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="equipment_location_view_tree" model="ir.ui.view">
+        <field name="name">equipment.location.tree</field>
+        <field name="model">equipment.location</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+                <field name="site" string="Site"/>
+            </tree>
+        </field>
+    </record>
+    <record id="equipment_location_view_search" model="ir.ui.view">
+        <field name="name">equipment.location.search</field>
+        <field name="model">equipment.location</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field filter_domain="[('name','ilike',self)]" name="name" string="Name"/>
+            </search>
+        </field>
+    </record>
+    <!-- equipment.location : actions -->
+    <record id="equipment_location_action" model="ir.actions.act_window">
+        <field name="name">Equipment Location</field>
+        <field name="res_model">equipment.location</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="equipment_location_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new equipment location
+            </p>
+        </field>
+    </record>
+    <!--    <menuitem-->
+    <!--            id="menu_equipment_location"-->
+    <!--            name="Equipment Location"-->
+    <!--            parent="maintenance.menu_maintenance_configuration"-->
+    <!--            action="equipment_location_action"-->
+    <!--            sequence="11"/>-->
+    <!--    equipment.site : views-->
+    <record id="equipment_site_view_form" model="ir.ui.view">
+        <field name="name">equipment.site.form</field>
+        <field name="model">equipment.site</field>
+        <field name="arch" type="xml">
+            <form string="Equipment Locations">
+                <sheet>
+                    <group style="width:60%;">
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="equipment_site_view_tree" model="ir.ui.view">
+        <field name="name">equipment.site.tree</field>
+        <field name="model">equipment.site</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="equipment_site_view_search" model="ir.ui.view">
+        <field name="name">equipment.site.search</field>
+        <field name="model">equipment.site</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field filter_domain="[('name','ilike',self)]" name="name" string="Name"/>
+            </search>
+        </field>
+    </record>
+    <!-- equipment.site : actions -->
+    <record id="equipment_site_action" model="ir.actions.act_window">
+        <field name="name">Equipment Site</field>
+        <field name="res_model">equipment.site</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="equipment_site_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a new equipment site
+            </p>
+        </field>
+    </record>
+    <!--    <menuitem-->
+    <!--            id="menu_equipment_site"-->
+    <!--            name="Equipment Site"-->
+    <!--            parent="maintenance.menu_maintenance_configuration"-->
+    <!--            action="equipment_site_action"-->
+    <!--            sequence="12"/>-->
+    <!-- equipment.location.change -->
+    <record id="equipment_location_change_view_form" model="ir.ui.view">
+        <field name="name">equipment.location.change.form</field>
+        <field name="model">equipment.location.change</field>
+        <field name="arch" type="xml">
+            <form string="Equipment Location Change">
+                <header>
+                    <button class="oe_highlight" groups="maintenance.group_equipment_manager" name="approve_location_change" states="draft" string="Approve" type="object"/>
+                    <field name="state" nolabel="1" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="equipment_id" required="1"/>
+                            <field name="current_location_id" required="1"/>
+                            <field name="date" required="1"/>
+                        </group>
+                        <group>
+                            <field name="destination_location_id" required="1"/>
+                            <field name="approval_date" readonly="1"/>
+                            <field name="approval_user_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="equipment_change_location_view_tree" model="ir.ui.view">
+        <field name="name">equipment.change.location.tree</field>
+        <field name="model">equipment.location.change</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="equipment_id"/>
+                <field name="current_location_id"/>
+                <field name="destination_location_id"/>
+                <field name="date"/>
+                <field name="approval_date"/>
+                <field name="approval_user_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="equipment_change_location_view_search" model="ir.ui.view">
+        <field name="name">equipment.location.change.search</field>
+        <field name="model">equipment.location.change</field>
+        <field name="arch" type="xml">
+            <search string="Location">
+                <field name="equipment_id"/>
+                <field name="current_location_id"/>
+                <field name="destination_location_id"/>
+            </search>
+        </field>
+    </record>
+    <record id="equipment_location_change_action" model="ir.actions.act_window">
+        <field name="name">Equipment Location Change</field>
+        <field name="res_model">equipment.location.change</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="equipment_change_location_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face"/>
+        </field>
+    </record>
+    <menuitem action="equipment_location_change_action" id="menu_equipment_location_change" name="Equipment Location Change" parent="maintenance.menu_maintenance_configuration" sequence="13"/>
+    <!--    &lt;!&ndash; equipment.meter : views &ndash;&gt;-->
+    <!--    <record id="equipment_meter_view_form" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.meter.form</field>-->
+    <!--        <field name="model">equipment.meter</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form string="Equipment Locations">-->
+    <!--                <sheet>-->
+    <!--                    <group style="width:60%">-->
+    <!--                        <field name="name"/>-->
+    <!--                    </group>-->
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="equipment_meter_view_tree" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.meter.tree</field>-->
+    <!--        <field name="model">equipment.meter</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <tree>-->
+    <!--                <field name="name" string="Name"/>-->
+    <!--            </tree>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="equipment_meter_view_search" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.meter.search</field>-->
+    <!--        <field name="model">equipment.meter</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search string="Search">-->
+    <!--                <field name="name" string="Name" filter_domain="[('name','ilike',self)]"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    &lt;!&ndash; equipment.meter : actions &ndash;&gt;-->
+    <!--    <record id="equipment_meter_action" model="ir.actions.act_window">-->
+    <!--        <field name="name">Equipment Meter</field>-->
+    <!--        <field name="res_model">equipment.meter</field>-->
+    <!--        <field name="view_mode">tree,form</field>-->
+    <!--        <field name="view_id" ref="equipment_meter_view_tree"/>-->
+    <!--        <field name="help" type="html">-->
+    <!--            <p class="o_view_nocontent_smiling_face">-->
+    <!--                Add a new equipment location-->
+    <!--            </p>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <menuitem-->
+    <!--            id="menu_equipment_meter"-->
+    <!--            name="Equipment Meter"-->
+    <!--            parent="maintenance.menu_maintenance_configuration"-->
+    <!--            action="equipment_meter_action"-->
+    <!--            sequence="12"/>-->
+    <!-- equipment.z : views -->
+    <!--    <record id="equipment_z_view_form" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.z.form</field>-->
+    <!--        <field name="model">equipment.z</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form string="Equipment Locations">-->
+    <!--                <sheet>-->
+    <!--                    <group style="width:60%">-->
+    <!--                        <field name="name"/>-->
+    <!--                    </group>-->
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="equipment_z_view_tree" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.z.tree</field>-->
+    <!--        <field name="model">equipment.z</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <tree>-->
+    <!--                <field name="name" string="Name"/>-->
+    <!--            </tree>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="equipment_z_view_search" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.z.search</field>-->
+    <!--        <field name="model">equipment.z</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search string="Search">-->
+    <!--                <field name="name" string="Name" filter_domain="[('name','ilike',self)]"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    &lt;!&ndash; equipment.z : actions &ndash;&gt;-->
+    <!--    <record id="equipment_z_action" model="ir.actions.act_window">-->
+    <!--        <field name="name">Equipment Location</field>-->
+    <!--        <field name="res_model">equipment.z</field>-->
+    <!--        <field name="view_mode">tree,form</field>-->
+    <!--        <field name="view_id" ref="equipment_z_view_tree"/>-->
+    <!--        <field name="help" type="html">-->
+    <!--            <p class="o_view_nocontent_smiling_face">-->
+    <!--                Add a new equipment location-->
+    <!--            </p>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <menuitem-->
+    <!--            id="menu_equipment_z"-->
+    <!--            name="Equipment Location"-->
+    <!--            parent="maintenance.menu_maintenance_configuration"-->
+    <!--            action="equipment_z_action"-->
+    <!--            sequence="13"/>-->
+    <!--    &lt;!&ndash; equipment.room : views &ndash;&gt;-->
+    <!--    <record id="equipment_room_view_form" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.room.form</field>-->
+    <!--        <field name="model">equipment.room</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form string="Equipment Locations">-->
+    <!--                <sheet>-->
+    <!--                    <group style="width:60%">-->
+    <!--                        <field name="name"/>-->
+    <!--                    </group>-->
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="equipment_room_view_tree" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.room.tree</field>-->
+    <!--        <field name="model">equipment.room</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <tree>-->
+    <!--                <field name="name" string="Name"/>-->
+    <!--            </tree>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="equipment_room_view_search" model="ir.ui.view">-->
+    <!--        <field name="name">equipment.room.search</field>-->
+    <!--        <field name="model">equipment.room</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search string="Search">-->
+    <!--                <field name="name" string="Name" filter_domain="[('name','ilike',self)]"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    &lt;!&ndash; equipment.room : actions &ndash;&gt;-->
+    <!--    <record id="equipment_room_action" model="ir.actions.act_window">-->
+    <!--        <field name="name">Equipment Room</field>-->
+    <!--        <field name="res_model">equipment.room</field>-->
+    <!--        <field name="view_mode">tree,form</field>-->
+    <!--        <field name="view_id" ref="equipment_room_view_tree"/>-->
+    <!--        <field name="help" type="html">-->
+    <!--            <p class="o_view_nocontent_smiling_face">-->
+    <!--                Add a new equipment location-->
+    <!--            </p>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <menuitem-->
+    <!--            id="menu_equipment_room"-->
+    <!--            name="Equipment Room"-->
+    <!--            parent="maintenance.menu_maintenance_configuration"-->
+    <!--            action="equipment_room_action"-->
+    <!--            sequence="14"/>-->
+</odoo>

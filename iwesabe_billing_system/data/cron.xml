@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+
+        <record id="bank_grantee_seq_record" model="ir.sequence">
+            <field name="name">Bank Grantee</field>
+            <field name="code">bank.grantee.seq</field>
+            <field name="prefix">BG</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="airline_service_contract_seq_record" model="ir.sequence">
+            <field name="name">Airline Service Contract</field>
+            <field name="code">airline.service.contract.seq</field>
+            <field name="prefix">ASC</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- cron for daily attendance   -->
+<!--        <record id="data_ir_cron_add_lanatime_attendance" model="ir.cron">-->
+<!--            <field name="name">Update LanaTime attendance</field>-->
+<!--            <field name="model_id" ref="iwesabe_lanatime_attendance.model_hr_lanatime_instance_load"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="interval_number">2</field>-->
+<!--            <field name="interval_type">hours</field>-->
+<!--            <field name="code">model.cron_daily_lanatime_attendance()</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--            <field name="priority">50</field>-->
+<!--            <field name="doall" eval="False"/>-->
+<!--        </record>-->
+
+    </data>
+
+</odoo>

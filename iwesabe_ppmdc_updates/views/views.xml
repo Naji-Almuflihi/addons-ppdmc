@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="account_payment_view_new" model="ir.ui.view">
+        <field name="name">account.payment.new</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='ref']" position="after">
+                <!-- Add your fields or attributes here -->
+<!--                <field name="invoices_id" attrs="{'invisible':[('payment_type','=','inbound')]}" domain="[('move_type','=','in_invoice')]"/>-->
+<!--                <field name="bills_id" attrs="{'invisible':[('payment_type','=','outbound')]}" domain="[('move_type','=','out_invoice')]"/>-->
+                <field name="supplier_site_id"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="new_form_contract_view" model="ir.ui.view">
+        <field name="name">contract.contract.new</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="contract.contract_contract_supplier_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='contract_line_fixed_ids']//tree//field[@name='discount']" position="after">
+                <!-- Add your fields or attributes here -->
+                <field name="tax_ids" widget="many2many_tags" domain="[('type_tax_use','=','sale')]" attrs="{'readonly': [('parent.state','=','confirmed')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='contract_line_fixed_ids']//tree//field[@name='price_subtotal']" position="after">
+                <field name="price_total"/>
+            </xpath>
+
+        </field>
+    </record>
+
+        <record id="account_move_new_form_view" model="ir.ui.view">
+        <field name="name">account.move.new</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <!-- Add your fields or attributes here -->
+                <field name="supplier_site_id"
+                       attrs="{'invisible':[('move_type','not in',['in_invoice','in_refund'])]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='line_ids']//tree//field[@name='name']" position="after">
+                <field name="supplier_site_id"/>
+            </xpath>
+
+
+
+        </field>
+    </record>
+
+
+    <record id="tree_view_account_move_line_inherit" model="ir.ui.view">
+        <field name="name">name.account.move.line.tree.inherit</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="supplier_site_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="account_move_line_new_form_view" model="ir.ui.view">
+        <field name="name">account.move.line.new</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <!-- Add your fields or attributes here -->
+                <field name="is_vendor" invisible="1"/>
+                <field name="supplier_site_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+     <record id="product_template_new_form_view" model="ir.ui.view">
+        <field name="name">product.template.new</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='type']" position="after">
+                <!-- Add your fields or attributes here -->
+                <field name="supplier_site_id"/>
+            </xpath>
+
+        </field>
+    </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="product_category_new_form_view" model="ir.ui.view">
+        <field name="name">product.category.new</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <!-- Add your fields or attributes here -->
+                <field name="supplier_site_id"/>
+            </xpath>
+
+        </field>
+    </record>
+           <record id="hr_expense_view_form_new" model="ir.ui.view">
+            <field name="name">hr.expense.view.form.new</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//widget[@name='attach_document'][2]" position="replace">
+                      <widget name="attach_document" string="Attach Receipt" highlight="1" action="message_post"/>
+                </xpath>
+            </field>
+           </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="property_new_form_inherit" model="ir.ui.view">
+        <field name="name">property.property.new</field>
+        <field name="model">property.property</field>
+        <field name="inherit_id" ref="iwesabe_ppmdc_airport_management.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                 <button class="oe_stat_button" colspan="2" name="reason_open" type="object" icon="fa-book">
+                     <field name="reason_rent" widget="statinfo" />
+                 </button>
+
+                <!-- Add your fields or attributes here -->
+            </xpath>
+
+        </field>
+    </record>
+
+
+
+    <record model="ir.ui.menu" id="account.menu_action_account_payments_receivable">
+            <field name="name">Receipt</field>
+        </record>
+
+
+
+
+
+</odoo>

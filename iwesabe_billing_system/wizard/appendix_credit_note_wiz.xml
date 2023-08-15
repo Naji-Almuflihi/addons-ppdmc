@@ -1,0 +1,50 @@
+<odoo>
+    <!-- invoice for Other Customer Form View -->
+    <record id="wizard_invoice_other_customer_form_view_cc" model="ir.ui.view">
+        <field name="name">appendix.credit.note.form</field>
+        <field name="model">appendix.credit.note</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="credit_note_for"/>
+                        <field name="partner_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <group>
+                        <field name="invoice_appendix_id" readonly="1"/>
+                        <field invisible="1" name="currency_id"/>
+                    </group>
+                </group>
+                <field mode="tree" name="invoice_line_ids">
+                    <tree create="0" delete="0">
+                        <field name="invoice_id" readonly="1"/>
+                        <field name="invoice_amount" readonly="1" sum="Total Invoiced"/>
+                        <field name="paid_amount" readonly="1" sum="Total Paid"/>
+                        <field name="unpaind_amount" readonly="1" sum="Total UnPaid"/>
+                        <field invisible="1" name="currency_id"/>
+                    </tree>
+                </field>
+                <group>
+                    <field name="invoiced_amount"/>
+                    <field name="paid_amount"/>
+                    <field name="unpaid_amount"/>
+                </group>
+                <group>
+                    <field name="company_id" readonly="1"/>
+                    <field name="appendix_invoice_amount"/>
+                    <field name="account_id" required="1" options="{'no_create': True, 'no_open': True}" domain="[('deprecated', '=', False), ('user_type_id.type', 'not in', ('receivable', 'payable')), ('company_id', '=', company_id), ('is_off_balance', '=', False)]"/>
+                    <field name="credit_note_amount" readonly="0"/>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="create_invoice_credit_note" string="Create Credit Note" type="object"/>or
+                    <button class="oe_link" special="cancel" string="Cancel"/></footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_invoice_other_customer_form_view" model="ir.actions.act_window">
+        <field name="name">Credit Note for Appendix</field>
+        <field name="res_model">appendix.credit.note</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

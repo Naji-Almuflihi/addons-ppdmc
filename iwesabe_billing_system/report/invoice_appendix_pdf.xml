@@ -1,0 +1,237 @@
+<odoo>
+    <data>
+        <record id="appendix_invoice_reports_pdf" model="ir.actions.report">
+            <field name="name">AirLine PDF</field>
+            <field name="model">invoice.appendix</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">iwesabe_billing_system.appendix_invoice_report_pdf_template</field>
+            <field name="report_file">iwesabe_billing_system.appendix_invoice_report_pdf_template</field>
+            <field name="print_report_name">'AirLine - %s' % (object.name or 'Revenue').replace('/','')</field>
+            <field name="binding_model_id" ref="iwesabe_billing_system.model_invoice_appendix"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="iwesabe_billing_system.paperformat_appendix_invoice"/>
+        </record>
+        <template id="appendix_invoice_report_pdf_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+
+                            <div class="oe_structure">
+                                <center>
+                                    <p t-esc="o.name"/>
+                                </center>
+
+                                    <table style="border:0px" class="table table-sm">
+                                        <tbody>
+                                            <tr style="font-size:12px;">
+                                                <td>
+                                                    <span> From Date</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="o.from_date"/>
+
+                                                </td>
+                                                <td>
+                                                    <span> To Date</span>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="o.to_date"/>
+
+                                                </td>
+
+                                            </tr>
+                                             <tr style="font-size:12px;">
+                                                <td >
+                                                    <span>Partner</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="o.partner_id.name"/>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                <table style="border:.1px solid black" class="table table-sm"
+                                           name="invoice_appendix_line_table">
+                                        <thead>
+                                            <tr style="font-size:10px;background-color:#a8d5e5">
+                                                <!-- TODO: remove in master -->
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>ID</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Flight Arrival date</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Flight Departure date</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Mode</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>APRON</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Parking Stand</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Actual Registration</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Aircraft Type</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Aircraft Category</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>AMTOW</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Airline Code</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Handling Agent</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Flight NO</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Flight Type</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>PAX</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Terminal</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Counter</span>
+                                                </th>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Ground Time</span>
+                                                </th>
+
+                                                <t t-set="billing_pricing_ids" t-value="o.billing_pricing_ids.filtered(lambda b: b.appendix_total_field)"/>
+                                                <t t-foreach="billing_pricing_ids" t-as="billing_pricing">
+                                                    <th class="text-center" style="border:1px solid gray;">
+                                                        <span t-esc="billing_pricing.name"/>
+                                                    </th>
+                                                </t>
+
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span>Total</span>
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-set="current_subtotal" t-value="0"/>
+                                            <t t-set="seq" t-value="0"/>
+
+                                            <t t-foreach="o.invoice_appendix_line_ids" t-as="line">
+                                                <t t-set="seq"
+                                                   t-value="seq + 1"/>
+
+                                                <tr style="font-size:10px;">
+                                                        <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.ams_id"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.actual_a_time"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.actual_d_time"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.mode"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.apron"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.parking_stand"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.aircraft_registration"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.actual_aircraft"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.actual_category"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.amtow"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.airline"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.agha"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.flight_no"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.flight_type"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.pax"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.terminal"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line.counter"/>
+                                                        </td>
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-field="line.ground_time" t-options="{'widget': 'duration', 'digital': True, 'unit': 'hour', 'round': 'minute'}"/>
+                                                        </td>
+                                                    <t t-set="pricing_line_fields" t-value="o.billing_pricing_ids.filtered(lambda b: b.appendix_line_value_field).mapped('appendix_line_value_field.name')"/>
+                                                    <t t-foreach="pricing_line_fields" t-as="line_field">
+                                                        <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-esc="line[line_field]"/>
+                                                        </td>
+                                                    </t>
+
+                                                     <td class="text-center" style="border:1px solid gray;">
+                                                            <span t-field="line.fees_total"/>
+                                                        </td>
+
+                                                </tr>
+
+                                            </t>
+                                             <tr style="font-size:10px;background-color:#a8d5e5;font-wight:bold">
+                                                <!-- TODO: remove in master -->
+                                                <th class="text-center" colspan="18" style="border:1px solid gray;">
+                                                   <span>Total</span>
+                                                </th>
+
+                                                 <t t-set="pricing_total_fields"
+                                                    t-value="o.billing_pricing_ids.filtered(lambda b: b.appendix_total_field).mapped('appendix_total_field.name')"/>
+                                                 <t t-foreach="pricing_total_fields" t-as="total_field">
+                                                     <th class="text-center" style="border:1px solid gray;">
+                                                         <span t-esc="o[total_field]"/>
+                                                     </th>
+                                                 </t>
+                                                <th class="text-center" style="border:1px solid gray;">
+                                                    <span t-field="o.fees_total_total"/>
+                                                </th>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+

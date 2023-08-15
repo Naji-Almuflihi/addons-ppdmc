@@ -1,0 +1,188 @@
+<odoo>
+    <data>
+        <record id="view_ams_data_validation_form" model="ir.ui.view">
+            <field name="name">view_ams_data_validation_form</field>
+            <field name="model">ams.data.validation</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="from_date"/>
+                            </group>
+                            <group>
+                                <field name="to_date"/>
+                            </group>
+                        </group>
+                        <div style="width:100%">
+                            <div style="width:100%;float:left">
+                                <div style="overflow: hidden;white-space: nowrap;">
+                                <label for="condition1"/>
+                                    <!--<span style="padding-right:120px;"></span>-->
+
+                                    <button name="open_condition1" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition1" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition2"/>
+                                    <button name="open_condition2" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition2" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition3"/>
+                                    <button name="open_condition3" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition3" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition4"/>
+                                    <button name="open_condition4" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition4" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition5"/>
+                                    <button name="open_condition5" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition5" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition6"/>
+                                    <button name="open_condition6" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition6" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition11"/>
+                                    <button name="open_condition11" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition11" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition7"/>
+                                    <button name="open_condition7" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition7" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition8"/>
+                                   <button name="open_condition8" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition8" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition9"/>
+                                    <button name="open_condition9" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition9" force_save="1" style="float:right;padding-right:20px;"/>
+                                    <br/>
+                                    <br/>
+                                    <label for="condition10"/>
+                                    <button name="open_condition10" style="float:right;padding-right:200px;" string="Open" type="object"/>
+                                    <field name="condition10" force_save="1" style="float:right;padding-right:20px;"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--<group>-->
+                            <!--<div style="overflow: hidden;white-space: nowrap;">-->
+                                <!--&lt;!&ndash;<label for="condition1"/>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="d-flex">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<field name="condition1" />&ndash;&gt;-->
+                                    <!--&lt;!&ndash;&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<button name="open_condition1" string="Open" class="btn-primary" type="object"/>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                            <!--<label for="condition2"/>-->
+
+
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition2" style="width:90%"/>-->
+                                    <!--<button name="open_condition2" string="Open" class="btn-primary" type="object"/>-->
+
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+
+                                <!--</div>-->
+                            <!--<label for="condition3"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition3" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition3" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition4"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition4" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition4" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition5"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition5" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition5" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition6"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition6" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition6" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition11"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition11" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition11" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition7"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition7" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition7" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition8"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition8" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition8" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition9"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition9" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition9" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--<label for="condition10"/>-->
+                                <!--<div class="d-flex">-->
+                                    <!--<field name="condition10" style="width:10%"/>-->
+                                    <!--&lt;!&ndash;<span style="font-weight: bold;padding-left:15px;padding-right:15px;">Amount</span>&ndash;&gt;-->
+                                    <!--<button name="open_condition10" string="Open" class="btn-primary" type="object"/>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</group>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ams_data_validation_tree" model="ir.ui.view">
+            <field name="name">view_ams_data_validation_tree</field>
+            <field name="model">ams.data.validation</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_ams_data_validation_view" model="ir.actions.act_window">
+            <field name="name">Ams Data Validation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ams.data.validation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_ams_data_validation_view" name="Ams Data Validation" parent="iwesabe_billing_system.menu_billing_main" action="action_ams_data_validation_view" sequence="10"/>
+    </data>
+</odoo>

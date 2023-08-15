@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Tree-->
+    <record id="view_tree_ams_data" model="ir.ui.view">
+        <field name="name">ams.data.tree</field>
+        <field name="model">ams.data</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ams_id" widget="integer" options="{'format': 0}"/>
+                <field name="arrival_airline"/>
+                <field name="partner_id"/>
+                <field name="departure_airline"/>
+                <field name="airline"/>
+                <field name="arrival_flight_no"/>
+                <field name="departure_flight_no"/>
+                <field name="actual_aircraft"/>
+                <field name="actual_category"/>
+                <field name="apron"/>
+                <field name="reg_no"/>
+                <field name="amtow" string="MTOW"/>
+                <field name="agha"/>
+                <field name="a_status"/>
+                <field name="d_status"/>
+                <field name="a_terminal"/>
+                <field name="d_terminal"/>
+                <field name="actual_a_time"/>
+                <field name="actual_a_time_date"/>
+                <field name="actual_d_time"/>
+                <field name="actual_d_time_date"/>
+                <field name="ADT2"/>
+                <field name="a_passenger_no"/>
+                <field name="d_passenger_no"/>
+                <field name="a_stand"/>
+                <field name="d_stand"/>
+                <field name="HN"/>
+                <field name="DHN"/>
+                <field name="from_city"/>
+                <field name="to_city"/>
+                <field name="origin_type"/>
+                <field name="destination_type"/>
+                <field name="ABUSS"/>
+                <field name="DBUSS"/>
+                <field name="check_in_counter"/>
+                <field name="AFLT_type"/>
+                <field name="DFLT_type"/>
+                <field name="ground_time"/>
+                <field force_save="1" invisible="1" name="condition1"/>
+                <field force_save="1" invisible="1" name="condition2"/>
+                <field force_save="1" invisible="1" name="condition3"/>
+                <field force_save="1" invisible="1" name="condition4"/>
+                <field force_save="1" invisible="1" name="condition5"/>
+                <field force_save="1" invisible="1" name="condition6"/>
+                <field force_save="1" invisible="1" name="condition11"/>
+                <field force_save="1" invisible="1" name="condition7"/>
+                <field force_save="1" invisible="1" name="condition8"/>
+                <field force_save="1" invisible="1" name="condition9"/>
+                <field force_save="1" invisible="1" name="condition10"/>
+            </tree>
+        </field>
+    </record>
+    <!--Form-->
+    <record id="view_form_ams_data" model="ir.ui.view">
+        <field name="name">ams.data.form</field>
+        <field name="model">ams.data</field>
+        <field name="arch" type="xml">
+            <form string="Ams Data">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ams_id"/>
+                            <field name="arrival_airline" string="Arrival Airport"/>
+                            <field name="partner_id"/>
+                            <field name="departure_airline" string="Departure Airport"/>
+                            <field name="airline"/>
+                            <field name="arrival_flight_no"/>
+                            <field name="departure_flight_no"/>
+                            <field name="actual_aircraft"/>
+                            <field name="actual_category"/>
+                            <field name="apron"/>
+                            <field name="reg_no"/>
+                            <field name="amtow"/>
+                            <field name="agha"/>
+                            <field name="a_status"/>
+                            <field name="d_status"/>
+                            <field name="a_terminal"/>
+                            <field name="d_terminal"/>
+                            <field name="actual_a_time"/>
+                            <field name="actual_a_time_date"/>
+                            <field name="actual_d_time"/>
+                            <field name="actual_d_time_date"/>
+                        </group>
+                        <group>
+                            <field name="ADT2"/>
+                            <field name="a_passenger_no"/>
+                            <field name="d_passenger_no"/>
+                            <field name="a_stand"/>
+                            <field name="d_stand"/>
+                            <field name="HN"/>
+                            <field name="DHN"/>
+                            <field name="from_city"/>
+                            <field name="to_city"/>
+                            <field name="origin_type"/>
+                            <field name="destination_type"/>
+                            <field name="ABUSS" string="Arrival Buss"/>
+                            <field name="DBUSS" string="Departure Buss"/>
+                            <field name="check_in_counter"/>
+                            <field name="AFLT_type"/>
+                            <field name="DFLT_type"/>
+                            <field name="ground_time"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field force_save="1" invisible="1" name="condition1"/>
+                        <field force_save="1" invisible="1" name="condition2"/>
+                        <field force_save="1" invisible="1" name="condition3"/>
+                        <field force_save="1" invisible="1" name="condition4"/>
+                        <field force_save="1" invisible="1" name="condition5"/>
+                        <field force_save="1" invisible="1" name="condition6"/>
+                        <field force_save="1" invisible="1" name="condition11"/>
+                        <field force_save="1" invisible="1" name="condition7"/>
+                        <field force_save="1" invisible="1" name="condition8"/>
+                        <field force_save="1" invisible="1" name="condition9"/>
+                        <field force_save="1" invisible="1" name="condition10"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--Action-->
+    <record id="action_ams_data" model="ir.actions.act_window">
+        <field name="name">Ams Data</field>
+        <field name="res_model">ams.data</field>
+        <field name="view_mode">tree,form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="help" type="html">
+            <p/>
+        </field>
+    </record>
+    <record id="view_ams_data_filter" model="ir.ui.view">
+        <field name="name">view_ams_data_filter</field>
+        <field name="model">ams.data</field>
+        <field name="arch" type="xml">
+            <search string="Search Ams">
+                <field filter_domain="[('airline', 'ilike', self)]" name="airline" string="airline"/>
+                <field name="arrival_flight_no"/>
+                <field name="departure_flight_no"/>
+                <separator/>
+                <filter domain="[('condition1','=',True)]" name="condition1" string="Apron Null"/>
+                <filter domain="[('condition2','=',True)]" name="condition2" string="Total Number Of Flights With MTOW = Null In APRON6"/>
+                <filter domain="[('condition3','=',True)]" name="condition3" string="Total Number Of Flights With Arrival Stand 6-1,6-2,6-3,6-4,6-5,6-6,6-7,6-8,6-9,6-10 with Buses"/>
+                <filter domain="[('condition4','=',True)]" name="condition4" string="Total Number Of Flights With Departure Stand 6-1,6-2,6-3,6-4,6-5,6-6,6-7,6-8,6-9,6-10 with Buses"/>
+                <filter domain="[('condition5','=',True)]" name="condition5" string="Total Number Of Flights With Invalid ground time in Apron6"/>
+                <filter domain="[('condition6','=',True)]" name="condition6" string="Total Number Of International Airlines With Domestic Origin"/>
+                <filter domain="[('condition11','=',True)]" name="condition11" string="Total Number Of International Airlines With Domestic Destination"/>
+                <filter domain="[('condition7','=',True)]" name="condition7" string="Total Number With Invalid Arrival Terminal"/>
+                <filter domain="[('condition8','=',True)]" name="condition8" string="Total Number With Invalid Departure Terminal"/>
+                <filter domain="[('condition9','=',True)]" name="condition9" string="Total Number With Invalid Arrival I/D Flag"/>
+                <filter domain="[('condition10','=',True)]" name="condition10" string="Total Number With Invalid Departure I/D Flag"/>
+            </search>
+        </field>
+    </record>
+    <!--Menu-->
+    <menuitem action="action_ams_data" id="menu_ams_data1" name="AMS Data" parent="iwesabe_billing_system.menu_billing" sequence="1"/>
+</odoo>

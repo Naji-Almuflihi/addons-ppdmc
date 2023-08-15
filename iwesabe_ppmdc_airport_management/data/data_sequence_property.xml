@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+        <record id="seq_property" model="ir.sequence">
+            <field name="name">Property</field>
+            <field name="code">property</field>
+            <field name="prefix">P/</field>
+            <field name="padding">5</field>
+        </record>
+        <record id="seq_tenancy" model="ir.sequence">
+            <field name="name">tenant.tenancy</field>
+            <field name="code">tenant.tenancy</field>
+            <field name="prefix">T/</field>
+            <field name="padding">5</field>
+        </record>
+        <record id="seq_tenancy_tenancy_records" model="ir.sequence">
+            <field name="name">Tenant Tenancy Sequence</field>
+            <field name="code">tenant.tenancy.sequence</field>
+            <field name="prefix"/>
+            <field name="padding">3</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="seq_property_sub_record" model="ir.sequence">
+            <field name="name">Property Sub Seq</field>
+            <field name="code">property.sub.seq</field>
+            <field name="prefix"/>
+            <field name="padding">3</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="implementation_service_application_record" model="ir.sequence">
+            <field name="name">Implementation Service Application</field>
+            <field name="code">implementation.service.application.seq</field>
+            <field name="prefix">AS</field>
+            <field name="padding">3</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="vlan_line_sequence_record" model="ir.sequence">
+            <field name="name">VLAN Number</field>
+            <field name="code">vlan.vlan.line</field>
+            <field name="prefix">VLN</field>
+            <field name="padding">4</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="seq_tenant_customer" model="ir.sequence">
+            <field name="name">Tenant Customer</field>
+            <field name="code">tenant.customer.code</field>
+            <field name="prefix">CUS/</field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="seq_tenant_vendor" model="ir.sequence">
+            <field name="name">Tenant Vendor</field>
+            <field name="code">tenant.vendor.code</field>
+            <field name="prefix">SUP/</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</odoo>

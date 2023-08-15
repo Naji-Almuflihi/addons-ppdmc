@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_seq_customer" model="ir.sequence">
+            <field name="name">Customer</field>
+            <field name="code">res.partner.customer</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            
+        </record>
+
+        <record id="ir_seq_vendor" model="ir.sequence">
+            <field name="name">Vendor</field>
+            <field name="code">res.partner.vendor</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+  
+        </record>
+
+          <record id="ir_seq_assets" model="ir.sequence">
+            <field name="name">Assets</field>
+            <field name="code">account.assets.code</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+  
+        </record>
+        <record id="ir_seq_maintenance_equipment" model="ir.sequence">
+            <field name="name">Maintenance Equipment</field>
+            <field name="code">maintenance.equipment</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+  
+        </record>
+        
+        <record id="ir_seq_product_category" model="ir.sequence">
+            <field name="name">Product Category</field>
+            <field name="code">product.category</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+  
+        </record>
+
+        
+    </data>
+
+</odoo>

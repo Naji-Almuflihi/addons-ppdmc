@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_hijri_field_edit_wizard,iwesabe_hijri_asset.hijri_field_edit_wizard Employee,iwesabe_hijri_asset.model_hijri_field_edit_wizard,base.group_user,1,1,1,1
+

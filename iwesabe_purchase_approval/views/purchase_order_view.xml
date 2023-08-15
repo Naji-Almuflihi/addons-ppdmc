@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_purchase_order_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state" statusbar_visible="draft,sent,purchase" widget="statusbar"/>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice'][1]" position="attributes">
+                <attribute name="groups">purchase.group_purchase_manager,account.group_account_user</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
+                <attribute name="groups">purchase.group_purchase_manager,account.group_account_user</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="before">
+                <button groups="account.group_account_manager" name="button_finance_manager_approve" states="to_finance_manager_approve" string="Approve" type="object"/>
+                <button groups="purchase.group_purchase_manager" name="button_purchase_manager_approve" states="to_purchase_manager_approve" string="Approve" type="object"/>
+                <button groups="iwesabe_purchase_approval.group_purchase_approval_ceo" name="button_ceo_approve" states="to_ceo_approve" string="Approve" type="object"/>
+            </xpath>
+            <xpath expr="//button[@name='button_approve']" position="replace">
+                <button groups="iwesabe_purchase_approval.group_purchase_approval_general_manager" name="button_general_manager_approve" states="to_general_manager_approve" string="Approve" type="object"/>
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="replace">
+                <button name="button_cancel" states="draft,to_finance_manager_approve,to_purchase_manager_approve,to_general_manager_approve,to_ceo_approve,sent,purchase" string="Cancel" type="object"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

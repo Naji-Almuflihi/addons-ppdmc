@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="action_report_service_application" model="ir.actions.report">
+          <field name="name">Service Application</field>
+          <field name="model">service.application</field>
+          <field name="report_type">qweb-html</field>
+          <field name="report_name">iwesabe_ppmdc_airport_management.report_service_application</field>
+          <field name="report_file">iwesabe_ppmdc_airport_management.report_service_application</field>
+          <field name="print_report_name">('Service Application - %s' % (object.name)) </field>
+          <field name="binding_model_id" ref="model_service_application"/>
+          <field name="binding_type">report</field>
+     </record>
+
+        <record id="action_report_service_application_disable" model="ir.actions.report">
+          <field name="name">Service Application Disable</field>
+          <field name="model">service.application</field>
+          <field name="report_type">qweb-html</field>
+          <field name="report_name">iwesabe_ppmdc_airport_management.report_service_disable_application</field>
+          <field name="report_file">iwesabe_ppmdc_airport_management.report_service_disable_application</field>
+          <field name="print_report_name">(( 'Service Application - %s' % (object.name)) </field>
+          <field name="binding_model_id" ref="model_service_application"/>
+          <field name="binding_type">report</field>
+     </record>
+
+
+
+</odoo>

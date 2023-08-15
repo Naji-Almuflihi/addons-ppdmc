@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!--     <record id="view_hr_equipment_request_form_inherit_ppmdc" model="ir.ui.view">
+        <field name="name">maintenance.request.form.inherit</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[1]" position="before">
+                <field name="equipment_id" invisible='1'/>
+
+            </xpath>
+            <xpath expr="//field[@name='email_cc']" position="after">
+                <field name="spare_part_check" attrs="{'required':[('state','=','under_validation')]}"/>
+            </xpath>
+        </field>
+    </record>
+ -->
+    
+
+    <record id="hr_equipment_request_view_tree_inherit_ppmdc" model="ir.ui.view">
+        <field name="name">maintenance.request.tree.inherit</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="next_action_date"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

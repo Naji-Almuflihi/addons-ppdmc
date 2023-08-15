@@ -1,0 +1,121 @@
+<odoo>
+
+    <record id="send_mail_maintenance_repair" model="mail.template">
+        <field name="name">Maintenance Repair.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance Repair</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>
+               The Equipment  ${object.equipment_id.name} Is Repaired.<br/>
+               Thanks,,,,
+               </p>
+
+            ]]>
+        </field>
+    </record>
+
+    <record id="send_mail_maintenance_request_approve" model="mail.template">
+        <field name="name">Maintenance Request Approve.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance Request Approve</field>
+        <field name="body_html">
+            <![CDATA[
+               <p style="margin: 0px; padding: 0px; font-size: 13px;color: #000000;">Dear user ${object.user_assistant_id.name},
+                    <br/>k Please check the maintenence request and approve.<br/>
+                   please check below link for more details.
+                </p>
+                <a style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px" href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=maintenance.request">View</a>
+            ]]>
+        </field>
+    </record>
+
+    <record id="send_mail_maintenance_ask_approve" model="mail.template">
+        <field name="name">Maintenance Ask Approve.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance Ask Approve</field>
+        <field name="body_html">
+            <![CDATA[
+               <p style="margin: 0px; padding: 0px; font-size: 13px;color: #000000;">Dear user ${object.employee_id.name},
+                    <br/>k Please check the maintenence Ask and approve.<br/>
+                   please check below link for more details.
+                </p>
+                <a style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px" href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=maintenance.request">View</a>
+            ]]>
+        </field>
+    </record>
+
+    <record id="send_mail_maintenance_validation" model="mail.template">
+        <field name="name">Maintenance Validation.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance Validation</field>
+        <field name="body_html">
+            <![CDATA[
+               <p style="margin: 0px; padding: 0px; font-size: 13px;color: #000000;">Dear user ${object.user_id.name},
+                    <br/>the maintenance request no ${object.number} is validated.<br/>Please see more details by click below button.<br/>
+                </p>
+                <a style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px" href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=maintenance.request">View</a>
+                <p><br/>Thanks</p>
+            ]]>
+        </field>
+    </record>
+
+    <record id="send_mail_maintenance_return_to_repair" model="mail.template">
+        <field name="name">Maintenance return to repair.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance return to repair</field>
+        <field name="body_html">
+            <![CDATA[
+               <p style="margin: 0px; padding: 0px; font-size: 13px;color: #000000;">Dear user ${object.user_id.name},
+                    <br/>the maintenance request no ${object.number} is returned to repair.<br/>Please see more details by click below button.<br/>
+                </p>
+                <a style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px" href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=maintenance.request">View</a>
+                <p><br/>Thanks</p>
+            ]]>
+        </field>
+    </record>
+
+
+    <record id="send_mail_reject_maintenance_repair" model="mail.template">
+        <field name="name">Maintenance Repair Rejected.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance Repair Rejected</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>
+               The Equipment  ${object.equipment_id.name} Not Repaired Please Check.<br/>
+               Thanks,,,,
+               </p>
+
+            ]]>
+        </field>
+    </record>
+
+
+    <record id="send_mail_submit_maintenance_repair" model="mail.template">
+        <field name="name">Maintenance Repair Submit.</field>
+        <field name="model_id" ref='iwesabe_helpdesk_maintenance.model_maintenance_request'/>
+        <field name="lang">${object.lang}</field>
+        <field name="subject">Maintenance Repair Submit</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>
+                Dear ${object.user_id.name}
+                please review the maintenance request 
+               The Equipment  ${object.equipment_id.number} Is Submit Please Check.<br/>
+               Thanks,,,,
+               </p>
+
+            ]]>
+        </field>
+    </record>
+
+
+
+</odoo>

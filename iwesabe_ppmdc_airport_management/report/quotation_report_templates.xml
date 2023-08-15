@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <template id="report_quotation_document">
+     <t t-call="web.external_layout">
+          <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" /> 
+          <div class="page">
+               <div class="oe_structure"/>  
+               <h2>                    
+                    <span >Quotations+9 # </span>
+                    <span t-field="doc.name"/>
+               </h2>
+               <table class="table table-sm o_main_table" cellspacing="1">
+                    <tr style="background-color:#336699;" >
+                         <th colspan="6">Service Type</th>
+                    </tr>
+                    <tr>
+                         <!-- <td colspan="2"> 
+                              <span> Disable </span>
+                              <t t-if="doc.service_type == 'disable'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>                              
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>     
+                         </td> -->
+                         <!-- <td colspan="2">
+                              <span> Transfer </span>
+                              <t t-if="doc.service_type == 'transfer'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>  
+                         </td> -->
+                         <td colspan="4">
+                              <span> New nstallation </span>
+                              <t t-if="doc.service_type == 'new'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                          <td colspan="4">
+                              <span> New Item </span>
+                              <t t-if="doc.service_type == 'add_new_item'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>  
+                         </td>
+                         <!-- <td class="fa fa-check">New nstallation</td> -->
+                    </tr>
+
+                    <br/>
+                    <tr style="background-color:#336699;">
+                         <th colspan="6" >Applicant</th>
+                    </tr>
+                    <tr>
+                         <td colspan="2">
+                              <span> Other </span>
+                              <t t-if="doc.applicant == 'other'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                         <td colspan="2">
+                              <span> Airlines </span>
+                              <t t-if="doc.applicant == 'airlines'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                         <td colspan="2">
+                              <span> Governmental </span>
+                              <t t-if="doc.applicant == 'governmental'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                    </tr>
+
+                    <br/>
+                    <t t-if="doc.telephone_service_ids">
+                         <tr style="background-color:#336699;">
+                              <th colspan="6" >Telephone Services &amp; Types Of Sets</th>
+                         </tr>
+                         <tr>
+                              <th>Model</th>
+                              <th>Phone Extention Service</th>
+                              <th>Extention Number</th>
+                              <th>Quantity</th>
+                              <th>Rent</th>
+                              <th>Total</th>
+                         </tr>
+                         <t t-foreach="doc.telephone_service_ids" t-as="line">
+                              <tr>
+                                   <td >
+                                        <span t-field="line.equipment_id.name"/>
+                                   </td>
+                                   <td >
+                                        <span t-field="line.phone_extention_id.name"/>
+                                   </td>
+                                   <td >
+                                        <span t-field="line.extention_number_id.name"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.quantity"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.rent"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.total"/>
+                                   </td>
+                              </tr>
+                         </t>
+                    </t>
+
+                    <t t-if="doc.information_data_ids">
+                         <tr style="background-color:#336699;">
+                              <th colspan="6" >Information &amp; Data Service</th>
+                         </tr>
+                          <tr>
+                              <th>Service</th>
+                              <th>Points</th>
+                              <th>VLAN</th>
+                              <th>Quantity</th>
+                              <th>Rent</th>
+                              <th>Total</th>
+                         </tr>
+                         <t t-foreach="doc.information_data_ids" t-as="line">
+                              <tr>
+                                    <td>
+                                        <span t-field="line.product_id.name"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.points"/>
+                                   </td>
+                                    <td>
+                                        <span t-field="line.vlan"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.quantity"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.rent"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.total"/>
+                                   </td>
+                              </tr>
+                         </t>
+                    </t>
+                    <t t-if="doc.equipment_ids">
+                         <tr style="background-color:#336699;">
+                              <th colspan="6" >Equipments</th>
+                         </tr>
+                         <tr>
+                              <th colspan="3">Equipment</th>
+                              <th>Quantity</th>
+                              <th>Rent</th>
+                              <th>Total</th>
+                         </tr>
+                         <t t-foreach="doc.equipment_ids" t-as="line">
+                              <tr>
+                                   <td colspan="3">
+                                        <span t-field="line.equipment_id.name"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.quantity"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.rent"/>
+                                   </td>
+                                   <td>
+                                        <span t-field="line.total"/>
+                                   </td>
+                              </tr>
+                         </t>
+                    </t>
+
+                    <tr style="background-color:#336699;">
+                         <th colspan="6" >Applicant Approval</th>
+                     </tr>
+                    <tr>
+                         <th>Job Title</th>
+                         <td colspan="2"><span t-field="doc.applicant_job_title"/></td>
+                         <th>Name</th>
+                         <td colspan="2"><span t-field="doc.applicant_name"/></td>
+                    </tr>
+                    <tr>
+                         <th>Mobile No</th>
+                         <td colspan="2"><span t-field="doc.applicant_mobile"/></td>
+                         <th>Phone No</th>
+                         <td colspan="2"> <span t-field="doc.applicant_phone"/></td>
+                    </tr>
+                    <tr >
+                         <th >Address</th>
+                         <td colspan="5"><span t-field="doc.applicant_address"/></td> 
+                    </tr>
+                    <tr >
+                         <th >Stamp</th>
+                         <td colspan="3">
+                              <div style="position: relative; display: block; width:70mm; height:42.4mm; float:left; margin:0; padding:0;">
+                                   <div style="width:150%; height:50%; border: 1px solid black; "/>
+                              </div>
+                         </td>
+                         <th >Signature</th>
+                         <td colspan="3"><span t-field="doc.signature"/></td>
+                    </tr>
+                    <tr style="background-color:#336699;">
+                         <th colspan="6" >Property Management Approval</th>
+                    </tr>
+                    <tr>
+                         <td colspan="2">
+                              <span> Octagon </span>
+                              <t t-if="doc.property_side == 'octagon'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                         <td colspan="2">
+                              <span> Out Of terminal </span>
+                              <t t-if="doc.property_side == 'out_terminal'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                         <td colspan="2">
+                              <span> Inside Terminal </span>
+                              <t t-if="doc.property_side == 'inside_ierminal'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                    </tr>
+                    <tr>
+                         <td colspan="6">
+                              <span> Area Side </span>
+                              <t t-if="doc.property_side == 'area_side'">
+                                   <input type="checkbox" checked="True"/>
+                              </t>
+                              <t t-else ="">
+                                   <input type="checkbox" />
+                              </t>
+                         </td>
+                    </tr>
+                    <tr>
+                          <td colspan="2">
+                              <span> Office No. </span>
+                         </td>
+                         <td colspan="4">
+                               <div style="position: relative; display: block; width:70mm; height:42.4mm; float:left; margin:0; padding:0;">
+                                   <div style="width:150%; height:50%; border: 1px solid black; ">
+                                        <span t-field="doc.office_no"/>
+                                   </div>
+                              </div>
+                         </td>
+                    </tr>
+                    <tr>
+                         <td>Contract No</td>
+                         <td>
+                              <span t-field="doc.contract_no"/>
+                         </td>
+                    </tr>
+                    <tr>
+                         <th>Signature</th>
+                         <td></td>
+                         <th>Date</th>
+                         <td>
+                              <span t-field="doc.signature_date"/>
+                         </td>
+                         <th>Name</th>
+                         <td>
+                              <span t-field="doc.partner_id.name"/>
+                         </td>
+                    </tr>
+                    <tr style="background-color:#336699;">
+                              <th colspan="6" >Notes</th>
+                         </tr>
+                    
+                    <tr>
+                         <th>Notes</th>
+                    </tr>
+                    <tr>
+                         <td colspan="6">
+                              <div style="position: relative; display: block; width:70mm; height:42.4mm; float:left; margin:0; padding:0;">
+                                   <div style="width:400%; height:50%; border: 1px solid black; ">
+                                        <span t-field="doc.notes"/>
+                                   </div>
+                              </div>
+                         </td>
+                    </tr>
+                    
+               </table>
+               
+          </div>
+          </t>
+     </template>
+
+
+     <template id="report_quotation">
+          <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="doc">
+                    <t t-call="iwesabe_ppmdc_airport_management.report_quotation_document" t-lang="doc.partner_id.lang"/>
+               </t>
+          </t>
+     </template>
+
+    
+
+</odoo>

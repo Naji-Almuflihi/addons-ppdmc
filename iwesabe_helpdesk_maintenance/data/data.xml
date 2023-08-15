@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="validation_record" model="maintenance.stage">
+			<field name="name">Validation</field>
+		</record>
+    </data>
+    <data noupdate="1">
+        <record id="maintenance_request_seq_record" model="ir.sequence">
+            <field name="name">Maintenance Request</field>
+            <field name="code">maintenance.request</field>
+            <field name="prefix">%(year)s-%(month)s-</field>
+            <field name="padding">5</field>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="maintenance_request_seq_record_reset" model="ir.sequence">
+            <field name="name">Maintenance Request</field>
+            <field name="code">maintenance.request.reset</field>
+            <field name="prefix">%(range_year)s-%(range_month)s-</field>
+            <field name="padding">5</field>
+            <field eval="False" name="company_id"/>
+            <field name="use_date_range">True</field>
+            <field name="range_reset">monthly</field>
+        </record>
+    </data>
+</odoo>
+

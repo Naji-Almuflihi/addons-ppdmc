@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_inherit_view_partner_form" model="ir.ui.view">
+            <field name="name">view_inherit_view_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="customer_rank" invisible="1" />
+                <button
+                    name="air_line_service_contract"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-book"
+                    help="Show the sale contracts for this partner"
+                >
+                    <field
+                        name="no_of_airline_contract"
+                        widget="statinfo"
+                        string="AirLine Contracts"
+                    />
+                </button>
+                
+            </xpath>
+
+                <!-- position: after|before|replace|attributes|inside -->
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="is_non_airline" attrs="{'invisible':[('is_airline','=',True)]}"/>
+                    <field name="is_airline" attrs="{'invisible':[('is_non_airline','=',True)]}"/>
+                    <field name="airline_code" attrs="{'invisible':['|', ('is_airline','=',False), ('is_non_airline', '=', True)],'required':[('is_airline','=',True)]}"/>
+                    <field name="invoice_peendix_by_mail"/>
+                    <field name="agent_grantee_id"/>
+                </xpath>
+                <xpath expr="//group[@name='sale']" position="inside">
+                    <field name="is_gmt_customer"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

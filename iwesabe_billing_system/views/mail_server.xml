@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+<!--        <record id="view_inherit_ir_mail_server_form" model="ir.ui.view">-->
+<!--            <field name="name">view_inherit_ir_mail_server_form</field>-->
+<!--            <field name="model">ir.mail_server</field>-->
+<!--            <field name="inherit_id" ref="base.ir_mail_server_form"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                &lt;!&ndash; position: after|before|replace|attributes|inside &ndash;&gt;-->
+<!--                <xpath expr="//field[@name='active']" position="after">-->
+<!--                    <field name="use_in_mail"/>-->
+<!--                </xpath>-->
+
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

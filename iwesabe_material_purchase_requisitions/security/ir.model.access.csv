@@ -1,0 +1,10 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_material_purchase_requisition_employee,acc_purchase_requisition_employee,model_material_purchase_requisition,base.group_user,1,1,1,1
+access_material_purchase_requisition_line_employee,acc_purchase_requisition_line_employee,model_material_purchase_requisition_line,base.group_user,1,1,1,1
+access_stock_picking_purchase_user,acc_stock_picking,model_stock_picking,purchase.group_purchase_user,1,0,0,0
+
+stock.access_stock_picking_type_all,stock.stock.picking.type all users,stock.model_stock_picking_type,base.group_user,1,1,1,0
+stock.access_stock_picking_type_user,stock.stock.picking.type user,stock.model_stock_picking_type,stock.group_stock_user,1,1,1,0
+
+
+

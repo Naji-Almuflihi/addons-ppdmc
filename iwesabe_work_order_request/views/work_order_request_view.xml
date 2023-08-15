@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+	<data>
+		<record id="form_view_work_order_request" model="ir.ui.view">
+            <field name="name">name.work.order.request.form</field>
+            <field name="model">work.order.request</field>
+            <field name="arch" type="xml">
+                <form string="Work Order Request">
+                	<header>
+                        <button name="action_create_maintenance_request" type="object" string="Create Maintenance Request"/>
+                        <button string='Submit' type='object' name='action_submit' states='draft'/>
+                        <button string='Approve' type='object' name='action_second_submit' states='confirm' groups="iwesabe_work_order_request.maintenance_management_group"/>
+                        <button string='Approve' type='object' name='action_third_submit' states='validate1' groups="iwesabe_work_order_request.safety_management_group"/>
+                        <button string='Approve' type='object' name='action_approve' states='validate2' groups="iwesabe_work_order_request.operation_management_group"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="din"/>
+                                <field name="rn"/>
+                                <field name="date"/>
+                                <field name="name"/>
+                                <field name="request_date"/>
+                                <!-- <field name="request_date_hijri"/> -->
+                                <label for="request_date_hijri" string="Request Date (Hijri)"/>
+			                    <div class="o_row">
+			                        <field name="request_date_hijri"/>
+			                        <button context="{'field_to':'request_date_hijri','field_from':'request_date_hijri'}" name="Gregorian2hijri" type="object" string=" " icon="fa-refresh" class="oe_edit_only" help="Conversion with Gregorian; There is a small probability of one day error"/>
+			                        <button context="{'date_field': 'request_date_hijri'}" name="%(iwesabe_hijri_asset.call_field_edit)d" type="action"  string=" " icon="fa-pencil" class="oe_edit_only"/>
+			                    </div>
+                                <field name="mode"/>
+                                <field name="work_type"/>
+                                <field name="category"/>
+                                <field name="other_category" attrs="{'invisible': [('category','!=','other')] }"/>
+                            </group>
+                            <group>
+                                <field name="contactor_id"/>
+                                <field name="zone_location_id"/>
+                                <field name="period"/>
+                                <field name="period_day" attrs="{'invisible': [('period','!=','day')] }"/>
+                                <field name="period_hour" attrs="{'invisible': [('period','!=','hour')] }"/>
+                                <field name="employee_id"/>
+                                <field name="contact_no"/>
+                                <field name="equipment_ids" widget='many2many_tags'/>
+                            	<field name="man_power"/>
+                            </group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="start_time"/>
+                                <field name="start_am_pm"/>
+                                <field name="end_date"/>
+                                <field name="end_time"/>
+                                <field name="end_am_pm"/>
+                            </group>
+                            <group>
+                                <field name="maintenance_management_user_id" readonly="1"/>
+                                <field name="safety_management_user_id" readonly="1"/>
+                                <field name="operation_management_user_id" readonly="1"/>
+                                <field name="spare_part"/>
+                            	<field name="product_ids" widget='many2many_tags' attrs="{'invisible': [('spare_part','!=','required')] }"/>
+                            	<field name="affected_system_location"/>
+                                <field name="system_category_ids" widget='many2many_tags' attrs="{'invisible': [('affected_system_location','!=','yes')] }"/>
+                                <field name="property_ids" widget='many2many_tags' attrs="{'invisible': [('affected_system_location','!=','yes')] }"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Work Description" >
+                                	<field name="work_description"/>
+                            </page>
+                            <page string="Instructions" >
+                                <group>
+                                    <group>
+                                        <field name="instruction_1" nolabel="1"/>
+                                        <field name="instruction_2" nolabel="1"/>
+                                        <field name="instruction_3" nolabel="1"/>
+                                        <field name="instruction_4" nolabel="1"/>
+                                        <field name="instruction_5" nolabel="1"/>
+                                        <field name="instruction_6" nolabel="1"/>
+                                        <field name="instruction_7" nolabel="1"/>
+                                        <field name="instruction_8" nolabel="1"/>
+                                        <field name="instruction_9" nolabel="1"/>
+                                        <field name="instruction_10" nolabel="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="instruction_arabic_1" nolabel="1"/>
+                                        <field name="instruction_arabic_2" nolabel="1"/>
+                                        <field name="instruction_arabic_3" nolabel="1"/>
+                                        <field name="instruction_arabic_4" nolabel="1"/>
+                                        <field name="instruction_arabic_5" nolabel="1"/>
+                                        <field name="instruction_arabic_6" nolabel="1"/>
+                                        <field name="instruction_arabic_7" nolabel="1"/>
+                                        <field name="instruction_arabic_8" nolabel="1"/>
+                                        <field name="instruction_arabic_9" nolabel="1"/>
+                                        <field name="instruction_arabic_10" nolabel="1"/>
+                                    </group>
+                                    <group>
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+		<record id="tree_view_work_order_request" model="ir.ui.view">
+            <field name="name">name.work.order.request.tree</field>
+            <field name="model">work.order.request</field>
+            <field name="arch" type="xml">
+                <tree string="Work Order Request">
+                    <field name="din"/>
+                    <field name="employee_id"/>
+                    <field name="contactor_id"/>
+                    <field name="zone_location_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+		<record id="action_view_work_order_request" model="ir.actions.act_window">
+            <field name="name">Work Order Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">work.order.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_view_work_order_request" id="menu_work_order_request" name="Work Order Request" parent="maintenance.menu_m_request" sequence='3'/>
+
+        <menuitem action="action_view_work_order_request" id="menu_work_order_request_helpdesk" name="Work Order Request" parent="helpdesk.helpdesk_ticket_menu_main" sequence="21"/>
+	</data>
+</odoo>
